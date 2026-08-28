@@ -15,3 +15,20 @@ export const PESOS = [
   { gramas: 500, label: "500g" },
   { gramas: 1000, label: "1kg" },
 ];
+
+// Peso mínimo que o cliente pode digitar no campo de peso exato (em gramas)
+export const PESO_MINIMO = 100;
+
+// Tipos de corte que o açougueiro pode fazer. O "valor" é o que fica salvo
+// no array "cortes" do produto (banco); o "label" é o que aparece na tela.
+export const CORTES = [
+  { valor: "bife", label: "Bife" },
+  { valor: "manta", label: "Manta" },
+  { valor: "cubos", label: "Cubos" },
+  { valor: "moida", label: "Moída" },
+];
+
+/** Rótulo amigável de um corte a partir do valor salvo ("cubos" -> "Cubos") */
+export function rotuloCorte(valor) {
+  return CORTES.find((c) => c.valor === valor)?.label || valor;
+}

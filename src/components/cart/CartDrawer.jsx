@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Trash2,
-  AlertTriangle,
   ShoppingBag,
   ArrowLeft,
   Store,
@@ -11,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { cn, formatBRL, formatPeso } from "@/lib/utils";
+import { rotuloCorte } from "@/data/categories";
 import { enviarPedidoWhatsApp } from "@/lib/whatsapp";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,8 +38,15 @@ function lerCliente() {
  * `onClose` fecha o drawer (usado no botão "Continuar comprando").
  */
 export function CartDrawer({ onClose }) {
-  const { itens, total, subtotalItem, chave, incrementar, decrementar, remover } =
-    useCart();
+  const {
+    itens,
+    total,
+    subtotalItem,
+    chaveItem,
+    incrementar,
+    decrementar,
+    remover,
+  } = useCart();
 
   const [etapa, setEtapa] = useState("carrinho");
 
@@ -133,7 +140,7 @@ export function CartDrawer({ onClose }) {
           <ul className="space-y-3">
             <AnimatePresence initial={false}>
               {itens.map((item) => {
-                const k = chave(item.id, item.gramas);
+                const k = chaveItem(item);
                 return (
                   <motion.li
                     key={k}
@@ -156,6 +163,14 @@ export function CartDrawer({ onClose }) {
                       <p className="text-xs text-muted-foreground">
                         {formatPeso(item.gramas)} · {formatBRL(item.precoKg)}/kg
                       </p>
+                      {(item.corte || item.temperada) && (
+                        <p className="mt-0.5 flex flex-wrap gap-x-2 text-xs text-carne-dark">
+                          {item.corte && (
+                            <span>Corte: {rotuloCorte(item.corte)}</span>
+                          )}
+                          {item.temperada && <span>Temperada</span>}
+                        </p>
+                      )}
 
                       <div className="mt-2 flex items-center justify-between">
                         {/* Stepper de quantidade */}
@@ -204,14 +219,6 @@ export function CartDrawer({ onClose }) {
       {/* Aviso obrigatório + totais + ações */}
       {!vazio && (
         <SheetFooter>
-          <div className="flex items-start gap-2 rounded-lg bg-carne/10 p-3 text-xs text-carne-dark">
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
-            <p>
-              Item sujeito a alteração de peso de <strong>10% para mais ou
-              para menos</strong>.
-            </p>
-          </div>
-
           <div className="flex items-center justify-between py-1">
             <span className="text-sm text-muted-foreground">Total estimado</span>
             <span className="font-display text-xl">{formatBRL(total)}</span>

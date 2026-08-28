@@ -1,19 +1,19 @@
 import { motion } from "framer-motion";
 
 /**
- * Hero: logo (fundo transparente) sobre um banner de madeira real
- * (public/assets/wood-banner.jpg), com um facho de luz quente e um
+ * Hero: logo (fundo transparente) sobre uma foto de carne na brasa
+ * (public/assets/hero-fogo.jpg), com um facho de luz quente e um
  * escurecimento que garantem contraste do texto em qualquer tela.
  */
 export function HeroBanner() {
   return (
     <header className="relative isolate flex min-h-[20rem] flex-col justify-center overflow-hidden bg-madeira-escura sm:min-h-[22rem]">
-      {/* textura de madeira */}
+      {/* foto de fundo */}
       <img
-        src="/assets/wood-banner.jpg"
+        src="/assets/hero-fogo.jpg"
         alt=""
         aria-hidden
-        className="absolute inset-0 h-full w-full object-cover object-center"
+        className="absolute inset-0 h-full w-full object-cover object-[center_35%]"
       />
 
       {/* facho de luz quente atrás da logo */}
@@ -27,7 +27,7 @@ export function HeroBanner() {
       />
       {/* escurecimento: contraste do texto + emenda com o restante da página */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-carvao"
+        className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-carvao"
         aria-hidden
       />
 
@@ -60,16 +60,6 @@ export function HeroBanner() {
         >
           Rua João Pacheco de Lima 54-84 Centro.
         </motion.p>
-
-        <motion.span
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.32, duration: 0.4 }}
-          className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-white/90 backdrop-blur-sm"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-carne" />
-          Itens sujeitos a alteração de peso de 10% para mais ou para menos.
-        </motion.span>
       </div>
     </header>
   );

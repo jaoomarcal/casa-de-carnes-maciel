@@ -5,7 +5,7 @@ import { ArrowLeft, LogOut, Plus, Pencil, Trash2 } from "lucide-react";
 
 import { formatBRL } from "@/lib/utils";
 import { urlImagemProduto } from "@/lib/supabase";
-import { CATEGORIAS } from "@/data/categories";
+import { CATEGORIAS, CORTES } from "@/data/categories";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { Button } from "@/components/ui/button";
@@ -76,6 +76,8 @@ const VAZIO = {
   preco_oferta_kg: "",
   em_oferta: false,
   esgotado: false,
+  cortes: [],
+  permite_tempero: false,
   imagem_url: "",
   ordem: 0,
 };
@@ -88,6 +90,18 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
     const v = e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setForm((f) => ({ ...f, [campo]: v }));
   };
+
+  const cortesSelecionados = Array.isArray(form.cortes) ? form.cortes : [];
+  const toggleCorte = (valor) =>
+    setForm((f) => {
+      const atuais = Array.isArray(f.cortes) ? f.cortes : [];
+      return {
+        ...f,
+        cortes: atuais.includes(valor)
+          ? atuais.filter((c) => c !== valor)
+          : [...atuais, valor],
+      };
+    });
 
   async function onFile(e) {
     const file = e.target.files?.[0];
@@ -197,6 +211,38 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
             className="ml-2 w-16 rounded-lg border border-input px-2 py-1 text-sm"
           />
         </label>
+      </div>
+
+      {/* Tempero + cortes disponíveis (aparecem no site só quando marcados) */}
+      <div className="space-y-2 rounded-lg border border-border bg-muted/40 p-3">
+        <label className="flex items-center gap-2 text-sm font-medium">
+          <input
+            type="checkbox"
+            checked={!!form.permite_tempero}
+            onChange={set("permite_tempero")}
+          />
+          Permite tempero
+        </label>
+        <p className="text-xs text-muted-foreground">
+          Mostra a opção “Vai temperada?” para o cliente neste produto.
+        </p>
+
+        <div className="pt-1 text-sm font-medium">Cortes disponíveis</div>
+        <div className="flex flex-wrap gap-3">
+          {CORTES.map((c) => (
+            <label key={c.valor} className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={cortesSelecionados.includes(c.valor)}
+                onChange={() => toggleCorte(c.valor)}
+              />
+              {c.label}
+            </label>
+          ))}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Deixe tudo desmarcado se este produto não recebe corte.
+        </p>
       </div>
 
       <div className="flex items-center gap-3">

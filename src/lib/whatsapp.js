@@ -1,4 +1,5 @@
 import { formatBRL, formatPeso } from "./utils";
+import { rotuloCorte } from "@/data/categories";
 
 const NUMERO = import.meta.env.VITE_WHATSAPP_NUMERO || "5517991316331";
 
@@ -24,7 +25,12 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
 
   const linhas = itens.map((item) => {
     const preco = formatBRL(subtotalItem(item));
-    return `• *${item.quantidade}x* ${item.nome} — ${formatPeso(item.gramas)}\n   ${preco}`;
+    const extras = [
+      item.corte ? `Corte: ${rotuloCorte(item.corte)}` : null,
+      item.temperada ? "Temperada" : null,
+    ].filter(Boolean);
+    const sufixo = extras.length ? ` · ${extras.join(" · ")}` : "";
+    return `• *${item.quantidade}x* ${item.nome} — ${formatPeso(item.gramas)}${sufixo}\n   ${preco}`;
   });
 
   const entrega =
@@ -49,8 +55,6 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
     `*Total estimado:* ${formatBRL(totalCarrinho(itens))}`,
     "",
     ...infoCliente,
-    "",
-    "_Itens sujeitos a alteração de peso de 10% para mais ou para menos._",
   ].join("\n");
 
   const url = `https://wa.me/${NUMERO}?text=${encodeURIComponent(mensagem)}`;

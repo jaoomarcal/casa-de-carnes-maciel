@@ -87,13 +87,14 @@ maciel/
     │   │   ├── PromoBanner.jsx→ card de ofertas em vidro fosco (glassmorphism)
     │   │   └── Footer.jsx     → rodapé + link "•" escondido para o /painel
     │   ├── catalog/
-    │   │   ├── ProductCard.jsx    → 🟩 PEÇA 3: o card do produto (hover + esgotado)
+    │   │   ├── ProductCard.jsx    → 🟩 PEÇA 3: o card do produto (hover + esgotado, abre o modal)
+    │   │   ├── ProductModal.jsx   → detalhe do produto: peso, corte e tempero + "Adicionar"
     │   │   ├── ProductSkeleton.jsx
     │   │   ├── CategorySection.jsx → título + grade de cards de uma categoria
-    │   │   └── WeightSelector.jsx  → os botões 100g / 500g / 1kg
+    │   │   └── WeightSelector.jsx  → atalhos 100g / 500g / 1kg + campo de peso exato
     │   └── cart/
     │       ├── FloatingCart.jsx   → 🟩 PEÇA 4: botão 3D + abre a gaveta
-    │       └── CartDrawer.jsx     → conteúdo da gaveta (lista, aviso 10%, botões)
+    │       └── CartDrawer.jsx     → conteúdo da gaveta (lista, botões)
     │
     └── pages/
         ├── Home.jsx           → monta a loja: Hero + Promo + categorias + carrinho
@@ -181,9 +182,10 @@ select id from auth.users where email = 'dono@casadecarnesmaciel.com';
 
 - É um **Context**: um "quadro de avisos" que qualquer componente lê sem precisar
   passar props de pai para filho.
-- Guarda uma lista de itens `{ id, nome, precoKg, gramas, quantidade, imagem }`.
-- O mesmo produto em pesos diferentes vira **linhas diferentes** (a "chave" é
-  `id + gramas`).
+- Guarda uma lista de itens
+  `{ id, nome, precoKg, gramas, quantidade, imagem, corte, temperada }`.
+- O mesmo produto com opções diferentes vira **linhas diferentes** (a "chave" é
+  `id + gramas + corte + temperada`).
 - Toda mudança é salva no **localStorage** — se o cliente fechar e voltar, o
   carrinho continua lá.
 - `adicionar()` já dispara o toast "Item adicionado ao carrinho".
@@ -194,10 +196,15 @@ select id from auth.users where email = 'dono@casadecarnesmaciel.com';
   no `<article>`, e a imagem dá um leve zoom (`group-hover:scale-110`).
 - **Esgotado (`produto.esgotado === true`):**
   - imagem recebe `grayscale`, o card inteiro fica com `opacity-60`;
-  - o botão "Adicionar" **some** e no lugar entra a badge **"Indisponível"**;
-  - os botões de peso ficam desabilitados.
+  - o botão "Escolher" **some** e no lugar entra a badge **"Indisponível"**;
+  - o card não abre o modal.
 - **Oferta:** mostra o preço cheio riscado + o preço de oferta em vermelho.
 - O preço sempre aparece como `R$ 48,50 / kg` (via `formatBRL`).
+- Clicar no card (ou no botão "Escolher") abre o **`ProductModal`**, onde o
+  cliente define o **peso** (atalho ou peso exato em gramas), o **tipo de corte**
+  (só aparece se o produto tiver cortes habilitados no painel) e se **vai
+  temperada** (só se o produto permitir tempero no painel). O "Adicionar ao
+  carrinho" fica dentro do modal.
 
 ### 🟩 O botão flutuante 3D (`components/cart/FloatingCart.jsx`)
 
@@ -215,11 +222,10 @@ select id from auth.users where email = 'dono@casadecarnesmaciel.com';
 
 ### 🟩 A gaveta (`components/cart/CartDrawer.jsx`)
 
-- Lista os itens com miniatura, peso, preço/kg, **stepper** de quantidade e um
-  ícone de **lixeira** (`Trash2` do lucide-react) para remover na hora.
+- Lista os itens com miniatura, peso, preço/kg, corte/tempero (quando houver),
+  **stepper** de quantidade e um ícone de **lixeira** (`Trash2` do lucide-react)
+  para remover na hora.
 - Cada item entra/sai com animação (`<AnimatePresence>` + `layout`).
-- Mostra em destaque o aviso:
-  **"Item sujeito a alteração de peso de 10% para mais ou para menos"**.
 - Rodapé fixo com o **total estimado** e dois botões:
   - **Continuar comprando** → só fecha a gaveta (`onClose`);
   - **Fechar pedido via WhatsApp** → chama `enviarPedidoWhatsApp(itens)`.
@@ -227,7 +233,7 @@ select id from auth.users where email = 'dono@casadecarnesmaciel.com';
 ### 🟩 O WhatsApp (`lib/whatsapp.js`)
 
 - `subtotalItem(item)` = `precoKg * (gramas / 1000) * quantidade`.
-- Monta um texto com bullets, total e o aviso dos 10%.
+- Monta um texto com bullets (peso, corte e tempero de cada item) e o total.
 - Abre `https://wa.me/5517991316331?text=<mensagem codificada>`.
 - O número vem de `VITE_WHATSAPP_NUMERO` (fallback já é o número da Maciel).
 

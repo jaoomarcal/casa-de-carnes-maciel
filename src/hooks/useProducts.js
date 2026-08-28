@@ -14,6 +14,8 @@ function normalizar(row) {
     precoAtualKg: emOferta ? Number(row.preco_oferta_kg) : Number(row.preco_kg),
     emOferta,
     esgotado: row.esgotado,
+    cortes: Array.isArray(row.cortes) ? row.cortes : [],
+    permiteTempero: !!row.permite_tempero,
     imagem: urlImagemProduto(row.imagem_url),
     ordem: row.ordem ?? 0,
   };

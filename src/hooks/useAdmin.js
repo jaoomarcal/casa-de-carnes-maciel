@@ -98,6 +98,8 @@ export function useAdmin() {
         : null,
       em_oferta: !!produto.em_oferta,
       esgotado: !!produto.esgotado,
+      cortes: Array.isArray(produto.cortes) ? produto.cortes : [],
+      permite_tempero: !!produto.permite_tempero,
       imagem_url: produto.imagem_url || null,
       ordem: Number(produto.ordem) || 0,
     };
