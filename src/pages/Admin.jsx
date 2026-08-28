@@ -277,48 +277,55 @@ export default function Admin() {
       ) : (
         <ul className="divide-y divide-border rounded-xl border border-border">
           {produtos.map((p) => (
-            <li key={p.id} className="flex items-center gap-3 p-3">
-              <img
-                src={urlImagemProduto(p.imagem_url) || "/assets/carnes-og.png"}
-                alt=""
-                className="h-12 w-12 rounded-lg object-cover"
-              />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold">{p.nome}</p>
-                <p className="text-xs text-muted-foreground">
-                  {p.categoria} · {formatBRL(p.preco_kg)}/kg
-                </p>
+            <li
+              key={p.id}
+              className="flex flex-col gap-2 p-3 sm:flex-row sm:items-center sm:gap-3"
+            >
+              <div className="flex min-w-0 items-center gap-3">
+                <img
+                  src={urlImagemProduto(p.imagem_url) || "/assets/carnes-og.png"}
+                  alt=""
+                  className="h-12 w-12 shrink-0 rounded-lg object-cover"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold">{p.nome}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {p.categoria} · {formatBRL(p.preco_kg)}/kg
+                  </p>
+                </div>
               </div>
 
-              {/* Toggle rápido: oferta */}
-              <TogglePill
-                ativo={p.em_oferta}
-                onClick={() => toggle(p.id, "em_oferta", p.em_oferta)}
-                label="Oferta"
-              />
-              {/* Toggle rápido: estoque */}
-              <TogglePill
-                ativo={!p.esgotado}
-                onClick={() => toggle(p.id, "esgotado", p.esgotado)}
-                label={p.esgotado ? "Esgotado" : "Em estoque"}
-              />
+              <div className="flex items-center gap-2 sm:ml-auto">
+                {/* Toggle rápido: oferta */}
+                <TogglePill
+                  ativo={p.em_oferta}
+                  onClick={() => toggle(p.id, "em_oferta", p.em_oferta)}
+                  label="Oferta"
+                />
+                {/* Toggle rápido: estoque */}
+                <TogglePill
+                  ativo={!p.esgotado}
+                  onClick={() => toggle(p.id, "esgotado", p.esgotado)}
+                  label={p.esgotado ? "Esgotado" : "Em estoque"}
+                />
 
-              <button
-                onClick={() => setEditando(p)}
-                className="rounded-md p-1.5 hover:bg-muted"
-                aria-label="Editar"
-              >
-                <Pencil className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => {
-                  if (confirm(`Excluir "${p.nome}"?`)) remover(p.id);
-                }}
-                className="rounded-md p-1.5 text-carne hover:bg-carne/10"
-                aria-label="Excluir"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
+                <button
+                  onClick={() => setEditando(p)}
+                  className="ml-auto rounded-md p-1.5 hover:bg-muted sm:ml-0"
+                  aria-label="Editar"
+                >
+                  <Pencil className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm(`Excluir "${p.nome}"?`)) remover(p.id);
+                  }}
+                  className="rounded-md p-1.5 text-carne hover:bg-carne/10"
+                  aria-label="Excluir"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
@@ -331,7 +338,7 @@ function TogglePill({ ativo, onClick, label }) {
   return (
     <button
       onClick={onClick}
-      className={`hidden rounded-full px-2.5 py-1 text-xs font-semibold transition-colors sm:block ${
+      className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold transition-colors ${
         ativo ? "bg-carne text-white" : "bg-muted text-muted-foreground"
       }`}
     >

@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   Store,
   Bike,
+  X,
 } from "lucide-react";
 
 import { cn, formatBRL, formatPeso } from "@/lib/utils";
@@ -67,7 +68,15 @@ export function CartDrawer({ onClose }) {
 
   return (
     <>
-      <SheetHeader>
+      <button
+        onClick={onClose}
+        className="absolute right-3 top-3 z-10 rounded-full p-2 text-muted-foreground transition hover:bg-muted"
+        aria-label="Fechar carrinho"
+      >
+        <X className="h-5 w-5" />
+      </button>
+
+      <SheetHeader className="pr-14">
         <SheetTitle className="flex items-center gap-2">
           {naEtapaDados ? (
             <>

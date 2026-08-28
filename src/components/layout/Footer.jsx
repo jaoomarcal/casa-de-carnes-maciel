@@ -12,13 +12,13 @@ export function Footer() {
         Casa de Carnes Maciel
       </p>
       <p className="mt-1">Seg a Sáb · 8h às 19h</p>
-      <p className="mt-4 text-xs">
-        © {new Date().getFullYear()} Casa de Carnes Maciel
-        {" · "}
+      <p className="mt-4 flex items-center justify-center gap-1 text-xs">
+        <span>© {new Date().getFullYear()} Casa de Carnes Maciel</span>
+        <span aria-hidden>·</span>
         <Link
           to="/painel"
-          className="text-muted-foreground/40 transition-colors hover:text-carne"
-          aria-label="Área restrita"
+          className="-m-2 inline-flex items-center p-2 text-base leading-none text-muted-foreground/40 transition-colors hover:text-carne"
+          aria-label="Área restrita (painel do dono)"
         >
           •
         </Link>
