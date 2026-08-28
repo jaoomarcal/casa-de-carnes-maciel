@@ -9,14 +9,7 @@ export const CATEGORIAS = [
   { slug: "temperados", nome: "Temperados", emoji: "🧂" },
 ];
 
-// Opções de peso que o cliente escolhe (em gramas)
-export const PESOS = [
-  { gramas: 100, label: "100g" },
-  { gramas: 500, label: "500g" },
-  { gramas: 1000, label: "1kg" },
-];
-
-// Peso mínimo que o cliente pode digitar no campo de peso exato (em gramas)
+// Peso mínimo que o cliente pode digitar no campo de peso (em gramas)
 export const PESO_MINIMO = 100;
 
 // Tipos de corte que o açougueiro pode fazer. O "valor" é o que fica salvo

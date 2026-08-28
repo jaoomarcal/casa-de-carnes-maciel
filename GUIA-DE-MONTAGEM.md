@@ -66,7 +66,7 @@ maciel/
     │   └── whatsapp.js        → transforma o carrinho em mensagem e abre o WhatsApp
     │
     ├── data/
-    │   └── categories.js      → lista de categorias e os pesos (100g/500g/1kg)
+    │   └── categories.js      → lista de categorias, cortes e o peso mínimo
     │
     ├── context/
     │   └── CartContext.jsx    → 🟩 o carrinho: guarda os itens e salva no navegador
@@ -91,7 +91,7 @@ maciel/
     │   │   ├── ProductModal.jsx   → detalhe do produto: peso, corte e tempero + "Adicionar"
     │   │   ├── ProductSkeleton.jsx
     │   │   ├── CategorySection.jsx → título + grade de cards de uma categoria
-    │   │   └── WeightSelector.jsx  → atalhos 100g / 500g / 1kg + campo de peso exato
+    │   │   └── WeightSelector.jsx  → campo para digitar o peso em gramas
     │   └── cart/
     │       ├── FloatingCart.jsx   → 🟩 PEÇA 4: botão 3D + abre a gaveta
     │       └── CartDrawer.jsx     → conteúdo da gaveta (lista, botões)
@@ -201,7 +201,7 @@ select id from auth.users where email = 'dono@casadecarnesmaciel.com';
 - **Oferta:** mostra o preço cheio riscado + o preço de oferta em vermelho.
 - O preço sempre aparece como `R$ 48,50 / kg` (via `formatBRL`).
 - Clicar no card (ou no botão "Escolher") abre o **`ProductModal`**, onde o
-  cliente define o **peso** (atalho ou peso exato em gramas), o **tipo de corte**
+  cliente define o **peso** (em gramas), o **tipo de corte**
   (só aparece se o produto tiver cortes habilitados no painel) e se **vai
   temperada** (só se o produto permitir tempero no painel). O "Adicionar ao
   carrinho" fica dentro do modal.

@@ -112,8 +112,7 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                     </div>
 
                     {/* Peso */}
-                    <div className="space-y-2">
-                      <p className="text-sm font-medium">Quanto você quer?</p>
+                    <div className="space-y-1.5">
                       <WeightSelector value={gramas} onChange={setGramas} />
                       {!pesoValido && (
                         <p className="text-xs text-carne">
