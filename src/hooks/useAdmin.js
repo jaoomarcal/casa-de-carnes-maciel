@@ -92,6 +92,7 @@ export function useAdmin() {
       nome: produto.nome,
       descricao: produto.descricao || null,
       categoria: produto.categoria,
+      unidade: produto.unidade === "un" ? "un" : "kg",
       preco_kg: Number(produto.preco_kg),
       preco_oferta_kg: produto.preco_oferta_kg
         ? Number(produto.preco_oferta_kg)

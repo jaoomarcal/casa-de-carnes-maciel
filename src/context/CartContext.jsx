@@ -24,12 +24,20 @@ function chaveItem(i) {
 function reducer(state, action) {
   switch (action.type) {
     case "ADD": {
-      const { produto, gramas, corte = null, temperada = false } = action;
+      const {
+        produto,
+        gramas = null,
+        corte = null,
+        temperada = false,
+        quantidade = 1,
+      } = action;
       const k = chave(produto.id, gramas, corte, temperada);
       const existente = state.find((i) => chaveItem(i) === k);
       if (existente) {
         return state.map((i) =>
-          chaveItem(i) === k ? { ...i, quantidade: i.quantidade + 1 } : i
+          chaveItem(i) === k
+            ? { ...i, quantidade: i.quantidade + quantidade }
+            : i
         );
       }
       return [
@@ -38,8 +46,9 @@ function reducer(state, action) {
           id: produto.id,
           nome: produto.nome,
           precoKg: produto.precoAtualKg, // já considera oferta
+          unidade: produto.unidade === "un" ? "un" : "kg",
           gramas,
-          quantidade: 1,
+          quantidade,
           imagem: produto.imagem,
           corte,
           temperada,
@@ -98,16 +107,24 @@ export function CartProvider({ children }) {
       subtotalItem,
       chave,
       chaveItem,
-      adicionar: (produto, { gramas, corte = null, temperada = false } = {}) => {
-        dispatch({ type: "ADD", produto, gramas, corte, temperada });
-        const peso = gramas >= 1000 ? gramas / 1000 + "kg" : gramas + "g";
+      adicionar: (
+        produto,
+        { gramas = null, corte = null, temperada = false, quantidade = 1 } = {}
+      ) => {
+        dispatch({ type: "ADD", produto, gramas, corte, temperada, quantidade });
+        const medida =
+          produto.unidade === "un"
+            ? `${quantidade} un`
+            : gramas >= 1000
+              ? gramas / 1000 + "kg"
+              : gramas + "g";
         const extras = [
           corte ? rotuloCorte(corte) : null,
           temperada ? "temperada" : null,
         ].filter(Boolean);
         toast.success("Item adicionado ao carrinho", {
           description:
-            `${produto.nome} · ${peso}` +
+            `${produto.nome} · ${medida}` +
             (extras.length ? ` · ${extras.join(" · ")}` : ""),
         });
       },

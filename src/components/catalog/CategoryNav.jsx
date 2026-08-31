@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 /**
  * Barra fixa de atalhos para as categorias. Fica "grudada" no topo ao rolar,
  * destaca a seção visível (scrollspy) e centraliza o chip ativo no mobile.
- * `categorias` = lista de { slug, nome, emoji } que TÊM produtos.
+ * `categorias` = lista de { slug, nome } que TÊM produtos.
  */
 export function CategoryNav({ categorias }) {
   const [ativo, setAtivo] = useState(categorias[0]?.slug ?? null);
@@ -58,7 +58,6 @@ export function CategoryNav({ categorias }) {
                 : "border-border bg-background text-foreground/70 hover:border-carne/50 hover:text-carne"
             )}
           >
-            <span aria-hidden>{c.emoji}</span>
             {c.nome}
           </a>
         ))}

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
 
 import { cn, formatBRL, formatPeso } from "@/lib/utils";
-import { CORTES, PESO_MINIMO } from "@/data/categories";
+import { CORTES, PESO_MINIMO, rotuloUnidade } from "@/data/categories";
 import { Button } from "@/components/ui/button";
 import { WeightSelector } from "@/components/catalog/WeightSelector";
 import { useCart } from "@/context/CartContext";
@@ -17,18 +17,24 @@ import { useCart } from "@/context/CartContext";
 export function ProductModal({ produto, aberto, onOpenChange }) {
   const { adicionar } = useCart();
 
+  // Vendido por unidade (bebidas, mercearia, bandejas...) não tem peso: o
+  // cliente escolhe a quantidade de unidades.
+  const porUnidade = produto.unidade === "un";
+
   const cortesDisponiveis = CORTES.filter((c) =>
     (produto.cortes || []).includes(c.valor)
   );
 
-  const [gramas, setGramas] = useState(500);
+  const [gramas, setGramas] = useState("");
+  const [unidades, setUnidades] = useState(1);
   const [corte, setCorte] = useState(cortesDisponiveis[0]?.valor || null);
   const [temperada, setTemperada] = useState(false);
 
   // Zera as escolhas toda vez que o modal reabre
   useEffect(() => {
     if (aberto) {
-      setGramas(500);
+      setGramas("");
+      setUnidades(1);
       setCorte(cortesDisponiveis[0]?.valor || null);
       setTemperada(false);
     }
@@ -36,13 +42,23 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
   }, [aberto, produto.id]);
 
   const pesoValido = Number.isFinite(gramas) && gramas >= PESO_MINIMO;
-  const precoEstimado = pesoValido
-    ? produto.precoAtualKg * (gramas / 1000)
-    : 0;
+  // "quantidade definida": no modo unidade já nasce válido (1); no modo peso
+  // só depois que o cliente digita um peso aceitável.
+  const quantidadeDefinida = porUnidade ? unidades >= 1 : pesoValido;
+  const precoEstimado = !quantidadeDefinida
+    ? 0
+    : porUnidade
+      ? produto.precoAtualKg * unidades
+      : produto.precoAtualKg * (gramas / 1000);
 
   function confirmar() {
-    if (!pesoValido) return;
-    adicionar(produto, { gramas, corte, temperada });
+    if (!quantidadeDefinida) return;
+    adicionar(
+      produto,
+      porUnidade
+        ? { quantidade: unidades, corte, temperada }
+        : { gramas, corte, temperada }
+    );
     onOpenChange(false);
   }
 
@@ -102,7 +118,9 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                         <span className="text-lg font-bold text-carne">
                           {formatBRL(produto.precoAtualKg)}
                         </span>
-                        <span className="text-xs text-muted-foreground">/ kg</span>
+                        <span className="text-xs text-muted-foreground">
+                          / {rotuloUnidade(produto.unidade)}
+                        </span>
                       </div>
                       {produto.descricao && (
                         <Dialog.Description className="mt-2 text-sm text-muted-foreground">
@@ -111,51 +129,86 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                       )}
                     </div>
 
-                    {/* Peso */}
-                    <div className="space-y-1.5">
-                      <WeightSelector value={gramas} onChange={setGramas} />
-                      {!pesoValido && (
-                        <p className="text-xs text-carne">
-                          Informe um peso de pelo menos {PESO_MINIMO}g.
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Corte */}
-                    {cortesDisponiveis.length > 0 && (
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium">Tipo de corte</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {cortesDisponiveis.map((c) => (
-                            <button
-                              key={c.valor}
-                              type="button"
-                              onClick={() => setCorte(c.valor)}
-                              className={cn(
-                                "rounded-md border px-3 py-2 text-xs font-semibold transition-colors",
-                                corte === c.valor
-                                  ? "border-carne bg-carne text-white"
-                                  : "border-border bg-background text-muted-foreground hover:border-carne/50"
-                              )}
-                            >
-                              {c.label}
-                            </button>
-                          ))}
-                        </div>
+                    {/* Peso (modo kg) ou quantidade de unidades (modo un) */}
+                    {porUnidade ? (
+                      <QuantidadeSelector
+                        value={unidades}
+                        onChange={setUnidades}
+                      />
+                    ) : (
+                      <div className="space-y-1.5">
+                        <WeightSelector value={gramas} onChange={setGramas} />
+                        {gramas !== "" && !pesoValido && (
+                          <p className="text-xs text-carne">
+                            Informe um peso de pelo menos {PESO_MINIMO}g.
+                          </p>
+                        )}
                       </div>
                     )}
 
-                    {/* Tempero */}
-                    {produto.permiteTempero && (
-                      <label className="flex items-center gap-2 rounded-lg border border-border bg-muted/40 p-3 text-sm font-medium">
-                        <input
-                          type="checkbox"
-                          checked={temperada}
-                          onChange={(e) => setTemperada(e.target.checked)}
-                        />
-                        Vai temperada?
-                      </label>
-                    )}
+                    {/* Corte e tempero — num card à parte, que só aparece depois
+                        que o cliente definiu a quantidade */}
+                    <AnimatePresence initial={false}>
+                      {quantidadeDefinida &&
+                        (cortesDisponiveis.length > 0 ||
+                          produto.permiteTempero) && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="space-y-4 rounded-xl border border-border bg-muted/30 p-4">
+                              <p className="text-sm font-semibold">
+                                {porUnidade
+                                  ? "Preferências"
+                                  : "Como você quer a carne?"}
+                              </p>
+
+                              {/* Corte */}
+                              {cortesDisponiveis.length > 0 && (
+                                <div className="space-y-2">
+                                  <p className="text-sm font-medium">
+                                    Tipo de corte
+                                  </p>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {cortesDisponiveis.map((c) => (
+                                      <button
+                                        key={c.valor}
+                                        type="button"
+                                        onClick={() => setCorte(c.valor)}
+                                        className={cn(
+                                          "rounded-md border px-3 py-2 text-xs font-semibold transition-colors",
+                                          corte === c.valor
+                                            ? "border-carne bg-carne text-white"
+                                            : "border-border bg-background text-muted-foreground hover:border-carne/50"
+                                        )}
+                                      >
+                                        {c.label}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Tempero */}
+                              {produto.permiteTempero && (
+                                <label className="flex items-center gap-2 rounded-lg border border-border bg-background p-3 text-sm font-medium">
+                                  <input
+                                    type="checkbox"
+                                    checked={temperada}
+                                    onChange={(e) =>
+                                      setTemperada(e.target.checked)
+                                    }
+                                  />
+                                  Vai temperada?
+                                </label>
+                              )}
+                            </div>
+                          </motion.div>
+                        )}
+                    </AnimatePresence>
                   </div>
                 </div>
 
@@ -163,7 +216,9 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                 <div className="border-t border-border bg-background p-4">
                   <div className="mb-2 flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">
-                      {pesoValido ? formatPeso(gramas) : "—"} estimado
+                      {porUnidade
+                        ? `${unidades} un`
+                        : `${pesoValido ? formatPeso(gramas) : "—"} estimado`}
                     </span>
                     <span className="font-display text-lg">
                       {formatBRL(precoEstimado)}
@@ -172,7 +227,7 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                   <Button
                     className="w-full"
                     size="lg"
-                    disabled={!pesoValido}
+                    disabled={!quantidadeDefinida}
                     onClick={confirmar}
                   >
                     <Plus className="h-4 w-4" />
@@ -186,5 +241,35 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
         )}
       </AnimatePresence>
     </Dialog.Root>
+  );
+}
+
+/** Seletor de quantidade (em unidades) para produtos vendidos por unidade. */
+function QuantidadeSelector({ value, onChange }) {
+  const dec = () => onChange(Math.max(1, value - 1));
+  const inc = () => onChange(Math.min(99, value + 1));
+  return (
+    <div className="text-sm font-medium">
+      Quantidade
+      <div className="mt-1 flex w-fit items-center rounded-lg border border-input">
+        <button
+          type="button"
+          onClick={dec}
+          className="px-3.5 py-2 text-base hover:bg-muted"
+          aria-label="Diminuir"
+        >
+          −
+        </button>
+        <span className="w-12 text-center text-base font-semibold">{value}</span>
+        <button
+          type="button"
+          onClick={inc}
+          className="px-3.5 py-2 text-base hover:bg-muted"
+          aria-label="Aumentar"
+        >
+          +
+        </button>
+      </div>
+    </div>
   );
 }

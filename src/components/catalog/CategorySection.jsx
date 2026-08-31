@@ -11,7 +11,6 @@ export function CategorySection({ categoria, produtos, loading }) {
   return (
     <section id={categoria.slug} className="scroll-mt-24">
       <div className="mb-3 flex items-center gap-2">
-        <span className="text-xl">{categoria.emoji}</span>
         <h2 className="font-display text-xl tracking-tight">{categoria.nome}</h2>
         {!loading && (
           <span className="text-sm text-muted-foreground">

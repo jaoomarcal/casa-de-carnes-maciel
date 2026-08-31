@@ -44,7 +44,7 @@ export function PromoBanner({ ofertas = [] }) {
                 style: "currency",
                 currency: "BRL",
               }).format(atual.precoAtualKg)}{" "}
-              / kg
+              / {atual.unidade === "un" ? "un" : "kg"}
             </motion.p>
           </AnimatePresence>
         </div>

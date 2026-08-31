@@ -14,8 +14,9 @@ create table if not exists public.produtos (
   nome              text not null,
   descricao         text,
   categoria         text not null
-                    check (categoria in ('bovinos','suinos','aves','linguica','temperados')),
-  preco_kg          numeric(10,2) not null check (preco_kg >= 0),
+                    check (categoria in ('bovinos','suinos','aves','peixes','linguica','temperados','mercearia','diversos','bebidas')),
+  unidade           text not null default 'kg' check (unidade in ('kg','un')), -- 'kg' = por peso | 'un' = por unidade
+  preco_kg          numeric(10,2) not null check (preco_kg >= 0),  -- quando unidade='un', vale "preço por unidade"
   preco_oferta_kg   numeric(10,2) check (preco_oferta_kg >= 0),
   em_oferta         boolean not null default false,
   esgotado          boolean not null default false,

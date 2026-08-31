@@ -3,8 +3,13 @@ import { rotuloCorte } from "@/data/categories";
 
 const NUMERO = import.meta.env.VITE_WHATSAPP_NUMERO || "5517991316331";
 
-/** Preço de uma linha do carrinho: preço/kg * (gramas / 1000) * quantidade */
+/**
+ * Preço de uma linha do carrinho.
+ *  - "un": preço por unidade * quantidade
+ *  - "kg": preço/kg * (gramas / 1000) * quantidade
+ */
 export function subtotalItem(item) {
+  if (item.unidade === "un") return item.precoKg * item.quantidade;
   return item.precoKg * (item.gramas / 1000) * item.quantidade;
 }
 
@@ -30,7 +35,9 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
       item.temperada ? "Temperada" : null,
     ].filter(Boolean);
     const sufixo = extras.length ? ` · ${extras.join(" · ")}` : "";
-    return `• *${item.quantidade}x* ${item.nome} — ${formatPeso(item.gramas)}${sufixo}\n   ${preco}`;
+    const medida =
+      item.unidade === "un" ? "" : ` — ${formatPeso(item.gramas)}`;
+    return `• *${item.quantidade}x* ${item.nome}${medida}${sufixo}\n   ${preco}`;
   });
 
   const entrega =
@@ -38,12 +45,19 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
       ? `*Entrega no endereço:*\n${(dados.endereco || "").trim()}`
       : "*Retirada na loja*";
 
+  const troco =
+    dados.pagamento === "dinheiro" && (dados.trocoPara || "").trim()
+      ? `*Troco para:* ${dados.trocoPara.trim()}`
+      : null;
+
   const infoCliente = [
     dados.nome ? `*Cliente:* ${dados.nome.trim()}` : null,
     entrega,
     dados.pagamento
       ? `*Pagamento:* ${ROTULO_PAGAMENTO[dados.pagamento] || dados.pagamento}`
       : null,
+    troco,
+    "*Tempo estimado de entrega:* trinta minutos",
   ].filter(Boolean);
 
   const mensagem = [

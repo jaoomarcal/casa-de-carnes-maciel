@@ -55,6 +55,7 @@ export function CartDrawer({ onClose }) {
   const [entrega, setEntrega] = useState(salvo.entrega || "retirada");
   const [endereco, setEndereco] = useState(salvo.endereco || "");
   const [pagamento, setPagamento] = useState(salvo.pagamento || "pix");
+  const [trocoPara, setTrocoPara] = useState(salvo.trocoPara || "");
 
   const vazio = itens.length === 0;
   const precisaEndereco = entrega === "entrega";
@@ -62,7 +63,13 @@ export function CartDrawer({ onClose }) {
     nome.trim().length > 1 && (!precisaEndereco || endereco.trim().length > 4);
 
   function finalizar() {
-    const dados = { nome, entrega, endereco, pagamento };
+    const dados = {
+      nome,
+      entrega,
+      endereco,
+      pagamento,
+      trocoPara: pagamento === "dinheiro" ? trocoPara : "",
+    };
     try {
       localStorage.setItem(CLIENTE_KEY, JSON.stringify(dados));
     } catch {
@@ -135,6 +142,8 @@ export function CartDrawer({ onClose }) {
             setEndereco={setEndereco}
             pagamento={pagamento}
             setPagamento={setPagamento}
+            trocoPara={trocoPara}
+            setTrocoPara={setTrocoPara}
           />
         ) : (
           <ul className="space-y-3">
@@ -161,7 +170,9 @@ export function CartDrawer({ onClose }) {
                         {item.nome}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {formatPeso(item.gramas)} · {formatBRL(item.precoKg)}/kg
+                        {item.unidade === "un"
+                          ? `${formatBRL(item.precoKg)} / un`
+                          : `${formatPeso(item.gramas)} · ${formatBRL(item.precoKg)}/kg`}
                       </p>
                       {(item.corte || item.temperada) && (
                         <p className="mt-0.5 flex flex-wrap gap-x-2 text-xs text-carne-dark">
@@ -277,6 +288,8 @@ function DadosCliente({
   setEndereco,
   pagamento,
   setPagamento,
+  trocoPara,
+  setTrocoPara,
 }) {
   return (
     <div className="space-y-4">
@@ -351,6 +364,36 @@ function DadosCliente({
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Troco — card à parte, só quando o pagamento é em dinheiro */}
+      <AnimatePresence initial={false}>
+        {pagamento === "dinheiro" && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="rounded-lg border border-border bg-muted/40 p-3">
+              <label className="block text-sm font-medium">
+                Precisa de troco?
+                <input
+                  value={trocoPara}
+                  onChange={(e) => setTrocoPara(e.target.value)}
+                  placeholder="Troco para quanto? (ex.: R$ 100)"
+                  className={campoBase}
+                />
+              </label>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Tempo estimado de entrega — informado ao fechar o pedido */}
+      <div className="rounded-lg border border-border bg-muted/40 p-3 text-sm">
+        <span className="font-medium">Tempo estimado de entrega:</span>{" "}
+        <span className="text-muted-foreground">trinta minutos</span>
       </div>
 
       <p className="text-xs text-muted-foreground">

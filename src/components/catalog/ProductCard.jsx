@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { SlidersHorizontal } from "lucide-react";
 
 import { cn, formatBRL } from "@/lib/utils";
+import { rotuloUnidade } from "@/data/categories";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProductModal } from "@/components/catalog/ProductModal";
@@ -83,7 +84,9 @@ export function ProductCard({ produto }) {
             <span className="text-lg font-bold text-carne">
               {formatBRL(produto.precoAtualKg)}
             </span>
-            <span className="text-xs text-muted-foreground">/ kg</span>
+            <span className="text-xs text-muted-foreground">
+              / {rotuloUnidade(produto.unidade)}
+            </span>
           </div>
 
           {/* Ação (empurrada para baixo com mt-auto) */}

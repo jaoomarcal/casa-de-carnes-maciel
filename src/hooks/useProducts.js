@@ -9,6 +9,7 @@ function normalizar(row) {
     nome: row.nome,
     descricao: row.descricao,
     categoria: row.categoria,
+    unidade: row.unidade === "un" ? "un" : "kg",
     precoKg: Number(row.preco_kg),
     precoOfertaKg: row.preco_oferta_kg != null ? Number(row.preco_oferta_kg) : null,
     precoAtualKg: emOferta ? Number(row.preco_oferta_kg) : Number(row.preco_kg),

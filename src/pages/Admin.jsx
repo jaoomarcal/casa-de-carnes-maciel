@@ -72,6 +72,7 @@ const VAZIO = {
   nome: "",
   descricao: "",
   categoria: "bovinos",
+  unidade: "kg",
   preco_kg: "",
   preco_oferta_kg: "",
   em_oferta: false,
@@ -153,7 +154,18 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
           </select>
         </label>
         <label className="text-sm">
-          Preço por kg (R$)
+          Vendido por
+          <select
+            value={form.unidade || "kg"}
+            onChange={set("unidade")}
+            className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
+          >
+            <option value="kg">Quilo (cliente escolhe o peso)</option>
+            <option value="un">Unidade (cliente escolhe a quantidade)</option>
+          </select>
+        </label>
+        <label className="text-sm">
+          {form.unidade === "un" ? "Preço por unidade (R$)" : "Preço por kg (R$)"}
           <input
             required
             type="number"
@@ -164,7 +176,9 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
           />
         </label>
         <label className="text-sm">
-          Preço de oferta por kg (opcional)
+          {form.unidade === "un"
+            ? "Preço de oferta por unidade (opcional)"
+            : "Preço de oferta por kg (opcional)"}
           <input
             type="number"
             step="0.01"
@@ -336,7 +350,8 @@ export default function Admin() {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold">{p.nome}</p>
                   <p className="text-xs text-muted-foreground">
-                    {p.categoria} · {formatBRL(p.preco_kg)}/kg
+                    {p.categoria} · {formatBRL(p.preco_kg)}/
+                    {p.unidade === "un" ? "un" : "kg"}
                   </p>
                 </div>
               </div>
