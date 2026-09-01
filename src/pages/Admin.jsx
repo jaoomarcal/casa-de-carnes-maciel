@@ -269,6 +269,16 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
         )}
         <input type="file" accept="image/*" onChange={onFile} className="text-sm" />
       </div>
+      <label className="block text-sm">
+        Ou cole o link de uma imagem (ex: copiado do Google Imagens)
+        <input
+          type="url"
+          placeholder="https://..."
+          value={form.imagem_url && form.imagem_url.startsWith("http") ? form.imagem_url : ""}
+          onChange={set("imagem_url")}
+          className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
+        />
+      </label>
 
       <div className="flex gap-2 pt-1">
         <Button type="submit" disabled={enviando}>
