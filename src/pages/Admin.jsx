@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
-import { ArrowLeft, LogOut, Plus, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, LogOut, Plus, Pencil, Trash2, Search, X } from "lucide-react";
 
 import { formatBRL } from "@/lib/utils";
 import { urlImagemProduto } from "@/lib/supabase";
@@ -287,6 +287,16 @@ export default function Admin() {
   const { user, loading: authLoading, entrar, sair } = useAuth();
   const { produtos, loading, uploadFoto, salvar, remover, toggle } = useAdmin();
   const [editando, setEditando] = useState(null); // objeto | "novo" | null
+  const [busca, setBusca] = useState("");
+
+  const termo = busca.trim().toLowerCase();
+  const produtosFiltrados = termo
+    ? produtos.filter((p) =>
+        [p.nome, p.categoria, p.descricao]
+          .filter(Boolean)
+          .some((campo) => campo.toLowerCase().includes(termo))
+      )
+    : produtos;
 
   if (authLoading) {
     return (
@@ -328,15 +338,42 @@ export default function Admin() {
         )}
       </div>
 
+      {!editando && !loading && (
+        <div className="relative mb-3">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="search"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            placeholder="Buscar produto por nome ou categoria..."
+            className="w-full rounded-lg border border-input py-2.5 pl-9 pr-9 text-sm outline-none focus:ring-2 focus:ring-ring"
+          />
+          {busca && (
+            <button
+              type="button"
+              onClick={() => setBusca("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground hover:bg-muted"
+              aria-label="Limpar busca"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+      )}
+
       {loading ? (
         <div className="space-y-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <Skeleton key={i} className="h-16 w-full" />
           ))}
         </div>
+      ) : produtosFiltrados.length === 0 ? (
+        <p className="py-8 text-center text-sm text-muted-foreground">
+          Nenhum produto encontrado para "{busca}".
+        </p>
       ) : (
         <ul className="divide-y divide-border rounded-xl border border-border">
-          {produtos.map((p) => (
+          {produtosFiltrados.map((p) => (
             <li
               key={p.id}
               className="flex flex-col gap-2 p-3 sm:flex-row sm:items-center sm:gap-3"
