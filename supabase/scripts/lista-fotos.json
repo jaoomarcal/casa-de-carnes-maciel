@@ -1,0 +1,687 @@
+[
+  {
+    "id": "5936ccc3-f2a1-4616-af67-16f55af65665",
+    "nome": "Frango Inteiro Congelado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Frango Inteiro.jpg"
+  },
+  {
+    "id": "db888227-8b95-4fbc-b8bb-ea9a1af0d39b",
+    "nome": "Meio da Asa (Bandeja)",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Meio da Asa (Bandeja) (1).jpg"
+  },
+  {
+    "id": "a142fa76-ed96-4431-897c-b2a47f9c2ec8",
+    "nome": "Moela (Bandeja)",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Moela (Bandeja) (1).jpg"
+  },
+  {
+    "id": "41efb348-3bf5-409e-9b2a-e5f8b55c4e38",
+    "nome": "Pé de Frango Congelado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pé de Frango Congelado (1).png"
+  },
+  {
+    "id": "ae68816a-9542-47ab-a609-5a05b23d0477",
+    "nome": "Acém com Osso",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Acém com Osso (1).jpg"
+  },
+  {
+    "id": "13c97253-ee25-45d5-8358-77e85552e6ed",
+    "nome": "Alcatra",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Alcatra.jpg"
+  },
+  {
+    "id": "1b233f8b-a065-4d58-98ff-a46d995d0b74",
+    "nome": "Bucho Congelado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Bucho Congelado (1).jpg"
+  },
+  {
+    "id": "156c80fc-fc5f-45e0-81f3-97c265483191",
+    "nome": "Carnaza",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Carnaza.jpg"
+  },
+  {
+    "id": "dfc32cdd-0a9e-47ab-b538-aababa3ad7b4",
+    "nome": "Carne Moída",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Carne Moída.jpg"
+  },
+  {
+    "id": "0ef46b7b-c6c3-46a4-9ae4-55ffe11611e8",
+    "nome": "Fígado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Fígado.jpg"
+  },
+  {
+    "id": "f148ddd3-a935-4f90-858d-7c9efad9994e",
+    "nome": "Kafta",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Kafta (1).jpg"
+  },
+  {
+    "id": "2925c432-1144-4048-887a-3cb78f142490",
+    "nome": "Lagarto",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Lagarto (1).jpg"
+  },
+  {
+    "id": "bd783ad6-981c-4b4c-a050-fbed7ad8a83a",
+    "nome": "Língua Congelada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Língua Congelada (2).jpg"
+  },
+  {
+    "id": "7d927832-410e-4b2b-b07d-03ac33864765",
+    "nome": "Minga do Chef",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Minga do Chef (1).jpg"
+  },
+  {
+    "id": "3cb334e4-d521-44dc-8b97-93be753a39b9",
+    "nome": "Miolo do Acém",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Miolo do Acém (2).jpg"
+  },
+  {
+    "id": "5ffab9fc-32ca-4b7e-83f7-ef67a0157296",
+    "nome": "Mocotó Congelado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Mocotó Congelado (2).jpg"
+  },
+  {
+    "id": "dfb75788-aaad-4bca-b19c-68aea045dcbc",
+    "nome": "Músculo",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Músculo (1).jpg"
+  },
+  {
+    "id": "3c6c6211-e875-4f0f-8044-b53834694aa1",
+    "nome": "Paleta",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Paleta (1).jpg"
+  },
+  {
+    "id": "f3f2a97c-5a44-4067-8b0c-c2541292a8a3",
+    "nome": "Patinho",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Patinho (1).png"
+  },
+  {
+    "id": "ddaf752f-a4d8-4f8a-a0cc-06d978437dd4",
+    "nome": "Peixinho",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Peixinho (1).jpg"
+  },
+  {
+    "id": "934c25d0-01ee-4579-b319-ce64ab3bbc90",
+    "nome": "Ponta de Peito Seringada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Ponta de Peito Seringada (1).jpg"
+  },
+  {
+    "id": "5a1bee1f-d10c-45d2-845e-86d883b3d0f0",
+    "nome": "Batata Palito",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Batata Palito (1).jpg"
+  },
+  {
+    "id": "da700a0c-e178-4429-8464-7f192fbc34fa",
+    "nome": "Carvão",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Carvão.jpg"
+  },
+  {
+    "id": "264580e2-de26-49fe-81bc-00627a4a4e16",
+    "nome": "Kibe",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Kibe (2).jpg"
+  },
+  {
+    "id": "859cff2d-728b-421b-a013-64b0f3c546b5",
+    "nome": "Mandioca",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Mandioca.jpg"
+  },
+  {
+    "id": "b8f5e146-616c-44d3-aef8-f02f449d3003",
+    "nome": "Pão de Alho 4 Queijos",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pão de Alho 4 Queijos (2).png"
+  },
+  {
+    "id": "d093b662-223f-4f29-b9c0-d7913e1531e0",
+    "nome": "Pão de Alho Cheddar e Bacon",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pão de Alho Cheddar e Bacon (1).webp"
+  },
+  {
+    "id": "f83357c2-da10-4eee-9aea-418224e2aa7c",
+    "nome": "Pão de Alho Frango Desfiado e Requeijão",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pão de Alho Frango Desfiado e Requeijão (1).jpg"
+  },
+  {
+    "id": "02544461-678e-44de-8b62-5aa634e64158",
+    "nome": "Pão de Alho Tomate Seco e Manjericão",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pão de Alho Tomate Seco e Manjericão (2).jpg"
+  },
+  {
+    "id": "25f26d38-6bc0-4734-b5cb-33e8da6baedf",
+    "nome": "Pão de Alho Tradicional",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pão de Alho Tradicional (1).webp"
+  },
+  {
+    "id": "79c38996-4c7e-421f-a08b-b473377b34f1",
+    "nome": "Queijo Coalho Lactopar",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Queijo Coalho Lactopar (1).png"
+  },
+  {
+    "id": "cb047530-3eb3-4173-97c7-3fc0b051b859",
+    "nome": "Risoles de Carne",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Risoles de Carne (1).jpg"
+  },
+  {
+    "id": "794df746-18e3-4063-ae2a-5d9a70420dbb",
+    "nome": "Risoles de Frango",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Risoles de Frango (2).jpg"
+  },
+  {
+    "id": "55c77de8-6350-4b01-bdf6-4f2bdffe35b8",
+    "nome": "Risoles de Pizza",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Risoles de Pizza (1).jpg"
+  },
+  {
+    "id": "ac1dacb9-733b-427e-b607-4a01dbf3d5c7",
+    "nome": "Salsicha Perdigão",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Salsicha Perdigão (1).jpg"
+  },
+  {
+    "id": "b850bcbf-95ac-4b8c-b407-33eeb8325ece",
+    "nome": "Linguiça Cabo de Reio",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Cabo de Reio (1).jpg"
+  },
+  {
+    "id": "662df2ab-34fb-45e1-9ff7-022dd7975610",
+    "nome": "Linguiça Caipira",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Caipira (1).jpg"
+  },
+  {
+    "id": "059b1051-a470-47c9-b084-a1f16ada029d",
+    "nome": "Linguiça Calabresa",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Calabresa (2).jpg"
+  },
+  {
+    "id": "d73f60ec-8810-48f7-b4cc-6686c9b1f817",
+    "nome": "Linguiça Calabresa Defumada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Calabresa Defumada (1).jpg"
+  },
+  {
+    "id": "2197174d-13c1-4c67-921c-59c2356b80fb",
+    "nome": "Linguiça Codeguinho Apimentada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Codeguinho Apimentada (2).jpg"
+  },
+  {
+    "id": "f4ae19d3-1717-4bf2-80cc-1d80f23e6f66",
+    "nome": "Linguiça Codeguinho Tradicional",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Codeguinho Tradicional (2).jpg"
+  },
+  {
+    "id": "1b788f3d-5277-4a0b-bfac-18bce602efbe",
+    "nome": "Linguiça Costela com Legumes",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Costela com Legumes (2).jpg"
+  },
+  {
+    "id": "366a6e44-0aed-498e-ab3a-f8101ad547ca",
+    "nome": "Linguiça Costela com Pimenta",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Costela com Pimenta (1).jpg"
+  },
+  {
+    "id": "14d2df2c-8aa9-4a21-8272-175d4ee43edb",
+    "nome": "Linguiça Cuiabana",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Cuiabana (1).jpg"
+  },
+  {
+    "id": "708b110b-2f78-43f3-8732-ac3dfc469bf1",
+    "nome": "Linguiça Mista",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Mista (1).jpg"
+  },
+  {
+    "id": "b1ffee46-027a-473a-be3a-4bb955f40a9e",
+    "nome": "Linguiça Toscana",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Linguiça Toscana (1).png"
+  },
+  {
+    "id": "ef076145-eddd-4af9-a40e-2bd22f52b6f7",
+    "nome": "Azeitona com Caroço",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Azeitona com Caroço (1).jpg"
+  },
+  {
+    "id": "36a175c8-2250-4b91-aac8-f3019e7655cb",
+    "nome": "Azeitona Fatiada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Azeitona Fatiada (1).jpg"
+  },
+  {
+    "id": "25640fa9-b615-4bcd-9aad-5c069df0ae48",
+    "nome": "Azeitona sem Caroço",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Azeitona sem Caroço (1).jpg"
+  },
+  {
+    "id": "67f1b88c-4fff-44a5-bd8f-36ce60f54abc",
+    "nome": "Ketchup Fugini Sachê",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Ketchup Fugini Sachê (1).jpg"
+  },
+  {
+    "id": "e2919597-9f96-4c61-b35a-340481655b97",
+    "nome": "Leite Condensado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Leite Condensado (2).jpg"
+  },
+  {
+    "id": "ada27af5-c14c-4f8d-8c16-ffd847881982",
+    "nome": "Macarrão Espaguete",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Macarrão Espaguete (2).jpg"
+  },
+  {
+    "id": "900b679a-590a-4236-86ba-fcb1146b6286",
+    "nome": "Macarrão Parafuso",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Macarrão Parafuso (1).jpg"
+  },
+  {
+    "id": "8afe8e44-50ad-40c3-9e66-2552d0ebfae4",
+    "nome": "Maionese Fugini Sachê",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Maionese Fugini Sachê (2).jpg"
+  },
+  {
+    "id": "4dc61918-b318-4c11-9897-6df4eb73db54",
+    "nome": "Molho de Tomate Fugini",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Molho de Tomate Fugini (1).jpg"
+  },
+  {
+    "id": "3e331b9c-fdc4-4f9c-9709-3d72edaf363e",
+    "nome": "Molho para Churrasco com Pimenta",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Molho para Churrasco com Pimenta (1).jpg"
+  },
+  {
+    "id": "73026a81-13ac-4b7d-af78-8cc28bb62695",
+    "nome": "Molho para Churrasco Tradicional",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Molho para Churrasco Tradicional (1).jpg"
+  },
+  {
+    "id": "2211ae49-f91e-4aaa-b604-40722330fc8a",
+    "nome": "Mostarda Fugini Sachê",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Mostarda Fugini Sachê (1).jpg"
+  },
+  {
+    "id": "11b78c1e-c80b-4d56-8a66-9b88415b44d7",
+    "nome": "Sal de Parrilla Argentino",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sal de Parrilla Argentino (1).jpg"
+  },
+  {
+    "id": "105d765c-3463-49b5-9030-0a042a9ccf74",
+    "nome": "Sal de Parrilla e Alho",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sal de Parrilla e Alho (1).jpg"
+  },
+  {
+    "id": "881e6245-90f8-4f55-b07d-d9e02b46f629",
+    "nome": "Sal de Parrilla e Chimichurri",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sal de Parrilla e Chimichurri (1).jpg"
+  },
+  {
+    "id": "6a1ae41e-6d1c-4371-8b2e-6cab22d0a85c",
+    "nome": "Sal de Parrilla e Lemon Pepper",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sal de Parrilla e Lemon Pepper (1).jpg"
+  },
+  {
+    "id": "75b534ca-6252-4a41-af71-81829129862a",
+    "nome": "Sal Grosso",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sal Grosso (1).jpg"
+  },
+  {
+    "id": "4e311679-786b-43a8-991a-95454a5bfd05",
+    "nome": "Sazón Carnes",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sazón Carnes (1).png"
+  },
+  {
+    "id": "045fd47c-f768-4335-a507-9c98854b7b73",
+    "nome": "Sazón Nordeste",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sazón Nordeste (2).jpg"
+  },
+  {
+    "id": "10872a2d-6540-40a8-90a7-0279dde81142",
+    "nome": "Sazón Salada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Sazón Salada (1).png"
+  },
+  {
+    "id": "a33a2dbb-a206-4aa8-8d60-1262547a36a0",
+    "nome": "Tempero Completo",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Tempero Completo (1).jpg"
+  },
+  {
+    "id": "7dfdf564-6155-46dd-b00a-d1956fc91b91",
+    "nome": "Filé de Tilápia Empanado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Filé de Tilápia Empanado (2).jpg"
+  },
+  {
+    "id": "a0f24708-4675-43fb-b344-97d5ce8a5360",
+    "nome": "Bacon",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Bacon.jpg"
+  },
+  {
+    "id": "cb5a976f-b58f-415a-88e6-d3c6420b3942",
+    "nome": "Banha Suína",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Banha Suína (2).webp"
+  },
+  {
+    "id": "e8648a7d-531d-4170-9c49-808f6cdc18c9",
+    "nome": "Barriga",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Barriga (1).jpg"
+  },
+  {
+    "id": "2a58c780-b43f-45d5-9262-b6f3feb866a7",
+    "nome": "Bisteca",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Bisteca.jpg"
+  },
+  {
+    "id": "c4fb5535-fb95-45c0-bd84-8cb020838670",
+    "nome": "Lombo",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Lombo (2).jpg"
+  },
+  {
+    "id": "54c5189e-d644-45da-b026-919c91fea5c7",
+    "nome": "Paleta Suína",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Paleta Suína (2).jpg"
+  },
+  {
+    "id": "860047fe-f526-4209-be9c-2f21002e14c9",
+    "nome": "Panceta Tuim",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Panceta Tuim (1).png"
+  },
+  {
+    "id": "876f6306-0880-4866-b092-6841252e139a",
+    "nome": "Pé Suíno",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pé Suíno (2).png"
+  },
+  {
+    "id": "5e10ac8d-73b9-472d-99f0-d6d8c62ce0be",
+    "nome": "Pernil",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Pernil (1).jpg"
+  },
+  {
+    "id": "5ce2cd37-2f21-4743-95bb-36451509d752",
+    "nome": "Picadão Suíno",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Picadão Suíno (1).jpg"
+  },
+  {
+    "id": "c80013c1-76cf-4d6b-bc1d-ecfccd5e5258",
+    "nome": "Torresmo Pré-Frito",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Torresmo Pré-Frito (1).jpg"
+  },
+  {
+    "id": "0e865f41-e477-4eba-bd2e-d4599a5c29e8",
+    "nome": "Torresmo Tuim",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Torresmo Tuim (1).jpg"
+  },
+  {
+    "id": "7d3b133d-d939-423b-98c8-7f88843c4ef3",
+    "nome": "Toucinho",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Toucinho (2).jpg"
+  },
+  {
+    "id": "f2ff86ad-3dfa-4be8-b330-688a3b407cd6",
+    "nome": "Bife Temperado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Bife Temperado.jpg"
+  },
+  {
+    "id": "be4e2e5e-f889-4788-9c7d-d89e32e9147a",
+    "nome": "Manta Temperada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/Manta Temperada.jpg"
+  },
+  {
+    "id": "aef6fede-17e5-4fc1-964b-1c9736554b37",
+    "nome": "Meio da Asa Temperada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Meio da Asa Temperada (2).jpg"
+  },
+  {
+    "id": "06d7b42c-7ad8-4c76-97a4-c0a2a6a2d939",
+    "nome": "Chicken Frango Empanado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Chicken Frango Empanado (1).jpg"
+  },
+  {
+    "id": "c3192d7e-a8ec-4be8-a1e6-6c1773bc793c",
+    "nome": "Contrafilé",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Contrafilé (2).jpg"
+  },
+  {
+    "id": "6a82fa83-f8ae-42a4-a0b4-7a49cce17a80",
+    "nome": "Coração (Bandeja)",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coração (Bandeja) (1).jpg"
+  },
+  {
+    "id": "7b56d52d-1e19-4be1-ab46-c5b91163abf5",
+    "nome": "Coração Congelado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coração Congelado (2).jpg"
+  },
+  {
+    "id": "153bba6c-7fb3-463a-a74a-c5818acb57b7",
+    "nome": "Costela",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Costela (1).png"
+  },
+  {
+    "id": "99f417e0-e744-46c2-b50d-eb9ddbc569a1",
+    "nome": "Costela Ripa",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Costela Ripa (2).jpg"
+  },
+  {
+    "id": "b1861584-79dc-4001-833c-76aae8a1951d",
+    "nome": "Costelão Temperado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Costelão Temperado (1).jpg"
+  },
+  {
+    "id": "2fed1f4a-f3b2-428f-858c-9295d02bd8f0",
+    "nome": "Coxa e Sobrecoxa (Bandeja)",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coxa e Sobrecoxa (Bandeja) (1).png"
+  },
+  {
+    "id": "1e9cf557-0ca7-45c4-af3f-f3547e6e15ff",
+    "nome": "Coxa e Sobrecoxa Temperada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coxa e Sobrecoxa Temperada (1).png"
+  },
+  {
+    "id": "ed18be62-179b-4f06-b3e8-72ab87aa7930",
+    "nome": "Coxinha da Asa (Bandeja)",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coxinha da Asa (Bandeja) (1).jpg"
+  },
+  {
+    "id": "68122717-f461-41b4-82cf-808b2165f2bb",
+    "nome": "Coxinha da Asa Temperada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coxinha da Asa Temperada (1).png"
+  },
+  {
+    "id": "f027ae84-e07f-466b-a37e-efbdc404205c",
+    "nome": "Coxão Duro com Lagarto",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coxão Duro com Lagarto (1).jpg"
+  },
+  {
+    "id": "c10c61e6-c652-407d-9f52-86c60130464a",
+    "nome": "Coxão Mole",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Coxão Mole (1).png"
+  },
+  {
+    "id": "ef025542-9345-450e-8d6f-8d53116d0db2",
+    "nome": "Creme de Leite",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Creme de Leite (1).webp"
+  },
+  {
+    "id": "7ad8be1f-f2b3-479c-91e0-e9bb929ac0d2",
+    "nome": "Cupim na Mostarda",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Cupim na Mostarda (1).jpg"
+  },
+  {
+    "id": "427d6900-ea5d-496e-bfc1-66184092320f",
+    "nome": "Cupim Seringado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Cupim Seringado (1).jpg"
+  },
+  {
+    "id": "f2050249-d7e6-4cd9-881e-b3d624b29be0",
+    "nome": "Espeto Bovino Temperado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Espeto Bovino Temperado (2).png"
+  },
+  {
+    "id": "8894d7bc-0153-43e7-b37a-2f0860149a5d",
+    "nome": "Espeto de Coração Temperado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Espeto de Coração Temperado (1).jpg"
+  },
+  {
+    "id": "6386a09d-c0df-4a27-8f63-1564e56e4a61",
+    "nome": "Farofa Mineira Costelinha com Limão",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Farofa Mineira Costelinha com Limão (1).webp"
+  },
+  {
+    "id": "788086b3-1e0a-4b4e-acce-cee73d66a15b",
+    "nome": "Farofa Mineira Pequi",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Farofa Mineira Pequi (2).jpg"
+  },
+  {
+    "id": "eead46c1-b81c-4e5d-a5b4-1565cde39175",
+    "nome": "Farofa Mineira Picante",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Farofa Mineira Picante (1).webp"
+  },
+  {
+    "id": "e55b5f0e-0627-407e-8c83-0f0b2e7bfe48",
+    "nome": "Farofa Mineira Torresmo",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Farofa Mineira Torresmo (1).webp"
+  },
+  {
+    "id": "e703861e-785a-4d35-825c-31e17d7acd1e",
+    "nome": "Farofa Mineira Tradicional",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Farofa Mineira Tradicional (2).jpeg"
+  },
+  {
+    "id": "5febcca8-3bc9-4778-8937-ca0f44b88fd9",
+    "nome": "Filé de Corvina",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Filé de Corvina (1).jpg"
+  },
+  {
+    "id": "47f9f909-3028-43f5-9357-64476166f6d6",
+    "nome": "Filé de Frango Empanado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Filé de Frango Empanado (1).png"
+  },
+  {
+    "id": "34171a95-0e4c-4368-a07d-8a1dd1b6271d",
+    "nome": "Filé de Peito Fatiado Temperado",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Filé de Peito Fatiado Temperado (2).png"
+  },
+  {
+    "id": "b27e8849-c5d9-479f-97b4-daebb11f6b71",
+    "nome": "Filé de Peito Inteiro (Bandeja)",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Filé de Peito Inteiro (Bandeja) (2).webp"
+  },
+  {
+    "id": "0dbb87a5-6e4c-493b-98dd-262ef48ab27f",
+    "nome": "Filé de Tilápia",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Filé de Tilápia (2).jpg"
+  },
+  {
+    "id": "d8d9ac00-ff3c-4e9c-b633-76976bacf66c",
+    "nome": "Ponta de Peito com Osso",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Ponta de Peito com Osso (2).jpg"
+  },
+  {
+    "id": "fc86242f-fe19-4597-9e34-480e76885b94",
+    "nome": "Ponta de Peito com Osso Fatiada",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Ponta de Peito com Osso Fatiada (1).webp"
+  },
+  {
+    "id": "58c0bbdf-5e67-4a59-8fc5-7d6df2142cfb",
+    "nome": "Ponta de Peito sem Osso",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-opcoes/Ponta de Peito sem Osso (2).jpg"
+  },
+  {
+    "id": "fd07915a-69c0-4b1c-8378-7600aeb520e6",
+    "nome": "Coca-Cola 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/Coca-Cola 2L (1).jpg"
+  },
+  {
+    "id": "e1f749dd-beb5-4648-b5fa-cec92c02a220",
+    "nome": "Coca-Cola Zero 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/coca02l.jpeg"
+  },
+  {
+    "id": "236a7816-45c6-49e5-96ae-bc94521a416c",
+    "nome": "Fanta Laranja 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/fanta2l.jpeg"
+  },
+  {
+    "id": "aed62801-56f7-4fd0-9451-4c00c66721bb",
+    "nome": "Fanta Laranja Zero 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/FantaLaranja02l.jpeg"
+  },
+  {
+    "id": "640ed4f2-84cb-4c19-a232-ec83f3790410",
+    "nome": "Fanta Uva 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/fantauva2l.jpeg"
+  },
+  {
+    "id": "06ae9975-3f3d-4aa6-b056-6d9c58d90154",
+    "nome": "Sprite 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/Sprite2l.jpeg"
+  },
+  {
+    "id": "df97d1a6-cf18-4c93-bdad-e8f9212843e1",
+    "nome": "Sprite Zero 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/sprite02l.png"
+  },
+  {
+    "id": "ef2b24a1-63f0-4128-8697-384f5aea58c9",
+    "nome": "Guaraná Poty 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/poty 2l.png"
+  },
+  {
+    "id": "23f6a23e-3394-44f1-a0c0-2e767f8763a7",
+    "nome": "Roller 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/roller 2L.webp"
+  },
+  {
+    "id": "2a5ff33f-ff0f-48af-8c87-5b20538943b6",
+    "nome": "Guaraná Poty 3L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/guaraná poty 3L.png"
+  },
+  {
+    "id": "6c91bfc5-dbd2-4ab0-a3f1-1d17a89bbf83",
+    "nome": "Roller 3L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/roller 3L.png"
+  },
+  {
+    "id": "d94a689b-1fbd-4bdd-921f-e47e95a80e43",
+    "nome": "Guaraná Cotuba 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/guaraná cotuba 2L.jpeg"
+  },
+  {
+    "id": "3d3dd3a3-f3a3-45c6-8bee-dcc78f1a5a64",
+    "nome": "Guaraná Cotuba Zero 2L",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/guaraná cotuba zero 2L.png"
+  },
+  {
+    "id": "545ab83b-5c8b-489d-8b03-74398a06c4a8",
+    "nome": "Coca-Cola 600ml",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/coca cola 600ml.png"
+  },
+  {
+    "id": "fc52d941-c079-4f04-a51e-c4b7d020e0a7",
+    "nome": "Coca-Cola Zero 600ml",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/coca cola zero 600ml.png"
+  },
+  {
+    "id": "1dc5364f-c43a-4032-8018-fd4cd81bc5ac",
+    "nome": "Suco Pomar Caju",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/suco pomar caju.jpeg"
+  },
+  {
+    "id": "876840af-c51b-48b5-acb3-bb2c81f11e0b",
+    "nome": "Suco Pomar Acerola",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/acerola.jpeg"
+  },
+  {
+    "id": "9d39a51f-92cb-41a5-9510-b520be355590",
+    "nome": "Suco Pomar Goiaba",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/suco pomar goiaba.jpeg"
+  },
+  {
+    "id": "3e932dcf-2f1f-4557-889e-4fc80eaece7b",
+    "nome": "Suco Pomar Maracujá",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/suco pomar maracujá.jpeg"
+  },
+  {
+    "id": "74d2d2f0-1188-4912-9bab-128cad9cf0ff",
+    "nome": "Água",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/agua.jpeg"
+  },
+  {
+    "id": "6fb6de2b-1a02-43cb-8d5e-5b15ce18cefc",
+    "nome": "Água com Gás",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/aguacomgas.jpeg"
+  },
+  {
+    "id": "2f1a335a-3d56-4deb-9676-1d9d910a73dc",
+    "nome": "Energético Monster",
+    "arquivo": "C:/Users/Joao Vitor/Pictures/fotos-produtos-maciel/_novas-bebidas/energético monster.jpeg"
+  }
+]
