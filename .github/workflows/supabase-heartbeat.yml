@@ -2,6 +2,13 @@
 # nao ser pausado por inatividade (planos gratuitos pausam apos ~7 dias
 # sem nenhuma requisicao). A chave usada aqui e a "publishable" (anon),
 # a mesma que ja fica exposta no site publico - sem risco expor ela aqui.
+#
+# O job tambem grava a data do ultimo ping em supabase/scripts/ultimo-heartbeat.txt
+# e commita essa mudanca de volta no repositorio. Isso conta como atividade
+# no repositorio, o que evita que o GitHub desative este workflow agendado
+# sozinho (o GitHub desativa cron jobs automaticamente depois de 60 dias
+# SEM NENHUM commit/push no repo - sem esse commit automatico, bastaria
+# o dono do projeto ficar 2 meses sem mexer no codigo pra tudo parar).
 name: Supabase Heartbeat
 
 on:
@@ -10,12 +17,27 @@ on:
     - cron: "0 6 */3 * *"
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Ping no banco (select simples)
         run: |
           curl -sf "https://amdazeudrxpyjvhfngue.supabase.co/rest/v1/produtos?select=id&limit=1" \
             -H "apikey: sb_publishable_Jv6cEYwhW4S6XZyj2DM2BA_lcyyTIx3" \
             -H "Authorization: Bearer sb_publishable_Jv6cEYwhW4S6XZyj2DM2BA_lcyyTIx3"
+
+      - name: Registra o horario do ping (mantem o repo "ativo" pro GitHub)
+        run: |
+          mkdir -p supabase/scripts
+          date -u "+%Y-%m-%dT%H:%M:%SZ" > supabase/scripts/ultimo-heartbeat.txt
+          git config user.name "supabase-heartbeat-bot"
+          git config user.email "actions@github.com"
+          git add supabase/scripts/ultimo-heartbeat.txt
+          git diff --cached --quiet || git commit -m "chore: heartbeat do Supabase"
+          git push
