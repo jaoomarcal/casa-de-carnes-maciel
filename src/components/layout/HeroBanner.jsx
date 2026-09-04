@@ -32,7 +32,7 @@ export function HeroBanner() {
       />
 
       {/* Conteúdo */}
-      <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center px-4 pb-16 pt-14 text-center">
+      <div className="relative mx-auto flex h-full w-full max-w-2xl flex-col items-center px-4 pb-3 pt-14 text-center">
         {/* A logo já mostra o nome visualmente; este h1 dá à página um
             título real para leitor de tela e SEO (antes só existia via alt). */}
         <h1 className="sr-only">Casa de Carnes Maciel</h1>
@@ -63,7 +63,7 @@ export function HeroBanner() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-          className="mt-10 max-w-sm text-sm font-medium text-white/90 underline decoration-white/40 underline-offset-4 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] transition hover:text-white hover:decoration-white/80"
+          className="mt-auto max-w-sm text-sm font-medium text-white/90 underline decoration-white/40 underline-offset-4 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] transition hover:text-white hover:decoration-white/80"
         >
           Rua João Pacheco de Lima 54-84 Centro.
         </motion.a>

@@ -8,7 +8,7 @@ export const CATEGORIAS = [
   { slug: "suinos", nome: "Suínos 🐷" },
   { slug: "aves", nome: "Aves 🐔" },
   { slug: "peixes", nome: "Peixes 🐟" },
-  { slug: "linguica", nome: "Linguiça 🌭" },
+  { slug: "linguica", nome: "Embutidos 🌭" },
   { slug: "temperados", nome: "Temperados 🧂" },
   { slug: "mercearia", nome: "Mercearia 🛒" },
   { slug: "diversos", nome: "Diversos 🧺" },
