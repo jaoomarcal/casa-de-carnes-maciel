@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-04T00:00:00Z",
+  "title": "Design System: Casa de Carnes Maciel",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Vermelho-Sangue",
+        "canonical": "#C1121F",
+        "tonalRamp": ["#2B0407", "#4A070C", "#6C0A11", "#8B0D16", "#C1121F", "#D62A36", "#E23B48", "#F3A3A9"]
+      },
+      "wood": {
+        "role": "secondary",
+        "displayName": "Madeira",
+        "canonical": "#7A4A25",
+        "tonalRamp": ["#140C07", "#231609", "#3E2A1B", "#5A3A1F", "#7A4A25", "#9C6A3F", "#C89B6A", "#E8D4B8"]
+      },
+      "charcoal": {
+        "role": "neutral",
+        "displayName": "Carvão",
+        "canonical": "#0E0E0E",
+        "tonalRamp": ["#0E0E0E", "#1C1C1C", "#2B2B2B", "#3D3D3D", "#5A5A5A", "#7A7A7A", "#A3A3A3", "#D4D4D4"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Branco",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#D4D4D4", "#E2E2E2", "#EDEBE7", "#F4F1EC", "#F7F4F0", "#FAF8F5", "#FDFCFB", "#FFFFFF"]
+      },
+      "whatsapp": {
+        "role": "accent",
+        "displayName": "Verde WhatsApp",
+        "canonical": "#25D366",
+        "tonalRamp": ["#052E14", "#0B5C29", "#118A3D", "#17B852", "#25D366", "#4FDD82", "#82E7A8", "#C4F3D3"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Archivo Black)", "purpose": "Só no total do carrinho — peso de placa de açougue, usado com moderação." },
+      "body": { "displayName": "Body (Inter)", "purpose": "Todo o resto do texto: produtos, formulários, navegação." }
+    },
+    "shadows": [
+      { "name": "soft", "value": "0 4px 20px -4px rgb(0 0 0 / 0.10)", "purpose": "Estado de repouso de cards de produto." },
+      { "name": "card", "value": "0 8px 30px -8px rgb(0 0 0 / 0.15)", "purpose": "Hover/destaque de cards de produto." },
+      { "name": "glass", "value": "0 8px 32px rgb(0 0 0 / 0.20)", "purpose": "Sobreposições com vidro fosco (drawer do carrinho)." }
+    ],
+    "motion": [
+      { "name": "card-hover", "value": "transform 300ms ease, box-shadow 300ms ease", "purpose": "Levantamento suave do card de produto no hover." },
+      { "name": "fade-up", "value": "opacity/translateY 400ms ease-out", "purpose": "Entrada de elementos ao rolar a página (hero, cards)." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "2xl", "value": "1200px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal (ex.: \"Escolher\" no card de produto).",
+      "html": "<button class=\"ds-btn-primary\">Escolher</button>",
+      "css": ".ds-btn-primary { background: #C1121F; color: #fff; height: 44px; padding: 0 20px; border-radius: 0.9rem; font-weight: 600; font-size: 0.875rem; border: none; box-shadow: 0 4px 20px -4px rgb(0 0 0 / 0.10); transition: background 0.15s, transform 0.15s; } .ds-btn-primary:hover { background: #8B0D16; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px #C1121F, 0 0 0 4px #fff; } .ds-btn-primary:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "WhatsApp Button",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "Ação de fechar pedido no WhatsApp — única cor de marca externa permitida na UI.",
+      "html": "<button class=\"ds-btn-whatsapp\">Enviar pedido no WhatsApp</button>",
+      "css": ".ds-btn-whatsapp { background: #25D366; color: #fff; height: 48px; padding: 0 24px; border-radius: 0.9rem; font-weight: 600; font-size: 1rem; border: none; box-shadow: 0 4px 20px -4px rgb(0 0 0 / 0.10); transition: filter 0.15s; } .ds-btn-whatsapp:hover { filter: brightness(0.95); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Ação secundária (ex.: \"Voltar ao carrinho\").",
+      "html": "<button class=\"ds-btn-outline\">Continuar comprando</button>",
+      "css": ".ds-btn-outline { background: #FFFFFF; color: #0F0F0F; height: 44px; padding: 0 20px; border-radius: 0.9rem; font-weight: 600; font-size: 0.875rem; border: 1px solid #E8E3DC; transition: background 0.15s; } .ds-btn-outline:hover { background: #F7F4F0; }"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "card-product",
+      "description": "Card de produto do catálogo, com imagem 4:3, preço e ação.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-img\"><img src=\"\" alt=\"\"/><span class=\"ds-badge-oferta\">Oferta 🔥</span></div><div class=\"ds-card-body\"><h3>Picanha</h3><div class=\"ds-card-price\"><span class=\"ds-price\">R$ 69,90</span><span class=\"ds-price-unit\">/ kg</span></div><button class=\"ds-btn-primary\">Escolher</button></div></article>",
+      "css": ".ds-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 5px; border: 1px solid #E8E3DC; background: #FFFFFF; box-shadow: 0 4px 20px -4px rgb(0 0 0 / 0.10); transition: transform 0.3s, box-shadow 0.3s; } .ds-card:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 30px -8px rgb(0 0 0 / 0.15); } .ds-card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; background: #F7F4F0; } .ds-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; } .ds-card:hover .ds-card-img img { transform: scale(1.1); } .ds-badge-oferta { position: absolute; top: 8px; left: 8px; background: #0E0E0E; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 2px 10px; border-radius: 9999px; } .ds-card-body { display: flex; flex-direction: column; gap: 8px; padding: 12px; } .ds-price { color: #C1121F; font-weight: 700; font-size: 1.125rem; } .ds-price-unit { color: #666666; font-size: 0.75rem; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Campo de formulário (nome, endereço) usado no fechamento do pedido.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Seu nome\"/>",
+      "css": ".ds-input { width: 100%; border-radius: 0.9rem; border: 1px solid #E8E3DC; background: #FFFFFF; padding: 8px 12px; font-size: 16px; outline: none; transition: box-shadow 0.15s; } .ds-input:focus { box-shadow: 0 0 0 2px #C1121F; }"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "nav",
+      "refersTo": "category-chip",
+      "description": "Item da barra de categorias fixa; estado ativo em vermelho-sangue sólido.",
+      "html": "<a class=\"ds-chip ds-chip-active\">Bovinos 🐂</a>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; border-radius: 9999px; padding: 6px 12px; font-weight: 500; font-size: 1.00625rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); transition: color 0.15s, border-color 0.15s; } .ds-chip:hover { border-color: rgba(193,18,31,0.6); color: #E23B48; } .ds-chip-active { border-color: #C1121F; background: #C1121F; color: #fff; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Balcão do Açougueiro",
+    "overview": "O site é a vitrine digital de um balcão de açougue de verdade: quente, tátil, sem enfeite corporativo. A foto do açougueiro trabalhando abre o hero, e a paleta segue direto da loja física — vermelho-sangue para ação e destaque, madeira e carvão para ambientação, branco limpo para deixar a comida ser a protagonista nos cards. A tipografia de display (Archivo Black, condensada e pesada) carrega o peso de placa de açougue; o corpo em Inter mantém tudo legível e rápido de escanear no celular. Nada aqui finge ser um marketplace: o pedido termina numa conversa de WhatsApp, então a interface prioriza clareza e confiança sobre efeito visual.",
+    "keyCharacteristics": [
+      "Vermelho-sangue como cor de ação, usado com moderação sobre fundo neutro",
+      "Fotografia de comida como elemento central de cada card de produto",
+      "Cantos arredondados suaves (nunca retos, nunca em pílula excessiva)",
+      "Sombras suaves e difusas — nunca duras ou \"flat\"",
+      "Hierarquia mobile-first: um botão primário por decisão"
+    ],
+    "rules": [
+      { "name": "A Regra do Acento Único", "body": "O vermelho-sangue é reservado para ação e destaque (botão, preço, badge). Nunca decorar uma área grande inteira com ele — sua raridade é o que dá peso ao \"Escolher\" e ao preço.", "section": "colors" },
+      { "name": "A Regra do Repouso Plano", "body": "Nada tem sombra pesada em repouso. A sombra cresce como resposta a um estado (hover, oferta em destaque), nunca como decoração fixa.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do reservar o vermelho-sangue para ação e destaque (botão, preço, badge de oferta)",
+      "Do manter sombras suaves e crescentes só em resposta a hover/estado",
+      "Do deixar a fotografia do produto/açougueiro ser o elemento mais chamativo da tela"
+    ],
+    "donts": [
+      "Don't usar preto puro (#000) — a marca usa carvão (#0E0E0E)",
+      "Don't aplicar sombra pesada ou múltiplas camadas em repouso",
+      "Don't introduzir uma segunda cor de ação vibrante além do vermelho-sangue (o verde do WhatsApp é a única exceção, restrita ao botão de fechar pedido)"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "rgba(255,196,120,0.30)",
+        "createdAt": "2026-09-04T18:12:37.081Z",
+        "reason": "gradiente decorativo (facho de luz do hero), documentado no audit como cor intencional fora do token system"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.45)",
+        "createdAt": "2026-09-04T18:12:37.166Z",
+        "reason": "gradiente decorativo (brilho sob a logo do hero), documentado no audit como cor intencional fora do token system"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#3a2413",
+        "createdAt": "2026-09-04T18:12:45.123Z",
+        "reason": "gradiente procedural de madeira (WoodBackground), documentado no audit como textura decorativa intencional"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#5f3f26",
+        "createdAt": "2026-09-04T18:12:45.223Z",
+        "reason": "gradiente procedural de madeira (WoodBackground), documentado no audit como textura decorativa intencional"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#38220f",
+        "createdAt": "2026-09-04T18:12:45.343Z",
+        "reason": "gradiente procedural de madeira (WoodBackground), documentado no audit como textura decorativa intencional"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#4a2f1b",
+        "createdAt": "2026-09-04T18:12:45.444Z",
+        "reason": "gradiente procedural de madeira (WoodBackground), documentado no audit como textura decorativa intencional"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.6)",
+        "createdAt": "2026-09-04T18:12:45.560Z",
+        "reason": "vinheta procedural de madeira (WoodBackground), documentado no audit como textura decorativa intencional"
+      }
+    ]
+  }
+}
