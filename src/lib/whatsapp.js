@@ -57,7 +57,9 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
       ? `*Pagamento:* ${ROTULO_PAGAMENTO[dados.pagamento] || dados.pagamento}`
       : null,
     troco,
-    "*Tempo estimado de entrega:* trinta minutos",
+    dados.entrega === "entrega"
+      ? "*Tempo estimado de entrega:* trinta minutos"
+      : "*Tempo estimado de preparo:* trinta minutos",
   ].filter(Boolean);
 
   const mensagem = [
@@ -72,5 +74,17 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
   ].join("\n");
 
   const url = `https://wa.me/${NUMERO}?text=${encodeURIComponent(mensagem)}`;
-  window.open(url, "_blank", "noopener,noreferrer");
+
+  // No celular, abrir em nova aba (window.open) é o motivo clássico do
+  // botão "falhar e voltar pro site": a aba em branco tenta repassar pro
+  // app do WhatsApp e, se esse handoff travar (Safari iOS, navegadores
+  // in-app, etc.), o usuário só vê a aba fechando sem nada acontecer.
+  // Navegar na própria aba resolve. No desktop mantemos nova aba, que
+  // funciona bem com o WhatsApp Web.
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isMobile) {
+    window.location.href = url;
+  } else {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 }

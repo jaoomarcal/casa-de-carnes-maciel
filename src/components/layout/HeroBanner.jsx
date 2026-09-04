@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 
 /**
- * Hero: logo (fundo transparente) sobre uma foto de carne na brasa
- * (public/assets/hero-fogo.jpg), com um facho de luz quente e um
+ * Hero: logo (fundo transparente) sobre a foto do açougueiro
+ * (public/assets/hero-acougueiro.jpg), com um facho de luz quente e um
  * escurecimento que garantem contraste do texto em qualquer tela.
  */
 export function HeroBanner() {
@@ -10,10 +10,10 @@ export function HeroBanner() {
     <header className="relative isolate flex min-h-[20rem] flex-col justify-center overflow-hidden bg-madeira-escura sm:min-h-[22rem]">
       {/* foto de fundo */}
       <img
-        src="/assets/hero-fogo.jpg"
+        src="/assets/hero-acougueiro.jpg"
         alt=""
         aria-hidden
-        className="absolute inset-0 h-full w-full object-cover object-[center_35%]"
+        className="absolute inset-0 h-full w-full object-cover object-center"
       />
 
       {/* facho de luz quente atrás da logo */}
@@ -33,6 +33,10 @@ export function HeroBanner() {
 
       {/* Conteúdo */}
       <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center px-4 pb-16 pt-14 text-center">
+        {/* A logo já mostra o nome visualmente; este h1 dá à página um
+            título real para leitor de tela e SEO (antes só existia via alt). */}
+        <h1 className="sr-only">Casa de Carnes Maciel</h1>
+
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -52,14 +56,17 @@ export function HeroBanner() {
           />
         </motion.div>
 
-        <motion.p
+        <motion.a
+          href="https://www.google.com/maps/search/?api=1&query=Rua+Jo%C3%A3o+Pacheco+de+Lima+54-84+Centro"
+          target="_blank"
+          rel="noopener noreferrer"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-          className="mt-5 max-w-sm text-sm font-medium text-white/90 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+          className="mt-10 max-w-sm text-sm font-medium text-white/90 underline decoration-white/40 underline-offset-4 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] transition hover:text-white hover:decoration-white/80"
         >
           Rua João Pacheco de Lima 54-84 Centro.
-        </motion.p>
+        </motion.a>
       </div>
     </header>
   );

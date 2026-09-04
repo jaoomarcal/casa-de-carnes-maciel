@@ -40,7 +40,7 @@ export function FloatingCart() {
                 whileTap={{ scale: 0.92 }}
                 whileHover={{ scale: 1.05, rotate: -3 }}
                 className="relative grid h-16 w-16 place-items-center rounded-full bg-carvao shadow-glass ring-1 ring-white/10"
-                aria-label={`Abrir carrinho, ${quantidadeTotal} itens`}
+                aria-label={`Abrir carrinho, ${quantidadeTotal} ${quantidadeTotal === 1 ? "item" : "itens"}`}
               >
                 <img
                   src="/assets/cutelo-3d.png"

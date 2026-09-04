@@ -1,16 +1,18 @@
 // Ordem e rótulos das categorias exibidas na home.
 // O "slug" precisa ser IGUAL ao valor salvo na coluna "categoria" do banco.
+// O emoji no fim do nome é só visual (barra de categorias, seções e painel),
+// ajuda a bater o olho e identificar a categoria mais rápido.
 export const CATEGORIAS = [
-  { slug: "ofertas", nome: "Ofertas do Dia" },
-  { slug: "bovinos", nome: "Bovinos" },
-  { slug: "suinos", nome: "Suínos" },
-  { slug: "aves", nome: "Aves" },
-  { slug: "peixes", nome: "Peixes" },
-  { slug: "linguica", nome: "Linguiça" },
-  { slug: "temperados", nome: "Temperados" },
-  { slug: "mercearia", nome: "Mercearia" },
-  { slug: "diversos", nome: "Diversos" },
-  { slug: "bebidas", nome: "Bebidas" },
+  { slug: "ofertas", nome: "Ofertas do Dia 🔥" },
+  { slug: "bovinos", nome: "Bovinos 🐂" },
+  { slug: "suinos", nome: "Suínos 🐷" },
+  { slug: "aves", nome: "Aves 🐔" },
+  { slug: "peixes", nome: "Peixes 🐟" },
+  { slug: "linguica", nome: "Linguiça 🌭" },
+  { slug: "temperados", nome: "Temperados 🧂" },
+  { slug: "mercearia", nome: "Mercearia 🛒" },
+  { slug: "diversos", nome: "Diversos 🧺" },
+  { slug: "bebidas", nome: "Bebidas 🥤" },
 ];
 
 // Peso mínimo que o cliente pode digitar no campo de peso (em gramas)
@@ -35,6 +37,7 @@ export const CORTES = [
   { valor: "manta", label: "Manta" },
   { valor: "cubos", label: "Cubos" },
   { valor: "moida", label: "Moída" },
+  { valor: "peca-inteira", label: "Peça inteira" },
 ];
 
 /** Rótulo amigável de um corte a partir do valor salvo ("cubos" -> "Cubos") */

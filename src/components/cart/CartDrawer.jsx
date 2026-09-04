@@ -7,6 +7,7 @@ import {
   Store,
   Bike,
   X,
+  ChevronDown,
 } from "lucide-react";
 
 import { cn, formatBRL, formatPeso } from "@/lib/utils";
@@ -59,8 +60,11 @@ export function CartDrawer({ onClose }) {
 
   const vazio = itens.length === 0;
   const precisaEndereco = entrega === "entrega";
-  const podeEnviar =
-    nome.trim().length > 1 && (!precisaEndereco || endereco.trim().length > 4);
+  const faltando = [
+    nome.trim().length <= 1 ? "nome" : null,
+    precisaEndereco && endereco.trim().length <= 4 ? "endereço" : null,
+  ].filter(Boolean);
+  const podeEnviar = faltando.length === 0;
 
   function finalizar() {
     const dados = {
@@ -91,25 +95,27 @@ export function CartDrawer({ onClose }) {
       </button>
 
       <SheetHeader className="pr-14">
-        <SheetTitle className="flex items-center gap-2">
-          {naEtapaDados ? (
-            <>
-              <button
-                onClick={() => setEtapa("carrinho")}
-                className="rounded-md p-1 text-muted-foreground transition hover:bg-muted"
-                aria-label="Voltar ao carrinho"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              Seus dados
-            </>
-          ) : (
-            <>
-              <ShoppingBag className="h-5 w-5 text-carne" />
-              Seu carrinho
-            </>
+        <div className="flex items-center gap-2">
+          {naEtapaDados && (
+            <button
+              onClick={() => setEtapa("carrinho")}
+              className="rounded-md p-1 text-muted-foreground transition hover:bg-muted"
+              aria-label="Voltar ao carrinho"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
           )}
-        </SheetTitle>
+          <SheetTitle className="flex items-center gap-2">
+            {naEtapaDados ? (
+              "Seus dados"
+            ) : (
+              <>
+                <ShoppingBag className="h-5 w-5 text-carne" />
+                Seu carrinho
+              </>
+            )}
+          </SheetTitle>
+        </div>
         <SheetDescription>
           {vazio
             ? "Ainda não há itens."
@@ -133,18 +139,21 @@ export function CartDrawer({ onClose }) {
             <p className="text-sm">Adicione cortes para fechar seu pedido.</p>
           </div>
         ) : naEtapaDados ? (
-          <DadosCliente
-            nome={nome}
-            setNome={setNome}
-            entrega={entrega}
-            setEntrega={setEntrega}
-            endereco={endereco}
-            setEndereco={setEndereco}
-            pagamento={pagamento}
-            setPagamento={setPagamento}
-            trocoPara={trocoPara}
-            setTrocoPara={setTrocoPara}
-          />
+          <>
+            <ResumoPedido itens={itens} chaveItem={chaveItem} subtotalItem={subtotalItem} />
+            <DadosCliente
+              nome={nome}
+              setNome={setNome}
+              entrega={entrega}
+              setEntrega={setEntrega}
+              endereco={endereco}
+              setEndereco={setEndereco}
+              pagamento={pagamento}
+              setPagamento={setPagamento}
+              trocoPara={trocoPara}
+              setTrocoPara={setTrocoPara}
+            />
+          </>
         ) : (
           <ul className="space-y-3">
             <AnimatePresence initial={false}>
@@ -188,7 +197,7 @@ export function CartDrawer({ onClose }) {
                         <div className="flex items-center rounded-md border border-border">
                           <button
                             onClick={() => decrementar(k)}
-                            className="px-2.5 py-1 text-sm hover:bg-muted"
+                            className="grid h-11 w-11 place-items-center text-sm hover:bg-muted"
                             aria-label="Diminuir"
                           >
                             −
@@ -198,7 +207,7 @@ export function CartDrawer({ onClose }) {
                           </span>
                           <button
                             onClick={() => incrementar(k)}
-                            className="px-2.5 py-1 text-sm hover:bg-muted"
+                            className="grid h-11 w-11 place-items-center text-sm hover:bg-muted"
                             aria-label="Aumentar"
                           >
                             +
@@ -237,6 +246,11 @@ export function CartDrawer({ onClose }) {
 
           {naEtapaDados ? (
             <>
+              {!podeEnviar && (
+                <p className="text-center text-xs text-carne">
+                  Falta preencher: {faltando.join(" e ")}.
+                </p>
+              )}
               <Button
                 variant="whatsapp"
                 size="lg"
@@ -272,6 +286,72 @@ export function CartDrawer({ onClose }) {
         </SheetFooter>
       )}
     </>
+  );
+}
+
+/**
+ * Resumo compacto e recolhível do pedido, mostrado durante a etapa "dados"
+ * — sem ele o cliente perde de vista o que está prestes a mandar pro
+ * WhatsApp (o momento de maior risco do fluxo: pedido errado sem querer).
+ */
+function ResumoPedido({ itens, chaveItem, subtotalItem }) {
+  const [aberto, setAberto] = useState(false);
+
+  return (
+    <div className="mb-4 rounded-lg border border-border">
+      <button
+        type="button"
+        onClick={() => setAberto((a) => !a)}
+        aria-expanded={aberto}
+        className="flex w-full items-center justify-between gap-2 p-3 text-left text-sm"
+      >
+        <span className="font-medium">
+          {itens.length} {itens.length === 1 ? "item" : "itens"} no pedido
+        </span>
+        <span className="flex items-center gap-1 text-muted-foreground">
+          {aberto ? "ocultar" : "ver detalhes"}
+          <ChevronDown
+            className={cn("h-4 w-4 transition-transform", aberto && "rotate-180")}
+          />
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {aberto && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border-t border-border"
+          >
+            <ul className="space-y-1.5 p-3 pt-2 text-sm">
+              {itens.map((item) => {
+                const extras = [
+                  item.corte ? rotuloCorte(item.corte) : null,
+                  item.temperada ? "Temperada" : null,
+                ]
+                  .filter(Boolean)
+                  .join(" · ");
+                const medida =
+                  item.unidade === "un" ? "" : ` — ${formatPeso(item.gramas)}`;
+                return (
+                  <li key={chaveItem(item)} className="flex justify-between gap-2">
+                    <span className="text-muted-foreground">
+                      {item.quantidade}x {item.nome}
+                      {medida}
+                      {extras && ` · ${extras}`}
+                    </span>
+                    <span className="shrink-0 font-medium">
+                      {formatBRL(subtotalItem(item))}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -352,6 +432,7 @@ function DadosCliente({
             <button
               key={valor}
               type="button"
+              aria-pressed={pagamento === valor}
               onClick={() => setPagamento(valor)}
               className={cn(
                 "flex-1 rounded-md border px-2 py-2 text-xs font-semibold transition-colors",
@@ -390,9 +471,11 @@ function DadosCliente({
         )}
       </AnimatePresence>
 
-      {/* Tempo estimado de entrega — informado ao fechar o pedido */}
+      {/* Tempo estimado — texto muda conforme retirada ou entrega */}
       <div className="rounded-lg border border-border bg-muted/40 p-3 text-sm">
-        <span className="font-medium">Tempo estimado de entrega:</span>{" "}
+        <span className="font-medium">
+          {entrega === "entrega" ? "Tempo estimado de entrega:" : "Tempo estimado de preparo:"}
+        </span>{" "}
         <span className="text-muted-foreground">trinta minutos</span>
       </div>
 
@@ -407,6 +490,7 @@ function OpcaoGrande({ ativo, onClick, icone, label }) {
   return (
     <button
       type="button"
+      aria-pressed={ativo}
       onClick={onClick}
       className={cn(
         "flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-semibold transition-colors",

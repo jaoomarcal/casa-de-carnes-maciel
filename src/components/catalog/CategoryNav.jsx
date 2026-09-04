@@ -44,18 +44,23 @@ export function CategoryNav({ categorias }) {
   if (categorias.length < 2) return null;
 
   return (
-    <nav className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur-md">
-      <div className="no-scrollbar mx-auto flex max-w-2xl gap-2 overflow-x-auto px-4 py-2.5 lg:max-w-5xl">
+    <nav className="border-b border-carvao bg-carvao">
+      {/* fontSize + espaçamentos em `em` deixam a barra 15% maior que o padrão
+          (base text-sm = 0.875rem → 1.00625rem) sem quebrar a proporção */}
+      <div
+        className="no-scrollbar mx-auto flex max-w-2xl gap-[0.571em] overflow-x-auto px-4 py-[0.714em] lg:max-w-5xl"
+        style={{ fontSize: "1.00625rem" }}
+      >
         {categorias.map((c) => (
           <a
             key={c.slug}
             href={`#${c.slug}`}
             ref={(el) => (chipsRef.current[c.slug] = el)}
             className={cn(
-              "flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+              "flex shrink-0 items-center gap-[0.429em] rounded-full border px-[0.857em] py-[0.429em] font-medium transition-colors",
               ativo === c.slug
                 ? "border-carne bg-carne text-white"
-                : "border-border bg-background text-foreground/70 hover:border-carne/50 hover:text-carne"
+                : "border-white/10 bg-white/5 text-white/70 hover:border-carne/60 hover:text-carne-light"
             )}
           >
             {c.nome}

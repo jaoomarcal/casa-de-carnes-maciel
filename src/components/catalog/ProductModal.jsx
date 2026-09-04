@@ -177,6 +177,7 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                                       <button
                                         key={c.valor}
                                         type="button"
+                                        aria-pressed={corte === c.valor}
                                         onClick={() => setCorte(c.valor)}
                                         className={cn(
                                           "rounded-md border px-3 py-2 text-xs font-semibold transition-colors",
@@ -255,7 +256,7 @@ function QuantidadeSelector({ value, onChange }) {
         <button
           type="button"
           onClick={dec}
-          className="px-3.5 py-2 text-base hover:bg-muted"
+          className="grid h-11 w-11 place-items-center text-base hover:bg-muted"
           aria-label="Diminuir"
         >
           −
@@ -264,7 +265,7 @@ function QuantidadeSelector({ value, onChange }) {
         <button
           type="button"
           onClick={inc}
-          className="px-3.5 py-2 text-base hover:bg-muted"
+          className="grid h-11 w-11 place-items-center text-base hover:bg-muted"
           aria-label="Aumentar"
         >
           +

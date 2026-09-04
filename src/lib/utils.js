@@ -21,3 +21,13 @@ export function formatBRL(valor) {
 export function formatPeso(gramas) {
   return gramas >= 1000 ? `${gramas / 1000}kg` : `${gramas}g`;
 }
+
+/**
+ * Normaliza texto pra busca: minúsculas e sem acento ("Moída" -> "moida").
+ * Sem isso, digitar "moida" no celular (sem acento, comum) não acha "Moída".
+ */
+const DIACRITICOS = new RegExp("[\\u0300-\\u036f]", "g");
+
+export function normalizarBusca(texto) {
+  return texto.normalize("NFD").replace(DIACRITICOS, "").toLowerCase();
+}

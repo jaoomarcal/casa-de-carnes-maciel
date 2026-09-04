@@ -16,15 +16,6 @@
     --radius: 0.9rem; /* bordas levemente arredondadas estilo Apple/Shadcn */
   }
 
-  .dark {
-    --background: 0 0% 6%;
-    --foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 65%;
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-  }
-
   * {
     @apply border-border;
   }
@@ -33,6 +24,15 @@
     @apply bg-background text-foreground font-sans antialiased;
     /* respeita o "notch" dos celulares */
     padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* evita o zoom automatico do iOS Safari ao focar campos com fonte < 16px */
+  @media (max-width: 640px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
   }
 }
 
