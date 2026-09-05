@@ -5,7 +5,7 @@ import { ArrowLeft, LogOut, Plus, Pencil, Trash2, Search, X } from "lucide-react
 
 import { formatBRL } from "@/lib/utils";
 import { urlImagemProduto } from "@/lib/supabase";
-import { CATEGORIAS, CORTES } from "@/data/categories";
+import { CATEGORIAS, CORTES, CORTE_PECA_INTEIRA } from "@/data/categories";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { Button } from "@/components/ui/button";
@@ -79,12 +79,19 @@ const VAZIO = {
   esgotado: false,
   cortes: [],
   permite_tempero: false,
+  peso_estimado_g: "",
   imagem_url: "",
   ordem: 0,
 };
 
 function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
-  const [form, setForm] = useState(inicial || VAZIO);
+  const [form, setForm] = useState(() => {
+    const base = inicial || VAZIO;
+    // Autocorrige cadastros antigos: "peça inteira" só faz sentido vendida
+    // por quilo (não existe preço fixo por unidade com peso variável).
+    const cortes = Array.isArray(base.cortes) ? base.cortes : [];
+    return cortes.includes(CORTE_PECA_INTEIRA) ? { ...base, unidade: "kg" } : base;
+  });
   const [enviando, setEnviando] = useState(false);
 
   const set = (campo) => (e) => {
@@ -93,9 +100,26 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
   };
 
   const cortesSelecionados = Array.isArray(form.cortes) ? form.cortes : [];
+  const vendePecaInteira = cortesSelecionados.includes(CORTE_PECA_INTEIRA);
+
+  // "Peça inteira" é exclusivo: marcar troca a lista toda por só ele
+  // (o peso varia, então nenhum outro corte faz sentido junto); os
+  // outros checkboxes ficam desabilitados enquanto ele estiver marcado.
+  // Também força "Vendido por" pra quilo: não existe preço fixo por
+  // unidade quando o peso da peça varia, só preço por kg.
   const toggleCorte = (valor) =>
     setForm((f) => {
       const atuais = Array.isArray(f.cortes) ? f.cortes : [];
+      if (valor === CORTE_PECA_INTEIRA) {
+        const ativando = !atuais.includes(valor);
+        return {
+          ...f,
+          cortes: ativando ? [valor] : [],
+          peso_estimado_g: ativando ? f.peso_estimado_g : "",
+          unidade: ativando ? "kg" : f.unidade,
+        };
+      }
+      if (atuais.includes(CORTE_PECA_INTEIRA)) return f;
       return {
         ...f,
         cortes: atuais.includes(valor)
@@ -158,14 +182,24 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
           <select
             value={form.unidade || "kg"}
             onChange={set("unidade")}
-            className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
+            disabled={vendePecaInteira}
+            className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm disabled:opacity-60"
           >
             <option value="kg">Quilo (cliente escolhe o peso)</option>
             <option value="un">Unidade (cliente escolhe a quantidade)</option>
           </select>
+          {vendePecaInteira && (
+            <span className="mt-1 block text-xs text-muted-foreground">
+              Travado em quilo: peça inteira não tem preço fixo por unidade.
+            </span>
+          )}
         </label>
         <label className="text-sm">
-          {form.unidade === "un" ? "Preço por unidade (R$)" : "Preço por kg (R$)"}
+          {vendePecaInteira
+            ? "Preço por kg da peça (R$)"
+            : form.unidade === "un"
+              ? "Preço por unidade (R$)"
+              : "Preço por kg (R$)"}
           <input
             required
             type="number"
@@ -176,9 +210,11 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
           />
         </label>
         <label className="text-sm">
-          {form.unidade === "un"
-            ? "Preço de oferta por unidade (opcional)"
-            : "Preço de oferta por kg (opcional)"}
+          {vendePecaInteira
+            ? "Preço de oferta por kg da peça (opcional)"
+            : form.unidade === "un"
+              ? "Preço de oferta por unidade (opcional)"
+              : "Preço de oferta por kg (opcional)"}
           <input
             type="number"
             step="0.01"
@@ -243,20 +279,52 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
 
         <div className="pt-1 text-sm font-medium">Cortes disponíveis</div>
         <div className="flex flex-wrap gap-3">
-          {CORTES.map((c) => (
-            <label key={c.valor} className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={cortesSelecionados.includes(c.valor)}
-                onChange={() => toggleCorte(c.valor)}
-              />
-              {c.label}
-            </label>
-          ))}
+          {CORTES.map((c) => {
+            const outroDesabilitado =
+              vendePecaInteira && c.valor !== CORTE_PECA_INTEIRA;
+            return (
+              <label
+                key={c.valor}
+                className={`flex items-center gap-2 text-sm ${
+                  outroDesabilitado ? "opacity-40" : ""
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={cortesSelecionados.includes(c.valor)}
+                  disabled={outroDesabilitado}
+                  onChange={() => toggleCorte(c.valor)}
+                />
+                {c.label}
+              </label>
+            );
+          })}
         </div>
         <p className="text-xs text-muted-foreground">
-          Deixe tudo desmarcado se este produto não recebe corte.
+          Deixe tudo desmarcado se este produto não recebe corte. "Peça
+          inteira" é exclusivo (o peso varia, então desabilita os outros
+          cortes) e esconde o campo de peso do cliente no site.
         </p>
+
+        {vendePecaInteira && (
+          <label className="block text-sm">
+            Peso estimado por peça (gramas)
+            <input
+              required
+              type="number"
+              min={1}
+              step={50}
+              placeholder="Ex: 900"
+              value={form.peso_estimado_g ?? ""}
+              onChange={set("peso_estimado_g")}
+              className="mt-1 w-full max-w-[10rem] rounded-lg border border-input px-3 py-2 text-sm"
+            />
+            <span className="mt-1 block text-xs text-muted-foreground">
+              É o peso que aparece pro cliente no site. O peso e o valor
+              exatos são combinados pelo WhatsApp.
+            </span>
+          </label>
+        )}
       </div>
 
       <div className="flex items-center gap-3">
@@ -398,7 +466,9 @@ export default function Admin() {
                   <p className="truncate text-sm font-semibold">{p.nome}</p>
                   <p className="text-xs text-muted-foreground">
                     {p.categoria} · {formatBRL(p.preco_kg)}/
-                    {p.unidade === "un" ? "un" : "kg"}
+                    {(p.cortes || []).includes(CORTE_PECA_INTEIRA) || p.unidade !== "un"
+                      ? "kg"
+                      : "un"}
                   </p>
                 </div>
               </div>

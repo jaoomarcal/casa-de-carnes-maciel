@@ -40,6 +40,12 @@ export const CORTES = [
   { valor: "peca-inteira", label: "Peça inteira" },
 ];
 
+// "Peça inteira" é exclusivo: o peso varia de peça pra peça, então quando
+// o produto vende assim ele é o ÚNICO corte disponível (o painel desabilita
+// os outros) e o cliente não escolhe peso — só vê um peso estimado
+// (configurado no painel) e combina o peso/valor exato pelo WhatsApp.
+export const CORTE_PECA_INTEIRA = "peca-inteira";
+
 /** Rótulo amigável de um corte a partir do valor salvo ("cubos" -> "Cubos") */
 export function rotuloCorte(valor) {
   return CORTES.find((c) => c.valor === valor)?.label || valor;

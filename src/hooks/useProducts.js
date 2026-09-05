@@ -1,22 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase, urlImagemProduto } from "@/lib/supabase";
+import { CORTE_PECA_INTEIRA } from "@/data/categories";
 
 /** Normaliza o registro do banco para o formato que a UI usa */
 function normalizar(row) {
   const emOferta = row.em_oferta && row.preco_oferta_kg != null;
+  const cortes = Array.isArray(row.cortes) ? row.cortes : [];
+  // "Peça inteira" é sempre vendida por quilo (o preço por unidade não faz
+  // sentido com peso variável). Cai aqui pra qualquer cadastro que ainda
+  // não foi resalvo no painel com unidade="kg".
+  const vendePorPeca = cortes.includes(CORTE_PECA_INTEIRA);
   return {
     id: row.id,
     nome: row.nome,
     descricao: row.descricao,
     categoria: row.categoria,
-    unidade: row.unidade === "un" ? "un" : "kg",
+    unidade: vendePorPeca ? "kg" : row.unidade === "un" ? "un" : "kg",
     precoKg: Number(row.preco_kg),
     precoOfertaKg: row.preco_oferta_kg != null ? Number(row.preco_oferta_kg) : null,
     precoAtualKg: emOferta ? Number(row.preco_oferta_kg) : Number(row.preco_kg),
     emOferta,
     esgotado: row.esgotado,
-    cortes: Array.isArray(row.cortes) ? row.cortes : [],
+    cortes,
     permiteTempero: !!row.permite_tempero,
+    pesoEstimadoG: row.peso_estimado_g != null ? Number(row.peso_estimado_g) : null,
     imagem: urlImagemProduto(row.imagem_url),
     ordem: row.ordem ?? 0,
   };

@@ -1,5 +1,5 @@
 import { formatBRL, formatPeso } from "./utils";
-import { rotuloCorte } from "@/data/categories";
+import { rotuloCorte, CORTE_PECA_INTEIRA } from "@/data/categories";
 
 const NUMERO = import.meta.env.VITE_WHATSAPP_NUMERO || "5517991316331";
 
@@ -36,7 +36,11 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
     ].filter(Boolean);
     const sufixo = extras.length ? ` · ${extras.join(" · ")}` : "";
     const medida =
-      item.unidade === "un" ? "" : ` — ${formatPeso(item.gramas)}`;
+      item.unidade === "un"
+        ? ""
+        : item.corte === CORTE_PECA_INTEIRA
+          ? ` — ~${formatPeso(item.gramas)} (peso a confirmar)`
+          : ` — ${formatPeso(item.gramas)}`;
     return `• *${item.quantidade}x* ${item.nome}${medida}${sufixo}\n   ${preco}`;
   });
 

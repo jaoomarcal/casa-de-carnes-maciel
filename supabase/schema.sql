@@ -23,6 +23,7 @@ create table if not exists public.produtos (
   cortes            text[] not null default '{}'  -- cortes disponíveis: bife/manta/cubos/moida/peca-inteira (vazio = não recebe corte)
                     check (cortes <@ array['bife','manta','cubos','moida','peca-inteira']::text[]),
   permite_tempero   boolean not null default false, -- mostra a opção "Vai temperada?" no site
+  peso_estimado_g   integer,       -- peso estimado da peça (só usado quando cortes = ['peca-inteira'])
   imagem_url        text,          -- "path" do arquivo no Storage (bucket "produtos")
   ordem             integer not null default 0,   -- controla a ordem de exibição
   criado_em         timestamptz not null default now(),

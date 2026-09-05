@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
 
 import { cn, formatBRL, formatPeso } from "@/lib/utils";
-import { CORTES, PESO_MINIMO, rotuloUnidade } from "@/data/categories";
+import { CORTES, CORTE_PECA_INTEIRA, PESO_MINIMO, rotuloUnidade } from "@/data/categories";
 import { Button } from "@/components/ui/button";
 import { WeightSelector } from "@/components/catalog/WeightSelector";
 import { useCart } from "@/context/CartContext";
@@ -25,6 +25,16 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
     (produto.cortes || []).includes(c.valor)
   );
 
+  // "Peça inteira": o peso varia de peça pra peça, então o cliente não
+  // escolhe peso — só vê um peso estimado e escolhe quantas peças quer.
+  // É exclusivo: só conta se for o ÚNICO corte do produto (o painel garante
+  // isso ao salvar; cadastros antigos com outros cortes juntos continuam
+  // no modo de peso normal até serem reeditados no painel).
+  const vendePorPeca =
+    !porUnidade &&
+    cortesDisponiveis.length === 1 &&
+    cortesDisponiveis[0].valor === CORTE_PECA_INTEIRA;
+
   const [gramas, setGramas] = useState("");
   const [unidades, setUnidades] = useState(1);
   const [corte, setCorte] = useState(cortesDisponiveis[0]?.valor || null);
@@ -42,14 +52,17 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
   }, [aberto, produto.id]);
 
   const pesoValido = Number.isFinite(gramas) && gramas >= PESO_MINIMO;
-  // "quantidade definida": no modo unidade já nasce válido (1); no modo peso
-  // só depois que o cliente digita um peso aceitável.
-  const quantidadeDefinida = porUnidade ? unidades >= 1 : pesoValido;
+  // "quantidade definida": nos modos unidade e peça já nasce válido (1); no
+  // modo peso exato só depois que o cliente digita um peso aceitável.
+  const quantidadeDefinida =
+    porUnidade || vendePorPeca ? unidades >= 1 : pesoValido;
   const precoEstimado = !quantidadeDefinida
     ? 0
     : porUnidade
       ? produto.precoAtualKg * unidades
-      : produto.precoAtualKg * (gramas / 1000);
+      : vendePorPeca
+        ? produto.precoAtualKg * ((produto.pesoEstimadoG || 0) / 1000) * unidades
+        : produto.precoAtualKg * (gramas / 1000);
 
   function confirmar() {
     if (!quantidadeDefinida) return;
@@ -57,7 +70,9 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
       produto,
       porUnidade
         ? { quantidade: unidades, corte, temperada }
-        : { gramas, corte, temperada }
+        : vendePorPeca
+          ? { gramas: produto.pesoEstimadoG, quantidade: unidades, corte, temperada }
+          : { gramas, corte, temperada }
     );
     onOpenChange(false);
   }
@@ -129,12 +144,33 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                       )}
                     </div>
 
-                    {/* Peso (modo kg) ou quantidade de unidades (modo un) */}
+                    {/* Peso exato (modo kg), quantidade (modo un) ou
+                        quantas peças (modo "peça inteira", peso estimado) */}
                     {porUnidade ? (
                       <QuantidadeSelector
                         value={unidades}
                         onChange={setUnidades}
                       />
+                    ) : vendePorPeca ? (
+                      <div className="space-y-2">
+                        <QuantidadeSelector
+                          value={unidades}
+                          onChange={setUnidades}
+                          label="Quantas peças?"
+                        />
+                        <p className="rounded-lg bg-muted/50 p-2.5 text-xs text-muted-foreground">
+                          {produto.pesoEstimadoG ? (
+                            <>
+                              Peso estimado:{" "}
+                              <strong className="text-foreground">
+                                {formatPeso(produto.pesoEstimadoG)}
+                              </strong>{" "}
+                              por peça.{" "}
+                            </>
+                          ) : null}
+                          O peso exato varia e é combinado pelo WhatsApp.
+                        </p>
+                      </div>
                     ) : (
                       <div className="space-y-1.5">
                         <WeightSelector value={gramas} onChange={setGramas} />
@@ -147,9 +183,12 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                     )}
 
                     {/* Corte e tempero — num card à parte, que só aparece depois
-                        que o cliente definiu a quantidade */}
+                        que o cliente definiu a quantidade. No modo "peça
+                        inteira" não faz sentido (corte já é fixo e o peso
+                        varia demais pra combinar tempero), então some. */}
                     <AnimatePresence initial={false}>
                       {quantidadeDefinida &&
+                        !vendePorPeca &&
                         (cortesDisponiveis.length > 0 ||
                           produto.permiteTempero) && (
                           <motion.div
@@ -219,7 +258,9 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                     <span className="text-muted-foreground">
                       {porUnidade
                         ? `${unidades} un`
-                        : `${pesoValido ? formatPeso(gramas) : "—"} estimado`}
+                        : vendePorPeca
+                          ? `${unidades} peça${unidades > 1 ? "s" : ""} estimado`
+                          : `${pesoValido ? formatPeso(gramas) : "—"} estimado`}
                     </span>
                     <span className="font-display text-lg">
                       {formatBRL(precoEstimado)}
@@ -245,13 +286,13 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
   );
 }
 
-/** Seletor de quantidade (em unidades) para produtos vendidos por unidade. */
-function QuantidadeSelector({ value, onChange }) {
+/** Seletor de quantidade (em unidades, ou peças no modo "peça inteira"). */
+function QuantidadeSelector({ value, onChange, label = "Quantidade" }) {
   const dec = () => onChange(Math.max(1, value - 1));
   const inc = () => onChange(Math.min(99, value + 1));
   return (
     <div className="text-sm font-medium">
-      Quantidade
+      {label}
       <div className="mt-1 flex w-fit items-center rounded-lg border border-input">
         <button
           type="button"

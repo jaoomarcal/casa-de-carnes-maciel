@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { cn, formatBRL, formatPeso } from "@/lib/utils";
-import { rotuloCorte } from "@/data/categories";
+import { rotuloCorte, CORTE_PECA_INTEIRA } from "@/data/categories";
 import { enviarPedidoWhatsApp } from "@/lib/whatsapp";
 import { Button } from "@/components/ui/button";
 import {
@@ -181,7 +181,9 @@ export function CartDrawer({ onClose }) {
                       <p className="text-xs text-muted-foreground">
                         {item.unidade === "un"
                           ? `${formatBRL(item.precoKg)} / un`
-                          : `${formatPeso(item.gramas)} · ${formatBRL(item.precoKg)}/kg`}
+                          : item.corte === CORTE_PECA_INTEIRA
+                            ? `~${formatPeso(item.gramas)} estimado · ${formatBRL(item.precoKg)}/kg`
+                            : `${formatPeso(item.gramas)} · ${formatBRL(item.precoKg)}/kg`}
                       </p>
                       {(item.corte || item.temperada) && (
                         <p className="mt-0.5 flex flex-wrap gap-x-2 text-xs text-carne-dark">

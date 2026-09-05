@@ -101,6 +101,7 @@ export function useAdmin() {
       esgotado: !!produto.esgotado,
       cortes: Array.isArray(produto.cortes) ? produto.cortes : [],
       permite_tempero: !!produto.permite_tempero,
+      peso_estimado_g: produto.peso_estimado_g ? Number(produto.peso_estimado_g) : null,
       imagem_url: produto.imagem_url || null,
       ordem: Number(produto.ordem) || 0,
     };
