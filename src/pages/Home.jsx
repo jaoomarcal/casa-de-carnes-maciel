@@ -8,12 +8,17 @@ import { CategoryNav } from "@/components/catalog/CategoryNav";
 import { CategorySection } from "@/components/catalog/CategorySection";
 import { ProductSearch } from "@/components/catalog/ProductSearch";
 import { FloatingCart } from "@/components/cart/FloatingCart";
+import { LojaFechada } from "@/components/layout/LojaFechada";
 import { CATEGORIAS } from "@/data/categories";
 import { useProducts } from "@/hooks/useProducts";
+import { useLojaAberta } from "@/hooks/useLojaAberta";
 
 export default function Home() {
   const { porCategoria, loading, erro } = useProducts();
   const [busca, setBusca] = useState("");
+  const { status, mensagem } = useLojaAberta();
+
+  if (status !== "aberto") return <LojaFechada status={status} mensagem={mensagem} />;
 
   const ofertas = porCategoria("ofertas");
 
