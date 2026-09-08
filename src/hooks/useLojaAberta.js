@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 // Horário de funcionamento, sempre calculado no fuso de São Paulo (não no
 // fuso do navegador do cliente), já que quem importa é o horário da loja:
-//  - Seg a Sáb: 8h às 19h, com pedido online normal.
+//  - Seg a Sáb: 8h às 18h, com pedido online normal.
 //  - Domingo: loja aberta, mas só para atendimento presencial, das 8h às 12h
 //    (sem pedido online — por isso o site também mostra a tela cheia).
 const ABRE_HORA = 8;
-const FECHA_HORA = 19;
+const FECHA_HORA = 18;
 const FECHA_HORA_DOMINGO = 12;
 
 function agoraEmSaoPaulo() {

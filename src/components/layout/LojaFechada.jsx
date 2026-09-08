@@ -5,7 +5,7 @@ const NUMERO_WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMERO || "5517991316331";
 
 /**
  * Ocupa o lugar do site inteiro quando não dá pra fazer pedido online:
- * fora de Seg a Sáb 8h-19h, ou aos domingos fora do atendimento presencial
+ * fora de Seg a Sáb 8h-18h, ou aos domingos fora do atendimento presencial
  * (8h-12h). Mesmo visual do HeroBanner (foto + madeira escura) para manter
  * a identidade da marca.
  */
@@ -61,7 +61,7 @@ export function LojaFechada({ status, mensagem }) {
           <p className="flex items-start gap-2">
             <Clock className="mt-0.5 h-4 w-4 shrink-0 text-carne-light" aria-hidden />
             <span>
-              Seg a Sáb · 8h às 19h
+              Seg a Sáb · 8h às 18h
               <br />
               Domingo · 8h às 12h (só presencial)
             </span>

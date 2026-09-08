@@ -11,7 +11,7 @@ export function Footer() {
       <p className="font-display text-base text-foreground">
         Casa de Carnes Maciel
       </p>
-      <p className="mt-1">Seg a Sáb · 8h às 19h</p>
+      <p className="mt-1">Seg a Sáb · 8h às 18h</p>
       <p className="mt-4 flex items-center justify-center gap-1 text-xs">
         <span>© {new Date().getFullYear()} Casa de Carnes Maciel</span>
         <span aria-hidden>·</span>
