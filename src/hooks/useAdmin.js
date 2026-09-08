@@ -61,7 +61,14 @@ export function useAdmin() {
     carregar();
   }, [carregar]);
 
-  /** Sobe uma foto para o Storage e devolve o "path" para salvar no banco */
+  /**
+   * Sobe uma foto para o Storage e devolve o "path" para salvar no banco.
+   * Cache de 1 ano: cada upload gera um path novo (UUID aleatório) e nunca
+   * reaproveita o mesmo nome pra uma foto diferente, então dá pra cachear
+   * pesado sem risco de servir uma foto desatualizada — isso reduz bastante
+   * o consumo de banda do Storage, já que o navegador (e o CDN) param de
+   * rebaixar a mesma foto a cada hora.
+   */
   async function uploadFoto(file) {
     const arquivo = await comprimirImagem(file);
     const ext = arquivo.type === "image/jpeg" ? "jpg" : arquivo.name.split(".").pop();
@@ -69,7 +76,7 @@ export function useAdmin() {
     const { error } = await supabase.storage
       .from(BUCKET_PRODUTOS)
       .upload(path, arquivo, {
-        cacheControl: "3600",
+        cacheControl: "31536000",
         upsert: false,
         contentType: arquivo.type,
       });

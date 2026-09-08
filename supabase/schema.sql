@@ -20,8 +20,8 @@ create table if not exists public.produtos (
   preco_oferta_kg   numeric(10,2) check (preco_oferta_kg >= 0),
   em_oferta         boolean not null default false,
   esgotado          boolean not null default false,
-  cortes            text[] not null default '{}'  -- cortes disponíveis: bife/manta/cubos/moida/peca-inteira (vazio = não recebe corte)
-                    check (cortes <@ array['bife','manta','cubos','moida','peca-inteira']::text[]),
+  cortes            text[] not null default '{}'  -- cortes disponíveis: bife/manta/cubos/moida/sem-corte/peca-inteira (vazio = não recebe corte)
+                    check (cortes <@ array['bife','manta','cubos','moida','sem-corte','peca-inteira']::text[]),
   permite_tempero   boolean not null default false, -- mostra a opção "Vai temperada?" no site
   peso_estimado_g   integer,       -- peso estimado da peça (só usado quando cortes = ['peca-inteira'])
   imagem_url        text,          -- "path" do arquivo no Storage (bucket "produtos")

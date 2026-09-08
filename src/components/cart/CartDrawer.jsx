@@ -482,7 +482,9 @@ function DadosCliente({
       </div>
 
       <p className="text-xs text-muted-foreground">
-        O pedido é combinado e confirmado pelo WhatsApp da loja.
+        O valor informado é uma estimativa e poderá variar em até 10%, para
+        mais ou para menos, conforme o peso final dos produtos. O valor real
+        da compra será confirmado pelo WhatsApp no fechamento do pedido.
       </p>
     </div>
   );

@@ -313,7 +313,6 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
               required
               type="number"
               min={1}
-              step={50}
               placeholder="Ex: 900"
               value={form.peso_estimado_g ?? ""}
               onChange={set("peso_estimado_g")}

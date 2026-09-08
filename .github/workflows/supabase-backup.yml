@@ -1,0 +1,42 @@
+# Backup diario da tabela "produtos": busca todos os produtos via API publica
+# (mesma chave anon que ja fica exposta no site) e salva o JSON dentro do
+# proprio repositorio, sobrescrevendo supabase/backups/produtos.json.
+#
+# Por que sobrescrever em vez de acumular um arquivo por dia: o historico
+# do Git ja guarda todas as versoes anteriores desse arquivo. Se algo for
+# apagado ou alterado por engano no banco, basta olhar o historico desse
+# arquivo (git log -- supabase/backups/produtos.json) e recuperar o
+# conteudo de um commit anterior (git show <commit>:supabase/backups/produtos.json)
+# pra saber exatamente o que existia antes e reinserir no banco.
+name: Supabase Backup
+
+on:
+  schedule:
+    # todo dia as 6h UTC (~3h em Sao Paulo)
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Busca todos os produtos e salva o JSON
+        run: |
+          mkdir -p supabase/backups
+          curl -sf "https://amdazeudrxpyjvhfngue.supabase.co/rest/v1/produtos?select=*&order=nome" \
+            -H "apikey: sb_publishable_Jv6cEYwhW4S6XZyj2DM2BA_lcyyTIx3" \
+            -H "Authorization: Bearer sb_publishable_Jv6cEYwhW4S6XZyj2DM2BA_lcyyTIx3" \
+            | jq '.' > supabase/backups/produtos.json
+
+      - name: Commita se algo mudou
+        run: |
+          git config user.name "supabase-backup-bot"
+          git config user.email "actions@github.com"
+          git add supabase/backups/produtos.json
+          git diff --cached --quiet || git commit -m "chore: backup diario da tabela produtos"
+          git push

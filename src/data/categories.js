@@ -37,6 +37,7 @@ export const CORTES = [
   { valor: "manta", label: "Manta" },
   { valor: "cubos", label: "Cubos" },
   { valor: "moida", label: "Moída" },
+  { valor: "sem-corte", label: "Peça sem corte" },
   { valor: "peca-inteira", label: "Peça inteira" },
 ];
 

@@ -23,7 +23,7 @@ Qualidade e curadoria dos cortes é o diferencial central (não é uma corrida p
 - Catálogo mantido manualmente pelo dono da loja via painel interno (`/painel`), com login restrito.
 - Categorias: Ofertas do Dia, Bovinos, Suínos, Aves, Peixes, Linguiça, Temperados, Mercearia, Diversos, Bebidas.
 - Produtos vendidos por kg (peso escolhido pelo cliente) ou por unidade.
-- Cortes disponíveis por produto: bife, manta, cubos, moída, peça inteira; opção de "temperada" quando aplicável.
+- Cortes disponíveis por produto: bife, manta, cubos, moída, peça sem corte, peça inteira; opção de "temperada" quando aplicável.
 - Fechamento do pedido abre o WhatsApp com a mensagem pronta (itens, forma de pagamento, endereço se for entrega); pagamento combinado offline (PIX, dinheiro ou cartão).
 - Tempo estimado de entrega fixo: 30 minutos.
 - Backend Supabase mantido ativo por um heartbeat agendado via GitHub Actions.
