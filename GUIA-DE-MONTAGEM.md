@@ -84,13 +84,13 @@ maciel/
     │   │   └── sheet.jsx      → base acessível da gaveta lateral
     │   ├── layout/
     │   │   ├── HeroBanner.jsx → logo sobre a madeira, com escurecimento
-    │   │   ├── PromoBanner.jsx→ card de ofertas em vidro fosco (glassmorphism)
     │   │   └── Footer.jsx     → rodapé + link "•" escondido para o /painel
     │   ├── catalog/
     │   │   ├── ProductCard.jsx    → 🟩 PEÇA 3: o card do produto (hover + esgotado, abre o modal)
     │   │   ├── ProductModal.jsx   → detalhe do produto: peso, corte e tempero + "Adicionar"
     │   │   ├── ProductSkeleton.jsx
-    │   │   ├── CategorySection.jsx → título + grade de cards de uma categoria
+    │   │   ├── CategorySection.jsx → título + grade de cards de uma categoria (vitrine giratória na categoria "promocao")
+    │   │   ├── PromoCarousel.jsx   → vitrine da categoria "promocao": um produto grande por vez, giratória
     │   │   └── WeightSelector.jsx  → campo para digitar o peso em gramas
     │   └── cart/
     │       ├── FloatingCart.jsx   → 🟩 PEÇA 4: botão 3D + abre a gaveta
