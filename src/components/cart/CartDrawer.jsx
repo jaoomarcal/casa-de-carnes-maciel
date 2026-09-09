@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "sonner";
 import {
   Trash2,
   ShoppingBag,
@@ -47,6 +48,7 @@ export function CartDrawer({ onClose }) {
     incrementar,
     decrementar,
     remover,
+    limpar,
   } = useCart();
 
   const [etapa, setEtapa] = useState("carrinho");
@@ -80,6 +82,16 @@ export function CartDrawer({ onClose }) {
       /* ignora se o navegador bloquear o storage */
     }
     enviarPedidoWhatsApp(itens, dados);
+
+    // Encaminhou pro WhatsApp: o pedido se encerra aqui no app — esvazia o
+    // carrinho, volta pra primeira etapa e fecha a gaveta. A partir daqui a
+    // conversa continua no WhatsApp.
+    limpar();
+    setEtapa("carrinho");
+    toast.success("Pedido enviado no WhatsApp!", {
+      description: "Seu carrinho foi esvaziado. É só finalizar a conversa por lá.",
+    });
+    onClose?.();
   }
 
   const naEtapaDados = etapa === "dados" && !vazio;

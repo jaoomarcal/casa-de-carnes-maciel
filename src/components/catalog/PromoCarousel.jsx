@@ -11,16 +11,12 @@ import { ProductModal } from "@/components/catalog/ProductModal";
 const INTERVALO_MS = 4500;
 
 /**
- * Vitrine da categoria "Promoção": em vez de grade, mostra um produto por
+ * Vitrine da categoria "Ofertas": em vez de grade, mostra um produto por
  * vez em destaque (mesma arquitetura do ProductCard normal, só que maior:
  * foto, selo, nome e preço bem grandes) e troca sozinha a cada 4.5s.
  *
- * Layout: uma linha flex de 3 colunas de largura FIXA (nunca %, nunca
- * margem negativa) — miniatura anterior | card central | miniatura
- * seguinte. Cada coluna reserva seu próprio espaço, então a miniatura
- * nunca fica escondida atrás do card central; ela só encolhe (com
- * `shrink-0` todo mundo tem largura garantida) nas telas bem estreitas,
- * onde o wrapper com overflow-hidden evita rolagem horizontal.
+ * Só o card central aparece; a navegação entre os produtos fica nos
+ * pontinhos abaixo dele.
  */
 export function PromoCarousel({ produtos = [] }) {
   const [indice, setIndice] = useState(0);
@@ -38,8 +34,6 @@ export function PromoCarousel({ produtos = [] }) {
 
   const atual = indice % total;
   const central = produtos[atual];
-  const anterior = produtos[(atual - 1 + total) % total];
-  const proximo = produtos[(atual + 1) % total];
 
   const esgotado = central.esgotado;
   const desconto =
@@ -52,14 +46,7 @@ export function PromoCarousel({ produtos = [] }) {
 
   return (
     <>
-      <div className="mx-auto flex max-w-full items-center justify-center gap-2 overflow-hidden px-1 sm:gap-4 md:gap-6">
-        {total > 1 && (
-          <Miniatura
-            produto={anterior}
-            onClick={() => setIndice((atual - 1 + total) % total)}
-          />
-        )}
-
+      <div className="flex justify-center overflow-hidden px-1">
         <motion.article
           key={central.id}
           initial={{ opacity: 0 }}
@@ -75,7 +62,7 @@ export function PromoCarousel({ produtos = [] }) {
             }
           }}
           className={cn(
-            "flex w-60 shrink-0 flex-col overflow-hidden rounded-lg border border-border bg-background shadow-card sm:w-72 md:w-80",
+            "flex w-full max-w-sm flex-col overflow-hidden rounded-lg border border-border bg-background shadow-card",
             !esgotado && "cursor-pointer",
             esgotado && "opacity-60"
           )}
@@ -150,13 +137,6 @@ export function PromoCarousel({ produtos = [] }) {
             </div>
           </div>
         </motion.article>
-
-        {total > 1 && (
-          <Miniatura
-            produto={proximo}
-            onClick={() => setIndice((atual + 1) % total)}
-          />
-        )}
       </div>
 
       {total > 1 && (
@@ -184,28 +164,5 @@ export function PromoCarousel({ produtos = [] }) {
         />
       )}
     </>
-  );
-}
-
-/**
- * Miniatura do produto anterior/próximo — coluna de largura fixa ao lado
- * do card central, com uma fatia da foto pra dar contexto e convidar a
- * tocar. Nunca fica coberta: tem espaço próprio garantido no layout.
- */
-function Miniatura({ produto, onClick }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={`Ver ${produto.nome}`}
-      className="relative h-44 w-9 shrink-0 overflow-hidden rounded-lg border border-border opacity-60 transition hover:opacity-90 sm:h-56 sm:w-16 md:h-64 md:w-24"
-    >
-      <img
-        src={produto.imagem || "/assets/carnes-og.png"}
-        alt={produto.nome}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-carvao/25" aria-hidden />
-    </button>
   );
 }

@@ -131,7 +131,17 @@ export function CartProvider({ children }) {
       incrementar: (k) => dispatch({ type: "INC", k }),
       decrementar: (k) => dispatch({ type: "DEC", k }),
       remover: (k) => dispatch({ type: "REMOVE", k }),
-      limpar: () => dispatch({ type: "CLEAR" }),
+      limpar: () => {
+        dispatch({ type: "CLEAR" });
+        // Apaga o storage na hora: no celular a página navega pro WhatsApp
+        // logo em seguida e o efeito que salva o carrinho pode não rodar,
+        // então o carrinho "voltaria" quando o cliente reabrisse o app.
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch {
+          /* ignora se o navegador bloquear o storage */
+        }
+      },
     };
   }, [itens]);
 
