@@ -20,7 +20,7 @@ export default function Home() {
 
   if (status !== "aberto") return <LojaFechada status={status} mensagem={mensagem} />;
 
-  const ofertas = porCategoria("ofertas");
+  const promocoes = porCategoria("promocao");
 
   // Filtra por nome/descrição; usado para esconder produtos e seções que não
   // batem com a busca do cliente. Ignora acento nos dois lados da comparação
@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <div className="min-h-dvh bg-background">
       <HeroBanner />
-      <PromoBanner ofertas={ofertas} />
+      <PromoBanner promocoes={promocoes} loading={loading} />
 
       <div className="sticky top-0 z-40">
         <ProductSearch value={busca} onChange={setBusca} />

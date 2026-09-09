@@ -180,7 +180,9 @@ export function CartDrawer({ onClose }) {
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {item.unidade === "un"
-                          ? `${formatBRL(item.precoKg)} / un`
+                          ? item.gramas
+                            ? `~${formatPeso(item.gramas)}/un estimado · ${formatBRL(item.precoKg)}/kg`
+                            : `${formatBRL(item.precoKg)} / un`
                           : item.corte === CORTE_PECA_INTEIRA
                             ? `~${formatPeso(item.gramas)} estimado · ${formatBRL(item.precoKg)}/kg`
                             : `${formatPeso(item.gramas)} · ${formatBRL(item.precoKg)}/kg`}
@@ -335,7 +337,9 @@ function ResumoPedido({ itens, chaveItem, subtotalItem }) {
                   .filter(Boolean)
                   .join(" · ");
                 const medida =
-                  item.unidade === "un" ? "" : ` — ${formatPeso(item.gramas)}`;
+                  item.unidade === "un"
+                    ? item.gramas ? ` — ~${formatPeso(item.gramas)}/un` : ""
+                    : ` — ${formatPeso(item.gramas)}`;
                 return (
                   <li key={chaveItem(item)} className="flex justify-between gap-2">
                     <span className="text-muted-foreground">

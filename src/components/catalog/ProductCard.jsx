@@ -66,7 +66,7 @@ export function ProductCard({ produto }) {
 
           {/* Selos no canto */}
           <div className="absolute left-2 top-2 flex flex-col gap-1">
-            {produto.emOferta && !esgotado && <Badge variant="oferta">Oferta 🔥</Badge>}
+            {produto.emOferta && !esgotado && <Badge variant="oferta">Promoção 🔥</Badge>}
             {esgotado && <Badge variant="muted">Esgotado</Badge>}
           </div>
         </div>
@@ -76,7 +76,7 @@ export function ProductCard({ produto }) {
           <h3 className="line-clamp-1 font-semibold leading-tight">{produto.nome}</h3>
 
           <div className="flex items-baseline gap-1.5">
-            {produto.emOferta && (
+            {produto.temDesconto && (
               <span className="text-xs text-muted-foreground line-through">
                 {formatBRL(produto.precoKg)}
               </span>
@@ -85,7 +85,7 @@ export function ProductCard({ produto }) {
               {formatBRL(produto.precoAtualKg)}
             </span>
             <span className="text-xs text-muted-foreground">
-              / {rotuloUnidade(produto.unidade)}
+              / {produto.unidadeComPeso ? "kg" : rotuloUnidade(produto.unidade)}
             </span>
           </div>
 

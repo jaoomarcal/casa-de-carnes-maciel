@@ -3,7 +3,7 @@
 // O emoji no fim do nome é só visual (barra de categorias, seções e painel),
 // ajuda a bater o olho e identificar a categoria mais rápido.
 export const CATEGORIAS = [
-  { slug: "ofertas", nome: "Ofertas do Dia 🔥" },
+  { slug: "promocao", nome: "Promoção 🔥" },
   { slug: "bovinos", nome: "Bovinos 🐂" },
   { slug: "suinos", nome: "Suínos 🐷" },
   { slug: "aves", nome: "Aves 🐔" },

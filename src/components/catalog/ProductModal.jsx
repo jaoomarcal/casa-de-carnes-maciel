@@ -17,9 +17,15 @@ import { useCart } from "@/context/CartContext";
 export function ProductModal({ produto, aberto, onOpenChange }) {
   const { adicionar } = useCart();
 
-  // Vendido por unidade (bebidas, mercearia, bandejas...) não tem peso: o
-  // cliente escolhe a quantidade de unidades.
+  // Vendido por unidade (bebidas, mercearia, bandejas...): o cliente escolhe
+  // a quantidade de unidades em vez do peso.
   const porUnidade = produto.unidade === "un";
+
+  // "Unidade com peso estimado": vendida por unidade, mas o preço é por kg e o
+  // peso de cada unidade varia (ex: frango inteiro). O cliente escolhe quantas
+  // unidades, vê um valor estimado e a mensagem de peso — igual ao modo
+  // "peça inteira". O peso/valor exatos são combinados pelo WhatsApp.
+  const unidadeComPeso = !!produto.unidadeComPeso;
 
   const cortesDisponiveis = CORTES.filter((c) =>
     (produto.cortes || []).includes(c.valor)
@@ -59,7 +65,9 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
   const precoEstimado = !quantidadeDefinida
     ? 0
     : porUnidade
-      ? produto.precoAtualKg * unidades
+      ? unidadeComPeso
+        ? produto.precoAtualKg * (produto.pesoEstimadoG / 1000) * unidades
+        : produto.precoAtualKg * unidades
       : vendePorPeca
         ? produto.precoAtualKg * ((produto.pesoEstimadoG || 0) / 1000) * unidades
         : produto.precoAtualKg * (gramas / 1000);
@@ -69,7 +77,12 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
     adicionar(
       produto,
       porUnidade
-        ? { quantidade: unidades, corte, temperada }
+        ? {
+            quantidade: unidades,
+            corte,
+            temperada,
+            gramas: unidadeComPeso ? produto.pesoEstimadoG : null,
+          }
         : vendePorPeca
           ? { gramas: produto.pesoEstimadoG, quantidade: unidades, corte, temperada }
           : { gramas, corte, temperada }
@@ -125,7 +138,7 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                         {produto.nome}
                       </Dialog.Title>
                       <div className="mt-1 flex items-baseline gap-1.5">
-                        {produto.emOferta && (
+                        {produto.temDesconto && (
                           <span className="text-xs text-muted-foreground line-through">
                             {formatBRL(produto.precoKg)}
                           </span>
@@ -134,7 +147,7 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                           {formatBRL(produto.precoAtualKg)}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                          / {rotuloUnidade(produto.unidade)}
+                          / {unidadeComPeso ? "kg" : rotuloUnidade(produto.unidade)}
                         </span>
                       </div>
                       {produto.descricao && (
@@ -147,10 +160,22 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                     {/* Peso exato (modo kg), quantidade (modo un) ou
                         quantas peças (modo "peça inteira", peso estimado) */}
                     {porUnidade ? (
-                      <QuantidadeSelector
-                        value={unidades}
-                        onChange={setUnidades}
-                      />
+                      <div className="space-y-2">
+                        <QuantidadeSelector
+                          value={unidades}
+                          onChange={setUnidades}
+                        />
+                        {unidadeComPeso && (
+                          <p className="rounded-lg bg-muted/50 p-2.5 text-xs text-muted-foreground">
+                            Peso estimado:{" "}
+                            <strong className="text-foreground">
+                              {formatPeso(produto.pesoEstimadoG)}
+                            </strong>{" "}
+                            por unidade. O peso exato varia e é combinado pelo
+                            WhatsApp.
+                          </p>
+                        )}
+                      </div>
                     ) : vendePorPeca ? (
                       <div className="space-y-2">
                         <QuantidadeSelector
@@ -257,7 +282,9 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                   <div className="mb-2 flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">
                       {porUnidade
-                        ? `${unidades} un`
+                        ? unidadeComPeso
+                          ? `${unidades} un · ~${formatPeso(produto.pesoEstimadoG * unidades)} estimado`
+                          : `${unidades} un`
                         : vendePorPeca
                           ? `${unidades} peça${unidades > 1 ? "s" : ""} estimado`
                           : `${pesoValido ? formatPeso(gramas) : "—"} estimado`}

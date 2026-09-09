@@ -21,8 +21,9 @@ Qualidade e curadoria dos cortes é o diferencial central (não é uma corrida p
 ## Operating Context
 
 - Catálogo mantido manualmente pelo dono da loja via painel interno (`/painel`), com login restrito.
-- Categorias: Ofertas do Dia, Bovinos, Suínos, Aves, Peixes, Linguiça, Temperados, Mercearia, Diversos, Bebidas.
-- Produtos vendidos por kg (peso escolhido pelo cliente) ou por unidade.
+- Categorias: Promoção, Bovinos, Suínos, Aves, Peixes, Linguiça, Temperados, Mercearia, Diversos, Bebidas.
+- "Promoção" é uma vitrine virtual (primeira na ordem, com banner rotativo entre o hero e o menu): reúne todo produto com o checkbox "É oferta do dia" marcado no painel, sem removê-lo da categoria real. Preço de oferta é opcional.
+- Produtos vendidos por kg (peso escolhido pelo cliente) ou por unidade. Unidade pode ter um peso estimado opcional: nesse caso o preço passa a valer por kg e o cliente vê um valor estimado por unidade (peso/valor exatos combinados pelo WhatsApp), igual ao corte "peça inteira".
 - Cortes disponíveis por produto: bife, manta, cubos, moída, peça sem corte, peça inteira; opção de "temperada" quando aplicável.
 - Fechamento do pedido abre o WhatsApp com a mensagem pronta (itens, forma de pagamento, endereço se for entrega); pagamento combinado offline (PIX, dinheiro ou cartão).
 - Tempo estimado de entrega fixo: 30 minutos.

@@ -5,11 +5,17 @@ const NUMERO = import.meta.env.VITE_WHATSAPP_NUMERO || "5517991316331";
 
 /**
  * Preço de uma linha do carrinho.
- *  - "un": preço por unidade * quantidade
+ *  - "un" sem peso: preço por unidade * quantidade
+ *  - "un" com peso estimado: preço/kg * (peso da unidade / 1000) * quantidade
  *  - "kg": preço/kg * (gramas / 1000) * quantidade
  */
 export function subtotalItem(item) {
-  if (item.unidade === "un") return item.precoKg * item.quantidade;
+  if (item.unidade === "un") {
+    if (item.gramas) {
+      return item.precoKg * (item.gramas / 1000) * item.quantidade;
+    }
+    return item.precoKg * item.quantidade;
+  }
   return item.precoKg * (item.gramas / 1000) * item.quantidade;
 }
 
@@ -37,7 +43,9 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
     const sufixo = extras.length ? ` · ${extras.join(" · ")}` : "";
     const medida =
       item.unidade === "un"
-        ? ""
+        ? item.gramas
+          ? ` — ~${formatPeso(item.gramas)}/un (peso a confirmar)`
+          : ""
         : item.corte === CORTE_PECA_INTEIRA
           ? ` — ~${formatPeso(item.gramas)} (peso a confirmar)`
           : ` — ${formatPeso(item.gramas)}`;
