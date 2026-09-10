@@ -13,7 +13,7 @@ import {
 
 import { cn, formatBRL, formatPeso } from "@/lib/utils";
 import { rotuloCorte, CORTE_PECA_INTEIRA } from "@/data/categories";
-import { enviarPedidoWhatsApp } from "@/lib/whatsapp";
+import { enviarPedidoWhatsApp, TAXA_ENTREGA } from "@/lib/whatsapp";
 import { Button } from "@/components/ui/button";
 import {
   SheetHeader,
@@ -496,6 +496,31 @@ function DadosCliente({
         </span>{" "}
         <span className="text-muted-foreground">trinta minutos</span>
       </div>
+
+      {/* Taxa de entrega — só aparece no modo entrega. O valor é somado
+          apenas na mensagem do WhatsApp, não no total exibido no site. */}
+      <AnimatePresence initial={false}>
+        {entrega === "entrega" && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="flex items-start gap-2 rounded-lg border border-carne/30 bg-carne/5 p-3 text-sm">
+              <Bike className="mt-0.5 h-4 w-4 shrink-0 text-carne" />
+              <p>
+                <span className="font-medium">
+                  Taxa de entrega: {formatBRL(TAXA_ENTREGA)}
+                </span>{" "}
+                <span className="text-muted-foreground">
+                  — será somada ao total do pedido no WhatsApp.
+                </span>
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <p className="text-xs text-muted-foreground">
         O valor informado é uma estimativa e poderá variar em até 10%, para

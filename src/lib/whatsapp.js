@@ -4,6 +4,13 @@ import { rotuloCorte, CORTE_PECA_INTEIRA } from "@/data/categories";
 const NUMERO = import.meta.env.VITE_WHATSAPP_NUMERO || "5517991316331";
 
 /**
+ * Taxa de entrega fixa. Só entra na conta quando o pedido é "entrega" e
+ * apenas na mensagem enviada ao WhatsApp — o site não soma esse valor em
+ * lugar nenhum (o total exibido continua sendo só o dos produtos).
+ */
+export const TAXA_ENTREGA = 8;
+
+/**
  * Preço de uma linha do carrinho.
  *  - "un" sem peso: preço por unidade * quantidade
  *  - "un" com peso estimado: preço/kg * (peso da unidade / 1000) * quantidade
@@ -74,13 +81,26 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
       : "*Tempo estimado de preparo:* trinta minutos",
   ].filter(Boolean);
 
+  const totalProdutos = totalCarrinho(itens);
+  const taxaEntrega = dados.entrega === "entrega" ? TAXA_ENTREGA : 0;
+
+  // A taxa de entrega só é somada aqui, na string do WhatsApp. O total do
+  // site (passado em `total`/exibido no drawer) continua sem ela.
+  const resumoValores = taxaEntrega
+    ? [
+        `*Subtotal dos produtos:* ${formatBRL(totalProdutos)}`,
+        `*Taxa de entrega:* ${formatBRL(taxaEntrega)}`,
+        `*Total estimado:* ${formatBRL(totalProdutos + taxaEntrega)}`,
+      ]
+    : [`*Total estimado:* ${formatBRL(totalProdutos)}`];
+
   const mensagem = [
     "🥩 *NOVO PEDIDO — CASA DE CARNES MACIEL*",
     "",
     ...linhas,
     "",
     "————————————————",
-    `*Total estimado:* ${formatBRL(totalCarrinho(itens))}`,
+    ...resumoValores,
     "",
     ...infoCliente,
   ].join("\n");
