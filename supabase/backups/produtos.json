@@ -269,7 +269,7 @@
   {
     "id": "156c80fc-fc5f-45e0-81f3-97c265483191",
     "nome": "Carnaza",
-    "descricao": null,
+    "descricao": "🔥 𝗢𝗙𝗘𝗥𝗧𝗔 𝗘𝗫𝗖𝗟𝗨𝗦𝗜𝗩𝗔 🔥\n🛒 𝗦𝗢𝗠𝗘𝗡𝗧𝗘 𝗣𝗘𝗟𝗢 𝗦𝗜𝗧𝗘!",
     "categoria": "bovinos",
     "preco_kg": 36.80,
     "preco_oferta_kg": null,
@@ -278,7 +278,7 @@
     "imagem_url": "87f891ff-74d6-4ecb-97f9-705b2d24623f.jpg",
     "ordem": 10,
     "criado_em": "2026-08-31T20:22:59.048733+00:00",
-    "atualizado_em": "2026-09-09T18:53:32.097807+00:00",
+    "atualizado_em": "2026-09-10T12:44:31.078561+00:00",
     "cortes": [
       "manta",
       "bife",
@@ -293,7 +293,7 @@
   {
     "id": "dfc32cdd-0a9e-47ab-b538-aababa3ad7b4",
     "nome": "Carne Moída",
-    "descricao": null,
+    "descricao": "🔥 𝗢𝗙𝗘𝗥𝗧𝗔 𝗘𝗫𝗖𝗟𝗨𝗦𝗜𝗩𝗔 🔥\n🛒 𝗦𝗢𝗠𝗘𝗡𝗧𝗘 𝗣𝗘𝗟𝗢 𝗦𝗜𝗧𝗘!",
     "categoria": "bovinos",
     "preco_kg": 29.60,
     "preco_oferta_kg": null,
@@ -302,7 +302,7 @@
     "imagem_url": "74cf8629-f15e-49ae-9205-099a1c69c007.webp",
     "ordem": 16,
     "criado_em": "2026-08-31T20:22:59.048733+00:00",
-    "atualizado_em": "2026-09-09T18:51:36.350864+00:00",
+    "atualizado_em": "2026-09-10T12:44:13.945799+00:00",
     "cortes": [],
     "permite_tempero": false,
     "unidade": "kg",
@@ -1706,7 +1706,7 @@
   {
     "id": "3cb334e4-d521-44dc-8b97-93be753a39b9",
     "nome": "Miolo do Acém",
-    "descricao": null,
+    "descricao": "🔥 𝗢𝗙𝗘𝗥𝗧𝗔 𝗘𝗫𝗖𝗟𝗨𝗦𝗜𝗩𝗔 🔥\n🛒 𝗦𝗢𝗠𝗘𝗡𝗧𝗘 𝗣𝗘𝗟𝗢 𝗦𝗜𝗧𝗘!",
     "categoria": "bovinos",
     "preco_kg": 33.20,
     "preco_oferta_kg": null,
@@ -1715,7 +1715,7 @@
     "imagem_url": "99a380be-efba-439a-a628-779f6c6ee94b.jpg",
     "ordem": 12,
     "criado_em": "2026-08-31T20:22:59.048733+00:00",
-    "atualizado_em": "2026-09-09T18:53:00.709894+00:00",
+    "atualizado_em": "2026-09-10T12:44:50.062536+00:00",
     "cortes": [
       "bife",
       "manta",
@@ -1840,7 +1840,7 @@
   {
     "id": "dfb75788-aaad-4bca-b19c-68aea045dcbc",
     "nome": "Músculo",
-    "descricao": null,
+    "descricao": "🔥 𝗢𝗙𝗘𝗥𝗧𝗔 𝗘𝗫𝗖𝗟𝗨𝗦𝗜𝗩𝗔 🔥\n🛒 𝗦𝗢𝗠𝗘𝗡𝗧𝗘 𝗣𝗘𝗟𝗢 𝗦𝗜𝗧𝗘!",
     "categoria": "bovinos",
     "preco_kg": 31.40,
     "preco_oferta_kg": null,
@@ -1849,7 +1849,7 @@
     "imagem_url": "c485ee60-2783-409e-9372-1405cafc5335.jpg",
     "ordem": 15,
     "criado_em": "2026-08-31T20:22:59.048733+00:00",
-    "atualizado_em": "2026-09-09T18:55:02.873423+00:00",
+    "atualizado_em": "2026-09-10T12:43:43.386339+00:00",
     "cortes": [
       "cubos",
       "moida",
