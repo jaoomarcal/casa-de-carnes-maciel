@@ -56,7 +56,7 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
         : item.corte === CORTE_PECA_INTEIRA
           ? ` — ~${formatPeso(item.gramas)} (peso a confirmar)`
           : ` — ${formatPeso(item.gramas)}`;
-    return `• *${item.quantidade}x* ${item.nome}${medida}${sufixo}\n   ${preco}`;
+    return `• ${item.nome}${medida}${sufixo} — Qtd: ${item.quantidade}\n   ${preco}`;
   });
 
   const entrega =
