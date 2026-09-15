@@ -26,6 +26,7 @@ function normalizar(row) {
     !vendePorPeca && row.unidade === "un" && pesoEstimadoG > 0;
   return {
     id: row.id,
+    tipo: row.tipo === "banner" ? "banner" : "produto",
     nome: row.nome,
     descricao: row.descricao,
     categoria: row.categoria,
@@ -76,10 +77,12 @@ export function useProducts() {
     carregar();
   }, [carregar]);
 
-  // Agrupa por categoria; "promocao" é uma vitrine virtual (em_oferta = true)
+  // Agrupa por categoria; "promocao" é uma vitrine virtual (em_oferta = true).
+  // Cards "banner" (só imagem + descrição) só aparecem em "promocao" —
+  // nunca na grade normal de uma categoria, mesmo que tenham uma salva.
   const porCategoria = (slug) => {
     if (slug === "promocao") return produtos.filter((p) => p.emOferta);
-    return produtos.filter((p) => p.categoria === slug);
+    return produtos.filter((p) => p.categoria === slug && p.tipo !== "banner");
   };
 
   return { produtos, porCategoria, loading, erro, recarregar: carregar };

@@ -69,6 +69,7 @@ function Login({ onEntrar }) {
 
 /* --------------------------- Formulário de produto --------------------------- */
 const VAZIO = {
+  tipo: "produto",
   nome: "",
   descricao: "",
   categoria: "bovinos",
@@ -84,15 +85,26 @@ const VAZIO = {
   ordem: 0,
 };
 
-function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
+// Card de oferta: só imagem + descrição, sem preço/corte/peso — pensado
+// pra avisos na vitrine "Ofertas" que não são um produto vendável.
+const VAZIO_BANNER = {
+  tipo: "banner",
+  nome: "",
+  descricao: "",
+  imagem_url: "",
+  ordem: 0,
+};
+
+function ProdutoForm({ inicial, tipoInicial = "produto", onSalvar, onCancelar, uploadFoto }) {
   const [form, setForm] = useState(() => {
-    const base = inicial || VAZIO;
+    const base = inicial || (tipoInicial === "banner" ? VAZIO_BANNER : VAZIO);
     // Autocorrige cadastros antigos: "peça inteira" só faz sentido vendida
     // por quilo (não existe preço fixo por unidade com peso variável).
     const cortes = Array.isArray(base.cortes) ? base.cortes : [];
     return cortes.includes(CORTE_PECA_INTEIRA) ? { ...base, unidade: "kg" } : base;
   });
   const [enviando, setEnviando] = useState(false);
+  const ehBanner = form.tipo === "banner";
 
   const set = (campo) => (e) => {
     const v = e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -161,9 +173,16 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
       onSubmit={submit}
       className="space-y-3 rounded-xl border border-border bg-background p-4"
     >
+      {ehBanner && (
+        <p className="rounded-lg bg-muted/40 p-2.5 text-xs text-muted-foreground">
+          Card de oferta: só imagem + texto, sem preço. Entra girando no
+          carrossel da vitrine "Ofertas 🔥", sem abrir nada ao ser clicado.
+        </p>
+      )}
+
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="text-sm">
-          Nome
+          {ehBanner ? "Nome (uso interno, não aparece no site)" : "Nome"}
           <input
             required
             value={form.nome}
@@ -171,84 +190,89 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
             className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
           />
         </label>
-        <label className="text-sm">
-          Categoria
-          <select
-            value={form.categoria}
-            onChange={set("categoria")}
-            className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
-          >
-            {CATEGORIAS.filter((c) => c.slug !== "promocao").map((c) => (
-              <option key={c.slug} value={c.slug}>
-                {c.nome}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="text-sm">
-          Vendido por
-          <select
-            value={form.unidade || "kg"}
-            onChange={(e) =>
-              setForm((f) => ({
-                ...f,
-                unidade: e.target.value,
-                // Voltar pra quilo zera o peso estimado: ele só faz sentido
-                // em "unidade" (ou peça inteira, que trava este select).
-                peso_estimado_g:
-                  e.target.value === "un" ? f.peso_estimado_g : "",
-              }))
-            }
-            disabled={vendePecaInteira}
-            className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm disabled:opacity-60"
-          >
-            <option value="kg">Quilo (cliente escolhe o peso)</option>
-            <option value="un">Unidade (cliente escolhe a quantidade)</option>
-          </select>
-          {vendePecaInteira && (
-            <span className="mt-1 block text-xs text-muted-foreground">
-              Travado em quilo: peça inteira não tem preço fixo por unidade.
-            </span>
-          )}
-        </label>
-        <label className="text-sm">
-          {vendePecaInteira
-            ? "Preço por kg da peça (R$)"
-            : unidadeComPeso
-              ? "Preço por kg (R$)"
-              : form.unidade === "un"
-                ? "Preço por unidade (R$)"
-                : "Preço por kg (R$)"}
-          <input
-            required
-            type="number"
-            step="0.01"
-            value={form.preco_kg}
-            onChange={set("preco_kg")}
-            className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
-          />
-        </label>
-        <label className="text-sm">
-          {vendePecaInteira
-            ? "Preço de oferta por kg da peça (opcional)"
-            : unidadeComPeso
-              ? "Preço de oferta por kg (opcional)"
-              : form.unidade === "un"
-                ? "Preço de oferta por unidade (opcional)"
-                : "Preço de oferta por kg (opcional)"}
-          <input
-            type="number"
-            step="0.01"
-            value={form.preco_oferta_kg ?? ""}
-            onChange={set("preco_oferta_kg")}
-            className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
-          />
-        </label>
+        {!ehBanner && (
+          <>
+            <label className="text-sm">
+              Categoria
+              <select
+                value={form.categoria}
+                onChange={set("categoria")}
+                className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
+              >
+                {CATEGORIAS.filter((c) => c.slug !== "promocao").map((c) => (
+                  <option key={c.slug} value={c.slug}>
+                    {c.nome}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="text-sm">
+              Vendido por
+              <select
+                value={form.unidade || "kg"}
+                onChange={(e) =>
+                  setForm((f) => ({
+                    ...f,
+                    unidade: e.target.value,
+                    // Voltar pra quilo zera o peso estimado: ele só faz sentido
+                    // em "unidade" (ou peça inteira, que trava este select).
+                    peso_estimado_g:
+                      e.target.value === "un" ? f.peso_estimado_g : "",
+                  }))
+                }
+                disabled={vendePecaInteira}
+                className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm disabled:opacity-60"
+              >
+                <option value="kg">Quilo (cliente escolhe o peso)</option>
+                <option value="un">Unidade (cliente escolhe a quantidade)</option>
+              </select>
+              {vendePecaInteira && (
+                <span className="mt-1 block text-xs text-muted-foreground">
+                  Travado em quilo: peça inteira não tem preço fixo por unidade.
+                </span>
+              )}
+            </label>
+            <label className="text-sm">
+              {vendePecaInteira
+                ? "Preço por kg da peça (R$)"
+                : unidadeComPeso
+                  ? "Preço por kg (R$)"
+                  : form.unidade === "un"
+                    ? "Preço por unidade (R$)"
+                    : "Preço por kg (R$)"}
+              <input
+                required
+                type="number"
+                step="0.01"
+                value={form.preco_kg}
+                onChange={set("preco_kg")}
+                className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
+              />
+            </label>
+            <label className="text-sm">
+              {vendePecaInteira
+                ? "Preço de oferta por kg da peça (opcional)"
+                : unidadeComPeso
+                  ? "Preço de oferta por kg (opcional)"
+                  : form.unidade === "un"
+                    ? "Preço de oferta por unidade (opcional)"
+                    : "Preço de oferta por kg (opcional)"}
+              <input
+                type="number"
+                step="0.01"
+                value={form.preco_oferta_kg ?? ""}
+                onChange={set("preco_oferta_kg")}
+                className="mt-1 w-full rounded-lg border border-input px-3 py-2 text-sm"
+              />
+            </label>
+          </>
+        )}
       </div>
 
       <label className="block text-sm">
-        Descrição
+        {ehBanner ? "Texto do card (aparece embaixo da imagem)" : "Descrição"}
         <textarea
+          required={ehBanner}
           rows={2}
           value={form.descricao ?? ""}
           onChange={set("descricao")}
@@ -256,107 +280,121 @@ function ProdutoForm({ inicial, onSalvar, onCancelar, uploadFoto }) {
         />
       </label>
 
-      <div className="space-y-2">
-        <div className="flex flex-wrap items-center gap-4">
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={form.em_oferta}
-              onChange={set("em_oferta")}
-            />
-            É oferta do dia
-          </label>
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={form.esgotado}
-              onChange={set("esgotado")}
-            />
-            Esgotado
-          </label>
-          <label className="text-sm">
-            Ordem
-            <input
-              type="number"
-              value={form.ordem}
-              onChange={set("ordem")}
-              className="ml-2 w-16 rounded-lg border border-input px-2 py-1 text-sm"
-            />
-          </label>
+      {ehBanner ? (
+        <label className="text-sm">
+          Ordem
+          <input
+            type="number"
+            value={form.ordem}
+            onChange={set("ordem")}
+            className="ml-2 w-16 rounded-lg border border-input px-2 py-1 text-sm"
+          />
+        </label>
+      ) : (
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-4">
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={form.em_oferta}
+                onChange={set("em_oferta")}
+              />
+              É oferta do dia
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={form.esgotado}
+                onChange={set("esgotado")}
+              />
+              Esgotado
+            </label>
+            <label className="text-sm">
+              Ordem
+              <input
+                type="number"
+                value={form.ordem}
+                onChange={set("ordem")}
+                className="ml-2 w-16 rounded-lg border border-input px-2 py-1 text-sm"
+              />
+            </label>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            "É oferta do dia" coloca o produto na vitrine <strong>Promoção</strong>{" "}
+            (banner no topo da loja e categoria em primeiro lugar), sem tirá-lo da
+            categoria dele. O "preço de oferta" acima é opcional — sem ele, o
+            produto entra na promoção pelo preço normal.
+          </p>
         </div>
-        <p className="text-xs text-muted-foreground">
-          "É oferta do dia" coloca o produto na vitrine <strong>Promoção</strong>{" "}
-          (banner no topo da loja e categoria em primeiro lugar), sem tirá-lo da
-          categoria dele. O "preço de oferta" acima é opcional — sem ele, o
-          produto entra na promoção pelo preço normal.
-        </p>
-      </div>
+      )}
 
       {/* Tempero + cortes disponíveis (aparecem no site só quando marcados) */}
-      <div className="space-y-2 rounded-lg border border-border bg-muted/40 p-3">
-        <label className="flex items-center gap-2 text-sm font-medium">
-          <input
-            type="checkbox"
-            checked={!!form.permite_tempero}
-            onChange={set("permite_tempero")}
-          />
-          Permite tempero
-        </label>
-        <p className="text-xs text-muted-foreground">
-          Mostra a opção “Vai temperada?” para o cliente neste produto.
-        </p>
-
-        <div className="pt-1 text-sm font-medium">Cortes disponíveis</div>
-        <div className="flex flex-wrap gap-3">
-          {CORTES.map((c) => {
-            const outroDesabilitado =
-              vendePecaInteira && c.valor !== CORTE_PECA_INTEIRA;
-            return (
-              <label
-                key={c.valor}
-                className={`flex items-center gap-2 text-sm ${
-                  outroDesabilitado ? "opacity-40" : ""
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  checked={cortesSelecionados.includes(c.valor)}
-                  disabled={outroDesabilitado}
-                  onChange={() => toggleCorte(c.valor)}
-                />
-                {c.label}
-              </label>
-            );
-          })}
-        </div>
-        <p className="text-xs text-muted-foreground">
-          Deixe tudo desmarcado se este produto não recebe corte. "Peça
-          inteira" é exclusivo (o peso varia, então desabilita os outros
-          cortes) e esconde o campo de peso do cliente no site.
-        </p>
-
-        {(vendePecaInteira || porUnidade) && (
-          <label className="block text-sm">
-            {vendePecaInteira
-              ? "Peso estimado por peça (gramas)"
-              : "Peso estimado por unidade (gramas) — opcional"}
+      {!ehBanner && (
+        <div className="space-y-2 rounded-lg border border-border bg-muted/40 p-3">
+          <label className="flex items-center gap-2 text-sm font-medium">
             <input
-              required={vendePecaInteira}
-              type="number"
-              min={1}
-              placeholder="Ex: 900"
-              value={form.peso_estimado_g ?? ""}
-              onChange={set("peso_estimado_g")}
-              className="mt-1 w-full max-w-[10rem] rounded-lg border border-input px-3 py-2 text-sm"
+              type="checkbox"
+              checked={!!form.permite_tempero}
+              onChange={set("permite_tempero")}
             />
-            <span className="mt-1 block text-xs text-muted-foreground">
-              {vendePecaInteira
-                ? "É o peso que aparece pro cliente no site. O peso e o valor exatos são combinados pelo WhatsApp."
-                : "Use quando a unidade tem peso variável (ex: frango inteiro). Preenchendo, o preço acima passa a valer por kg e o cliente vê um valor estimado por unidade, além da mensagem de peso. Deixe vazio para preço fixo por unidade."}
-            </span>
+            Permite tempero
           </label>
-        )}
-      </div>
+          <p className="text-xs text-muted-foreground">
+            Mostra a opção “Vai temperada?” para o cliente neste produto.
+          </p>
+
+          <div className="pt-1 text-sm font-medium">Cortes disponíveis</div>
+          <div className="flex flex-wrap gap-3">
+            {CORTES.map((c) => {
+              const outroDesabilitado =
+                vendePecaInteira && c.valor !== CORTE_PECA_INTEIRA;
+              return (
+                <label
+                  key={c.valor}
+                  className={`flex items-center gap-2 text-sm ${
+                    outroDesabilitado ? "opacity-40" : ""
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={cortesSelecionados.includes(c.valor)}
+                    disabled={outroDesabilitado}
+                    onChange={() => toggleCorte(c.valor)}
+                  />
+                  {c.label}
+                </label>
+              );
+            })}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Deixe tudo desmarcado se este produto não recebe corte. "Peça
+            inteira" é exclusivo (o peso varia, então desabilita os outros
+            cortes) e esconde o campo de peso do cliente no site.
+          </p>
+
+          {(vendePecaInteira || porUnidade) && (
+            <label className="block text-sm">
+              {vendePecaInteira
+                ? "Peso estimado por peça (gramas)"
+                : "Peso estimado por unidade (gramas) — opcional"}
+              <input
+                required={vendePecaInteira}
+                type="number"
+                min={1}
+                placeholder="Ex: 900"
+                value={form.peso_estimado_g ?? ""}
+                onChange={set("peso_estimado_g")}
+                className="mt-1 w-full max-w-[10rem] rounded-lg border border-input px-3 py-2 text-sm"
+              />
+              <span className="mt-1 block text-xs text-muted-foreground">
+                {vendePecaInteira
+                  ? "É o peso que aparece pro cliente no site. O peso e o valor exatos são combinados pelo WhatsApp."
+                  : "Use quando a unidade tem peso variável (ex: frango inteiro). Preenchendo, o preço acima passa a valer por kg e o cliente vê um valor estimado por unidade, além da mensagem de peso. Deixe vazio para preço fixo por unidade."}
+              </span>
+            </label>
+          )}
+        </div>
+      )}
 
       <div className="flex items-center gap-3">
         {form.imagem_url && (
@@ -435,15 +473,23 @@ export default function Admin() {
       <div className="my-4">
         {editando ? (
           <ProdutoForm
-            inicial={editando === "novo" ? null : editando}
+            inicial={
+              editando === "novo" || editando === "novo-banner" ? null : editando
+            }
+            tipoInicial={editando === "novo-banner" ? "banner" : "produto"}
             onSalvar={salvar}
             onCancelar={() => setEditando(null)}
             uploadFoto={uploadFoto}
           />
         ) : (
-          <Button onClick={() => setEditando("novo")}>
-            <Plus className="h-4 w-4" /> Novo produto
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={() => setEditando("novo")}>
+              <Plus className="h-4 w-4" /> Novo produto
+            </Button>
+            <Button variant="outline" onClick={() => setEditando("novo-banner")}>
+              <Plus className="h-4 w-4" /> Novo card de oferta
+            </Button>
+          </div>
         )}
       </div>
 
@@ -496,12 +542,15 @@ export default function Admin() {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold">{p.nome}</p>
                   <p className="text-xs text-muted-foreground">
-                    {p.categoria} · {formatBRL(p.preco_kg)}/
-                    {(p.cortes || []).includes(CORTE_PECA_INTEIRA) ||
-                    p.unidade !== "un" ||
-                    p.peso_estimado_g > 0
-                      ? "kg"
-                      : "un"}
+                    {p.tipo === "banner"
+                      ? "Card de oferta"
+                      : `${p.categoria} · ${formatBRL(p.preco_kg)}/${
+                          (p.cortes || []).includes(CORTE_PECA_INTEIRA) ||
+                          p.unidade !== "un" ||
+                          p.peso_estimado_g > 0
+                            ? "kg"
+                            : "un"
+                        }`}
                   </p>
                 </div>
               </div>
@@ -513,12 +562,14 @@ export default function Admin() {
                   onClick={() => toggle(p.id, "em_oferta", p.em_oferta)}
                   label="Oferta"
                 />
-                {/* Toggle rápido: estoque */}
-                <TogglePill
-                  ativo={!p.esgotado}
-                  onClick={() => toggle(p.id, "esgotado", p.esgotado)}
-                  label={p.esgotado ? "Esgotado" : "Em estoque"}
-                />
+                {/* Toggle rápido: estoque (não faz sentido pra card de oferta) */}
+                {p.tipo !== "banner" && (
+                  <TogglePill
+                    ativo={!p.esgotado}
+                    onClick={() => toggle(p.id, "esgotado", p.esgotado)}
+                    label={p.esgotado ? "Esgotado" : "Em estoque"}
+                  />
+                )}
 
                 <button
                   onClick={() => setEditando(p)}

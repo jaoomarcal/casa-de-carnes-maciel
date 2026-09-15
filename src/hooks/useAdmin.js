@@ -95,23 +95,49 @@ export function useAdmin() {
   }
 
   async function salvar(produto) {
-    const payload = {
-      nome: produto.nome,
-      descricao: produto.descricao || null,
-      categoria: produto.categoria,
-      unidade: produto.unidade === "un" ? "un" : "kg",
-      preco_kg: Number(produto.preco_kg),
-      preco_oferta_kg: produto.preco_oferta_kg
-        ? Number(produto.preco_oferta_kg)
-        : null,
-      em_oferta: !!produto.em_oferta,
-      esgotado: !!produto.esgotado,
-      cortes: Array.isArray(produto.cortes) ? produto.cortes : [],
-      permite_tempero: !!produto.permite_tempero,
-      peso_estimado_g: produto.peso_estimado_g ? Number(produto.peso_estimado_g) : null,
-      imagem_url: produto.imagem_url || null,
-      ordem: Number(produto.ordem) || 0,
-    };
+    const ehBanner = produto.tipo === "banner";
+
+    // Banner é só imagem + descrição pra vitrine "Ofertas": os campos de
+    // produto normal (preço, cortes, peso...) não fazem sentido pra ele,
+    // então gravamos valores neutros em vez de expor esses campos no
+    // formulário reduzido do painel.
+    const payload = ehBanner
+      ? {
+          nome: produto.nome,
+          descricao: produto.descricao || null,
+          categoria: "diversos",
+          tipo: "banner",
+          unidade: "kg",
+          preco_kg: 0,
+          preco_oferta_kg: null,
+          em_oferta: true,
+          esgotado: false,
+          cortes: [],
+          permite_tempero: false,
+          peso_estimado_g: null,
+          imagem_url: produto.imagem_url || null,
+          ordem: Number(produto.ordem) || 0,
+        }
+      : {
+          nome: produto.nome,
+          descricao: produto.descricao || null,
+          categoria: produto.categoria,
+          tipo: "produto",
+          unidade: produto.unidade === "un" ? "un" : "kg",
+          preco_kg: Number(produto.preco_kg),
+          preco_oferta_kg: produto.preco_oferta_kg
+            ? Number(produto.preco_oferta_kg)
+            : null,
+          em_oferta: !!produto.em_oferta,
+          esgotado: !!produto.esgotado,
+          cortes: Array.isArray(produto.cortes) ? produto.cortes : [],
+          permite_tempero: !!produto.permite_tempero,
+          peso_estimado_g: produto.peso_estimado_g
+            ? Number(produto.peso_estimado_g)
+            : null,
+          imagem_url: produto.imagem_url || null,
+          ordem: Number(produto.ordem) || 0,
+        };
 
     const anterior = produto.id
       ? produtos.find((p) => p.id === produto.id)

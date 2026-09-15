@@ -17,7 +17,8 @@ import { ProductModal } from "@/components/catalog/ProductModal";
  *      imagem em grayscale + opacidade reduzida
  *      botão "Escolher" some e entra a badge "Indisponível"
  *  - oferta: mostra preço antigo riscado + preço novo
- *  - preço no formato "R$ 48,50 / kg"
+ *  - preço no formato "R$ 48,50 / kg" — é só o preço de referência; o valor
+ *    estimado do pedido e o total não aparecem mais em lugar nenhum
  *  - ao clicar no card (não esgotado) abre o modal com peso, corte e tempero
  */
 export function ProductCard({ produto }) {

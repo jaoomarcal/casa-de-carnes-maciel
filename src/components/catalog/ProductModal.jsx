@@ -62,15 +62,6 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
   // modo peso exato só depois que o cliente digita um peso aceitável.
   const quantidadeDefinida =
     porUnidade || vendePorPeca ? unidades >= 1 : pesoValido;
-  const precoEstimado = !quantidadeDefinida
-    ? 0
-    : porUnidade
-      ? unidadeComPeso
-        ? produto.precoAtualKg * (produto.pesoEstimadoG / 1000) * unidades
-        : produto.precoAtualKg * unidades
-      : vendePorPeca
-        ? produto.precoAtualKg * ((produto.pesoEstimadoG || 0) / 1000) * unidades
-        : produto.precoAtualKg * (gramas / 1000);
 
   function confirmar() {
     if (!quantidadeDefinida) return;
@@ -279,19 +270,14 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
 
                 {/* Rodapé */}
                 <div className="border-t border-border bg-background p-4">
-                  <div className="mb-2 flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {porUnidade
-                        ? unidadeComPeso
-                          ? `${unidades} un · ~${formatPeso(produto.pesoEstimadoG * unidades)} estimado`
-                          : `${unidades} un`
-                        : vendePorPeca
-                          ? `${unidades} peça${unidades > 1 ? "s" : ""} estimado`
-                          : `${pesoValido ? formatPeso(gramas) : "—"} estimado`}
-                    </span>
-                    <span className="font-display text-lg">
-                      {formatBRL(precoEstimado)}
-                    </span>
+                  <div className="mb-2 text-sm text-muted-foreground">
+                    {porUnidade
+                      ? unidadeComPeso
+                        ? `${unidades} un · ~${formatPeso(produto.pesoEstimadoG * unidades)} estimado`
+                        : `${unidades} un`
+                      : vendePorPeca
+                        ? `${unidades} peça${unidades > 1 ? "s" : ""} estimado`
+                        : `${pesoValido ? formatPeso(gramas) : "—"} estimado`}
                   </div>
                   <Button
                     className="w-full"

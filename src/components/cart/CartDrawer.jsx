@@ -40,16 +40,8 @@ function lerCliente() {
  * `onClose` fecha o drawer (usado no botão "Continuar comprando").
  */
 export function CartDrawer({ onClose }) {
-  const {
-    itens,
-    total,
-    subtotalItem,
-    chaveItem,
-    incrementar,
-    decrementar,
-    remover,
-    limpar,
-  } = useCart();
+  const { itens, chaveItem, incrementar, decrementar, remover, limpar } =
+    useCart();
 
   const [etapa, setEtapa] = useState("carrinho");
 
@@ -152,7 +144,7 @@ export function CartDrawer({ onClose }) {
           </div>
         ) : naEtapaDados ? (
           <>
-            <ResumoPedido itens={itens} chaveItem={chaveItem} subtotalItem={subtotalItem} />
+            <ResumoPedido itens={itens} chaveItem={chaveItem} />
             <DadosCliente
               nome={nome}
               setNome={setNome}
@@ -208,7 +200,7 @@ export function CartDrawer({ onClose }) {
                         </p>
                       )}
 
-                      <div className="mt-2 flex items-center justify-between">
+                      <div className="mt-2">
                         {/* Stepper de quantidade */}
                         <div className="flex items-center rounded-md border border-border">
                           <button
@@ -229,10 +221,6 @@ export function CartDrawer({ onClose }) {
                             +
                           </button>
                         </div>
-
-                        <span className="text-sm font-bold text-carne">
-                          {formatBRL(subtotalItem(item))}
-                        </span>
                       </div>
                     </div>
 
@@ -252,14 +240,9 @@ export function CartDrawer({ onClose }) {
         )}
       </div>
 
-      {/* Aviso obrigatório + totais + ações */}
+      {/* Aviso obrigatório + ações */}
       {!vazio && (
         <SheetFooter>
-          <div className="flex items-center justify-between py-1">
-            <span className="text-sm text-muted-foreground">Total estimado</span>
-            <span className="font-display text-xl">{formatBRL(total)}</span>
-          </div>
-
           {naEtapaDados ? (
             <>
               {!podeEnviar && (
@@ -310,7 +293,7 @@ export function CartDrawer({ onClose }) {
  * — sem ele o cliente perde de vista o que está prestes a mandar pro
  * WhatsApp (o momento de maior risco do fluxo: pedido errado sem querer).
  */
-function ResumoPedido({ itens, chaveItem, subtotalItem }) {
+function ResumoPedido({ itens, chaveItem }) {
   const [aberto, setAberto] = useState(false);
 
   return (
@@ -353,15 +336,10 @@ function ResumoPedido({ itens, chaveItem, subtotalItem }) {
                     ? item.gramas ? ` — ~${formatPeso(item.gramas)}/un` : ""
                     : ` — ${formatPeso(item.gramas)}`;
                 return (
-                  <li key={chaveItem(item)} className="flex justify-between gap-2">
-                    <span className="text-muted-foreground">
-                      {item.quantidade}x {item.nome}
-                      {medida}
-                      {extras && ` · ${extras}`}
-                    </span>
-                    <span className="shrink-0 font-medium">
-                      {formatBRL(subtotalItem(item))}
-                    </span>
+                  <li key={chaveItem(item)} className="text-muted-foreground">
+                    {item.quantidade}x {item.nome}
+                    {medida}
+                    {extras && ` · ${extras}`}
                   </li>
                 );
               })}
@@ -523,9 +501,9 @@ function DadosCliente({
       </AnimatePresence>
 
       <p className="text-xs text-muted-foreground">
-        O valor informado é uma estimativa e poderá variar em até 10%, para
-        mais ou para menos, conforme o peso final dos produtos. O valor real
-        da compra será confirmado pelo WhatsApp no fechamento do pedido.
+        O peso final pode variar um pouco em relação ao combinado aqui. O
+        valor da compra será confirmado pelo WhatsApp no fechamento do
+        pedido.
       </p>
     </div>
   );

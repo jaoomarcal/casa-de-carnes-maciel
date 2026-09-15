@@ -11,12 +11,13 @@ import { ProductModal } from "@/components/catalog/ProductModal";
 const INTERVALO_MS = 4500;
 
 /**
- * Vitrine da categoria "Ofertas": em vez de grade, mostra um produto por
- * vez em destaque (mesma arquitetura do ProductCard normal, só que maior:
- * foto, selo, nome e preço bem grandes) e troca sozinha a cada 4.5s.
+ * Vitrine da categoria "Ofertas": em vez de grade, mostra um item por vez
+ * em destaque e troca sozinha a cada 4.5s. Só o card central aparece; a
+ * navegação entre os itens fica nos pontinhos abaixo dele.
  *
- * Só o card central aparece; a navegação entre os produtos fica nos
- * pontinhos abaixo dele.
+ * Dois tipos de card passam por aqui:
+ *  - produto normal em oferta (foto, selo, nome, clicável -> abre modal)
+ *  - "banner" cadastrado no painel (só foto + texto, sem preço, sem clique)
  */
 export function PromoCarousel({ produtos = [] }) {
   const [indice, setIndice] = useState(0);
@@ -34,14 +35,15 @@ export function PromoCarousel({ produtos = [] }) {
 
   const atual = indice % total;
   const central = produtos[atual];
+  const ehBanner = central.tipo === "banner";
 
-  const esgotado = central.esgotado;
+  const esgotado = !ehBanner && central.esgotado;
   const desconto =
-    central.temDesconto && central.precoKg > 0
+    !ehBanner && central.temDesconto && central.precoKg > 0
       ? Math.round((1 - central.precoAtualKg / central.precoKg) * 100)
       : null;
   const abrirCentral = () => {
-    if (!esgotado) setProdutoModal(central);
+    if (!ehBanner && !esgotado) setProdutoModal(central);
   };
 
   return (
@@ -53,17 +55,17 @@ export function PromoCarousel({ produtos = [] }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
           onClick={abrirCentral}
-          role={esgotado ? undefined : "button"}
-          tabIndex={esgotado ? undefined : 0}
+          role={!ehBanner && !esgotado ? "button" : undefined}
+          tabIndex={!ehBanner && !esgotado ? 0 : undefined}
           onKeyDown={(e) => {
-            if (!esgotado && (e.key === "Enter" || e.key === " ")) {
+            if (!ehBanner && !esgotado && (e.key === "Enter" || e.key === " ")) {
               e.preventDefault();
               abrirCentral();
             }
           }}
           className={cn(
             "flex w-full max-w-sm flex-col overflow-hidden rounded-lg border border-border bg-background shadow-card",
-            !esgotado && "cursor-pointer",
+            !ehBanner && !esgotado && "cursor-pointer",
             esgotado && "opacity-60"
           )}
         >
@@ -78,63 +80,72 @@ export function PromoCarousel({ produtos = [] }) {
               )}
             />
 
-            {/* Selo chamativo: desconto real quando existe preço de oferta,
-                senão um selo genérico — nunca a palavra "Promoção" (o card
-                já está dentro dessa seção). */}
-            <div className="absolute left-2 top-2 flex flex-col gap-1">
-              {desconto ? (
-                <Badge className="bg-carne text-sm font-extrabold shadow-lg shadow-carne/40">
-                  -{desconto}% OFF
-                </Badge>
-              ) : (
-                <Badge variant="oferta" className="text-sm font-extrabold">
-                  Oferta do dia 🔥
-                </Badge>
-              )}
-              {esgotado && <Badge variant="muted">Esgotado</Badge>}
-            </div>
+            {!ehBanner && (
+              <div className="absolute left-2 top-2 flex flex-col gap-1">
+                {desconto ? (
+                  <Badge className="bg-carne text-sm font-extrabold shadow-lg shadow-carne/40">
+                    -{desconto}% OFF
+                  </Badge>
+                ) : (
+                  <Badge variant="oferta" className="text-sm font-extrabold">
+                    Oferta do dia 🔥
+                  </Badge>
+                )}
+                {esgotado && <Badge variant="muted">Esgotado</Badge>}
+              </div>
+            )}
           </div>
 
           {/* Corpo */}
           <div className="flex flex-1 flex-col gap-2.5 p-4 sm:p-5">
-            <h3 className="line-clamp-1 text-xl font-semibold leading-tight sm:text-2xl">
-              {central.nome}
-            </h3>
-            {central.descricao && (
-              <p className="line-clamp-1 text-sm text-muted-foreground">
-                {central.descricao}
-              </p>
+            {ehBanner ? (
+              central.descricao && (
+                <p className="line-clamp-1 text-xl font-semibold leading-tight sm:text-2xl">
+                  {central.descricao}
+                </p>
+              )
+            ) : (
+              <>
+                <h3 className="line-clamp-1 text-xl font-semibold leading-tight sm:text-2xl">
+                  {central.nome}
+                </h3>
+                {central.descricao && (
+                  <p className="line-clamp-1 text-sm text-muted-foreground">
+                    {central.descricao}
+                  </p>
+                )}
+
+                <div className="flex flex-wrap items-baseline gap-1.5">
+                  {central.temDesconto && (
+                    <span className="text-sm text-muted-foreground line-through">
+                      {formatBRL(central.precoKg)}
+                    </span>
+                  )}
+                  <span className="text-3xl font-extrabold text-carne sm:text-4xl">
+                    {formatBRL(central.precoAtualKg)}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    / {central.unidadeComPeso ? "kg" : rotuloUnidade(central.unidade)}
+                  </span>
+                </div>
+
+                <div className="mt-auto pt-1">
+                  {esgotado ? (
+                    <Badge
+                      variant="muted"
+                      className="w-full justify-center py-2.5 text-sm"
+                    >
+                      Indisponível
+                    </Badge>
+                  ) : (
+                    <Button size="lg" className="w-full" onClick={abrirCentral}>
+                      <SlidersHorizontal className="h-4 w-4" />
+                      Escolher
+                    </Button>
+                  )}
+                </div>
+              </>
             )}
-
-            <div className="flex flex-wrap items-baseline gap-1.5">
-              {central.temDesconto && (
-                <span className="text-sm text-muted-foreground line-through">
-                  {formatBRL(central.precoKg)}
-                </span>
-              )}
-              <span className="text-3xl font-extrabold text-carne sm:text-4xl">
-                {formatBRL(central.precoAtualKg)}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                / {central.unidadeComPeso ? "kg" : rotuloUnidade(central.unidade)}
-              </span>
-            </div>
-
-            <div className="mt-auto pt-1">
-              {esgotado ? (
-                <Badge
-                  variant="muted"
-                  className="w-full justify-center py-2.5 text-sm"
-                >
-                  Indisponível
-                </Badge>
-              ) : (
-                <Button size="lg" className="w-full" onClick={abrirCentral}>
-                  <SlidersHorizontal className="h-4 w-4" />
-                  Escolher
-                </Button>
-              )}
-            </div>
           </div>
         </motion.article>
       </div>

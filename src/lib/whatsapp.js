@@ -42,7 +42,6 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
   if (!itens.length) return;
 
   const linhas = itens.map((item) => {
-    const preco = formatBRL(subtotalItem(item));
     const extras = [
       item.corte ? `Corte: ${rotuloCorte(item.corte)}` : null,
       item.temperada ? "Temperada" : null,
@@ -56,7 +55,10 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
         : item.corte === CORTE_PECA_INTEIRA
           ? ` — ~${formatPeso(item.gramas)} (peso a confirmar)`
           : ` — ${formatPeso(item.gramas)}`;
-    return `• ${item.nome}${medida}${sufixo} — Qtd: ${item.quantidade}\n   ${preco}`;
+    // Só mostra a quantidade quando ela importa (mais de 1); em pedidos por
+    // peso (quantidade sempre 1) isso deixaria a linha poluída sem motivo.
+    const qtd = item.quantidade > 1 ? ` — Qtd: ${item.quantidade}` : "";
+    return `• ${item.nome}${medida}${sufixo}${qtd}`;
   });
 
   const entrega =
@@ -81,18 +83,14 @@ export function enviarPedidoWhatsApp(itens, dados = {}) {
       : "*Tempo estimado de preparo:* trinta minutos",
   ].filter(Boolean);
 
-  const totalProdutos = totalCarrinho(itens);
+  // O site não mostra mais preço nenhum (produto, subtotal ou total) — o
+  // valor é combinado direto pelo WhatsApp. "Total estimado:" fica em
+  // branco de propósito, pra o açougueiro preencher depois de pesar.
   const taxaEntrega = dados.entrega === "entrega" ? TAXA_ENTREGA : 0;
-
-  // A taxa de entrega só é somada aqui, na string do WhatsApp. O total do
-  // site (passado em `total`/exibido no drawer) continua sem ela.
-  const resumoValores = taxaEntrega
-    ? [
-        `*Subtotal dos produtos:* ${formatBRL(totalProdutos)}`,
-        `*Taxa de entrega:* ${formatBRL(taxaEntrega)}`,
-        `*Total estimado:* ${formatBRL(totalProdutos + taxaEntrega)}`,
-      ]
-    : [`*Total estimado:* ${formatBRL(totalProdutos)}`];
+  const resumoValores = [
+    ...(taxaEntrega ? [`*Taxa de entrega:* ${formatBRL(taxaEntrega)}`] : []),
+    "*Total estimado:*",
+  ];
 
   const mensagem = [
     "🥩 *NOVO PEDIDO — CASA DE CARNES MACIEL*",

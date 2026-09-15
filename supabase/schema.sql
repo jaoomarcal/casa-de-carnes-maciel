@@ -15,6 +15,7 @@ create table if not exists public.produtos (
   descricao         text,
   categoria         text not null
                     check (categoria in ('bovinos','suinos','aves','peixes','linguica','temperados','mercearia','diversos','bebidas')),
+  tipo              text not null default 'produto' check (tipo in ('produto','banner')), -- 'banner' = card só de imagem + descrição, sem preço/opções, pra vitrine "Ofertas"
   unidade           text not null default 'kg' check (unidade in ('kg','un')), -- 'kg' = por peso | 'un' = por unidade
   preco_kg          numeric(10,2) not null check (preco_kg >= 0),  -- quando unidade='un', vale "preço por unidade"
   preco_oferta_kg   numeric(10,2) check (preco_oferta_kg >= 0),

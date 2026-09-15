@@ -2,7 +2,6 @@ import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { formatBRL } from "@/lib/utils";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { useCart } from "@/context/CartContext";
 
@@ -18,7 +17,7 @@ import { useCart } from "@/context/CartContext";
  * com `forceMount` para o Framer Motion controlar entrada e saída.
  */
 export function FloatingCart() {
-  const { itens, quantidadeTotal, total } = useCart();
+  const { itens, quantidadeTotal } = useCart();
   const [aberto, setAberto] = useState(false);
   const temItens = itens.length > 0;
 
@@ -57,11 +56,6 @@ export function FloatingCart() {
                 >
                   {quantidadeTotal}
                 </motion.span>
-
-                {/* Total (aparece em telas maiores) */}
-                <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-full bg-carvao px-3 py-1.5 text-xs font-semibold text-white shadow-glass sm:block">
-                  {formatBRL(total)}
-                </span>
               </motion.button>
             </Dialog.Trigger>
           </motion.div>
