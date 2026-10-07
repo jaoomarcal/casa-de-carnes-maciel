@@ -1262,6 +1262,25 @@
     "tipo": "produto"
   },
   {
+    "id": "e1e97b68-af98-4eec-9d4a-57797183aea0",
+    "nome": "Imagem ",
+    "descricao": ".",
+    "categoria": "diversos",
+    "preco_kg": 0.00,
+    "preco_oferta_kg": null,
+    "em_oferta": true,
+    "esgotado": false,
+    "imagem_url": "0f6dc749-4b9d-41bd-a9bf-6928cc868fc3.jpg",
+    "ordem": 0,
+    "criado_em": "2026-10-06T15:17:43.201388+00:00",
+    "atualizado_em": "2026-10-06T15:19:34.83953+00:00",
+    "cortes": [],
+    "permite_tempero": false,
+    "unidade": "kg",
+    "peso_estimado_g": null,
+    "tipo": "banner"
+  },
+  {
     "id": "cf0a344a-b5a5-4552-8ffb-f559a5c64abd",
     "nome": "Imagem 2 ",
     "descricao": ".",
@@ -2840,14 +2859,14 @@
     "nome": "Toucinho",
     "descricao": null,
     "categoria": "suinos",
-    "preco_kg": 33.00,
+    "preco_kg": 24.90,
     "preco_oferta_kg": null,
     "em_oferta": false,
-    "esgotado": true,
+    "esgotado": false,
     "imagem_url": "4a6c1847-6a32-44bc-bbf2-8a4ee0ca2679.jpg",
     "ordem": 6,
     "criado_em": "2026-08-31T20:22:59.048733+00:00",
-    "atualizado_em": "2026-09-16T14:43:28.134727+00:00",
+    "atualizado_em": "2026-10-06T15:15:18.429496+00:00",
     "cortes": [
       "sem-corte",
       "cubos"
