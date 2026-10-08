@@ -8,14 +8,18 @@ import { CORTES, CORTE_PECA_INTEIRA, PESO_MINIMO, rotuloUnidade } from "@/data/c
 import { Button } from "@/components/ui/button";
 import { WeightSelector } from "@/components/catalog/WeightSelector";
 import { useCart } from "@/context/CartContext";
+import { useLoja } from "@/context/LojaContext";
 
 /**
  * Modal de detalhe do produto: o cliente escolhe peso (atalho ou exato),
  * o corte (quando o produto recebe corte) e se vai temperada (quando
  * o produto permite tempero), e então adiciona ao carrinho.
+ * Fora do horário de pedidos o modal serve só para consulta: o rodapé troca
+ * o botão de adicionar por um aviso.
  */
 export function ProductModal({ produto, aberto, onOpenChange }) {
   const { adicionar } = useCart();
+  const { podeComprar, mensagem } = useLoja();
 
   // Vendido por unidade (bebidas, mercearia, bandejas...): o cliente escolhe
   // a quantidade de unidades em vez do peso.
@@ -64,7 +68,7 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
     porUnidade || vendePorPeca ? unidades >= 1 : pesoValido;
 
   function confirmar() {
-    if (!quantidadeDefinida) return;
+    if (!quantidadeDefinida || !podeComprar) return;
     adicionar(
       produto,
       porUnidade
@@ -269,6 +273,14 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                 </div>
 
                 {/* Rodapé */}
+                {!podeComprar ? (
+                  <div className="border-t border-border bg-muted/60 p-4 text-center text-sm text-muted-foreground">
+                    <p className="font-semibold text-foreground">
+                      Pedidos online fechados agora
+                    </p>
+                    <p className="mt-0.5">{mensagem}</p>
+                  </div>
+                ) : (
                 <div className="border-t border-border bg-background p-4">
                   <div className="mb-2 text-sm text-muted-foreground">
                     {porUnidade
@@ -289,6 +301,7 @@ export function ProductModal({ produto, aberto, onOpenChange }) {
                     Adicionar ao carrinho
                   </Button>
                 </div>
+                )}
               </motion.div>
             </Dialog.Content>
             </div>

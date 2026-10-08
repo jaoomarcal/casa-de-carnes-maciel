@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { SlidersHorizontal } from "lucide-react";
+import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { cn, formatBRL } from "@/lib/utils";
 import { rotuloUnidade } from "@/data/categories";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProductModal } from "@/components/catalog/ProductModal";
+import { useLoja } from "@/context/LojaContext";
 
 const INTERVALO_MS = 4500;
 
@@ -22,6 +23,7 @@ const INTERVALO_MS = 4500;
 export function PromoCarousel({ produtos = [] }) {
   const [indice, setIndice] = useState(0);
   const [produtoModal, setProdutoModal] = useState(null);
+  const { podeComprar } = useLoja();
   const total = produtos.length;
 
   useEffect(() => {
@@ -139,8 +141,12 @@ export function PromoCarousel({ produtos = [] }) {
                     </Badge>
                   ) : (
                     <Button size="lg" className="w-full" onClick={abrirCentral}>
-                      <SlidersHorizontal className="h-4 w-4" />
-                      Escolher
+                      {podeComprar ? (
+                        <SlidersHorizontal className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                      {podeComprar ? "Escolher" : "Ver detalhes"}
                     </Button>
                   )}
                 </div>

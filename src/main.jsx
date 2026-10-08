@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 
 import "./index.css";
 import { CartProvider } from "@/context/CartContext";
+import { LojaProvider } from "@/context/LojaContext";
 import Home from "@/pages/Home";
 import Admin from "@/pages/Admin";
 
@@ -17,10 +18,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         {/* O carrinho vive "por cima" de todas as telas */}
         <CartProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/painel" element={<Admin />} />
-          </Routes>
+          <LojaProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/painel" element={<Admin />} />
+            </Routes>
+          </LojaProvider>
 
           {/* Sonner: avisos suaves ("Item adicionado ao carrinho") */}
           <Toaster

@@ -4,12 +4,14 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { useCart } from "@/context/CartContext";
+import { useLoja } from "@/context/LojaContext";
 
 /**
  * Botão flutuante (FAB) com ícone 3D do cutelo + gaveta lateral do carrinho.
  *
  * Regras pedidas:
  *  - o FAB só aparece quando há itens (itens.length > 0), com entrada animada (Framer Motion)
+ *  - fora do horário de pedidos o FAB some (os itens continuam salvos)
  *  - badge vermelho com a quantidade total de itens
  *  - ao clicar, abre um Drawer deslizando da DIREITA (estilo iFood), não um modal central
  *
@@ -19,13 +21,14 @@ import { useCart } from "@/context/CartContext";
 export function FloatingCart() {
   const { itens, quantidadeTotal } = useCart();
   const [aberto, setAberto] = useState(false);
+  const { podeComprar } = useLoja();
   const temItens = itens.length > 0;
 
   return (
     <Dialog.Root open={aberto} onOpenChange={setAberto}>
       {/* ---------- FAB ---------- */}
       <AnimatePresence>
-        {temItens && !aberto && (
+        {temItens && podeComprar && !aberto && (
           <motion.div
             key="fab"
             initial={{ opacity: 0, y: 80, scale: 0.6 }}

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { SlidersHorizontal } from "lucide-react";
+import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { cn, formatBRL } from "@/lib/utils";
 import { rotuloUnidade } from "@/data/categories";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProductModal } from "@/components/catalog/ProductModal";
+import { useLoja } from "@/context/LojaContext";
 
 /**
  * Card de um produto do catálogo.
@@ -20,9 +21,11 @@ import { ProductModal } from "@/components/catalog/ProductModal";
  *  - preço no formato "R$ 48,50 / kg" — é só o preço de referência; o valor
  *    estimado do pedido e o total não aparecem mais em lugar nenhum
  *  - ao clicar no card (não esgotado) abre o modal com peso, corte e tempero
+ *  - fora do horário o botão vira "Ver detalhes" (o modal não deixa adicionar)
  */
 export function ProductCard({ produto }) {
   const [aberto, setAberto] = useState(false);
+  const { podeComprar } = useLoja();
 
   const esgotado = produto.esgotado;
   const abrir = () => {
@@ -101,8 +104,12 @@ export function ProductCard({ produto }) {
               </Badge>
             ) : (
               <Button size="sm" className="w-full" onClick={abrir}>
-                <SlidersHorizontal className="h-4 w-4" />
-                Escolher
+                {podeComprar ? (
+                  <SlidersHorizontal className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+                {podeComprar ? "Escolher" : "Ver detalhes"}
               </Button>
             )}
           </div>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // fuso do navegador do cliente), já que quem importa é o horário da loja:
 //  - Seg a Sáb: 8h às 18h, com pedido online normal.
 //  - Domingo: loja aberta, mas só para atendimento presencial, das 8h às 12h
-//    (sem pedido online — por isso o site também mostra a tela cheia).
+//    (sem pedido online — o catálogo continua visível, só a compra trava).
 const ABRE_HORA = 8;
 const FECHA_HORA = 18;
 const FECHA_HORA_DOMINGO = 12;
@@ -27,8 +27,19 @@ function agoraEmSaoPaulo() {
   return { diaSemana, hora, minuto };
 }
 
+// Só em desenvolvimento: ?loja=fechado | presencial | aberto força o status,
+// para testar o modo vitrine sem esperar a loja fechar. Ignorado no build.
+function statusForcado() {
+  if (!import.meta.env.DEV) return null;
+  const valor = new URLSearchParams(window.location.search).get("loja");
+  return ["aberto", "presencial", "fechado"].includes(valor) ? valor : null;
+}
+
 /** "aberto" (site+loja), "presencial" (domingo, só na loja) ou "fechado". */
 function calcularStatus({ diaSemana, hora, minuto }) {
+  const forcado = statusForcado();
+  if (forcado) return forcado;
+
   const minutosNoDia = hora * 60 + minuto;
 
   if (diaSemana === 0) {
@@ -42,7 +53,7 @@ function calcularStatus({ diaSemana, hora, minuto }) {
     : "fechado";
 }
 
-/** Texto amigável para a tela cheia (só faz sentido quando não está "aberto"). */
+/** Texto amigável para o aviso de loja fechada (só faz sentido quando não está "aberto"). */
 function calcularMensagem({ diaSemana, hora }, status) {
   if (status === "presencial") {
     return "Hoje atendemos só presencialmente na loja, das 8h às 12h.";
@@ -59,6 +70,11 @@ function calcularMensagem({ diaSemana, hora }, status) {
     return "Amanhã (domingo) atendemos só presencialmente, das 8h às 12h. Pedido online volta segunda-feira às 8h.";
   }
   return "Abrimos amanhã às 8h.";
+}
+
+/** Checagem pontual, para revalidar no momento exato de enviar o pedido. */
+export function lojaAbertaAgora() {
+  return calcularStatus(agoraEmSaoPaulo()) === "aberto";
 }
 
 /** Status atual da loja/site ("aberto" | "presencial" | "fechado") e uma frase explicativa. */

@@ -7,17 +7,13 @@ import { CategoryNav } from "@/components/catalog/CategoryNav";
 import { CategorySection } from "@/components/catalog/CategorySection";
 import { ProductSearch } from "@/components/catalog/ProductSearch";
 import { FloatingCart } from "@/components/cart/FloatingCart";
-import { LojaFechada } from "@/components/layout/LojaFechada";
+import { AvisoLojaFechada } from "@/components/layout/AvisoLojaFechada";
 import { CATEGORIAS } from "@/data/categories";
 import { useProducts } from "@/hooks/useProducts";
-import { useLojaAberta } from "@/hooks/useLojaAberta";
 
 export default function Home() {
   const { porCategoria, loading, erro } = useProducts();
   const [busca, setBusca] = useState("");
-  const { status, mensagem } = useLojaAberta();
-
-  if (status !== "aberto") return <LojaFechada status={status} mensagem={mensagem} />;
 
   // Filtra por nome/descrição; usado para esconder produtos e seções que não
   // batem com a busca do cliente. Ignora acento nos dois lados da comparação
@@ -43,6 +39,7 @@ export default function Home() {
       <HeroBanner />
 
       <div className="sticky top-0 z-40">
+        <AvisoLojaFechada />
         <ProductSearch value={busca} onChange={setBusca} />
         <CategoryNav categorias={categoriasComItens} />
       </div>

@@ -22,6 +22,8 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { useCart } from "@/context/CartContext";
+import { useLoja } from "@/context/LojaContext";
+import { lojaAbertaAgora } from "@/hooks/useLojaAberta";
 
 const CLIENTE_KEY = "maciel:cliente";
 
@@ -42,6 +44,7 @@ function lerCliente() {
 export function CartDrawer({ onClose }) {
   const { itens, chaveItem, incrementar, decrementar, remover, limpar } =
     useCart();
+  const { podeComprar, mensagem } = useLoja();
 
   const [etapa, setEtapa] = useState("carrinho");
 
@@ -61,6 +64,12 @@ export function CartDrawer({ onClose }) {
   const podeEnviar = faltando.length === 0;
 
   function finalizar() {
+    // Revalida na hora do clique: o status do contexto só atualiza a cada
+    // 30s, então quem deixou a gaveta aberta até 18h00 não passa.
+    if (!lojaAbertaAgora()) {
+      toast.error("Pedidos online fechados agora", { description: mensagem });
+      return;
+    }
     const dados = {
       nome,
       entrega,
@@ -245,7 +254,11 @@ export function CartDrawer({ onClose }) {
         <SheetFooter>
           {naEtapaDados ? (
             <>
-              {!podeEnviar && (
+              {!podeComprar ? (
+                <p className="text-center text-xs text-carne">
+                  Pedidos online fechados agora. {mensagem}
+                </p>
+              ) : !podeEnviar && (
                 <p className="text-center text-xs text-carne">
                   Falta preencher: {faltando.join(" e ")}.
                 </p>
@@ -254,7 +267,7 @@ export function CartDrawer({ onClose }) {
                 variant="whatsapp"
                 size="lg"
                 className="w-full"
-                disabled={!podeEnviar}
+                disabled={!podeEnviar || !podeComprar}
                 onClick={finalizar}
               >
                 Enviar pedido no WhatsApp
