@@ -510,12 +510,12 @@
     "categoria": "bovinos",
     "preco_kg": 30.75,
     "preco_oferta_kg": 24.20,
-    "em_oferta": true,
+    "em_oferta": false,
     "esgotado": false,
     "imagem_url": "f1a98a2c-eff4-45f9-a30b-9c333f30aa4f.jpg",
     "ordem": 18,
     "criado_em": "2026-08-31T20:22:59.048733+00:00",
-    "atualizado_em": "2026-09-28T20:50:54.142216+00:00",
+    "atualizado_em": "2026-10-08T12:56:08.706488+00:00",
     "cortes": [
       "cubos",
       "sem-corte"
