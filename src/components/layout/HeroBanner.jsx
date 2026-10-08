@@ -67,6 +67,15 @@ export function HeroBanner() {
         >
           Rua João Pacheco de Lima 54-84 Centro.
         </motion.a>
+
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="mt-1.5 text-xs text-white/60 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+        >
+          Seg a Sáb, 8h às 18h · Dom, 8h às 12h (só na loja)
+        </motion.p>
       </div>
     </header>
   );
